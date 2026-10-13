@@ -24,6 +24,8 @@ JEV MLX 0.1 从应用提供的有限候选集中做出选择。模型路径负�
 
 后端的提示词、预填充和缓存上限可通过 `MLXDecisionEngine(model, **backend_options)` 配置。这些是资源限制，不是对模型上下文长度的保证。即使请求低于这些上限，token 编码可用性检查与聊天模板验证仍可能拒绝它。
 
+下方介绍文本后端与其缓存。可选的 [MLX-VLM 后端](multimodal.zh-CN.md)按次接收图片，始终使用全新上下文；请求／结果校验与拒绝语义继续共用。
+
 ## 本地模型路径
 
 `MLXDecisionEngine` 只在构造真实模型引擎时延迟导入 MLX。数据契约、会话以及注入后端的测试无需 MLX 即可使用。`MLXLMBackend` 要求本地目录包含 `config.json`，并调用官方 `mlx_lm.load`，设置 `trust_remote_code=False`。它既不下载也不修改权重。

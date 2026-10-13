@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jev-mlx"
 version = "0.1.0"
-description = "Use existing MLX LLMs for local decisions and semantic routing on Apple Silicon, without fine-tuning or extra decision weights."
+description = "Use existing MLX LLMs and VLMs for local typed decisions on Apple Silicon, without fine-tuning or extra decision weights."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
@@ -15,7 +15,7 @@ keywords = [
   "mlx", "mlx-lm", "apple-silicon", "llm", "local-llm",
   "local-inference", "action-selection", "semantic-routing", "jev",
   "decision-model", "typed-decisions",
-  "training-free", "logits",
+  "training-free", "logits", "mlx-vlm", "multimodal",
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -33,6 +33,7 @@ Issues = "https://github.com/ItsOdeLeo/JEV-MLX/issues"
 
 [project.optional-dependencies]
 mlx = ["mlx==0.31.2", "mlx-lm==0.31.3", "transformers==5.9.0", "tokenizers==0.22.2"]
+vlm = ["mlx==0.31.2", "mlx-lm==0.31.3", "mlx-vlm==0.6.4", "transformers==5.9.0", "tokenizers==0.22.2"]
 dev = ["pytest>=8,<10", "build>=1,<2", "ruff>=0.11,<1", "setuptools>=77"]
 browser = ["playwright==1.63.0"]
 

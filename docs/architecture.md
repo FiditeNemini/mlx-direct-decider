@@ -38,6 +38,8 @@ Backend prompt, prefill, and cache limits can be configured through
 context-length guarantees. Token-code availability and chat-template validation
 can reject a request below these bounds.
 
+The text backend and its cache are described below. The optional [MLX-VLM backend](multimodal.md) accepts per-call images and always uses fresh context; request/result validation and rejection semantics remain shared.
+
 ## Local model path
 
 `MLXDecisionEngine` imports MLX lazily when constructing a real model engine.

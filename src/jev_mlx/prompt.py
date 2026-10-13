@@ -4,6 +4,7 @@ import json
 import string
 from dataclasses import dataclass
 
+from .token_codes import continuation_choices
 from .types import ABSTAIN_ID as ABSTAIN
 from .types import NO_MATCH_ID as NO_MATCH
 from .types import DecisionRequest
@@ -145,7 +146,5 @@ def prepare_prompt(tokenizer, request: DecisionRequest, *, mode="code") -> Prepa
         raise ValueError("Unsupported chat template boundaries")
     if mode == "code":
         # Verify that each selected code is also a one-token continuation of this prompt.
-        for c in choices:
-            if tokenizer.encode(text + c.code, add_special_tokens=False) != [*tokens, c.token_id]:
-                raise ValueError(f"Choice code {c.code!r} is not a single-token continuation")
+        choices = continuation_choices(tokenizer, text, tokens, choices)
     return PreparedPrompt(tokens, system_tokens, state_tokens, choices)

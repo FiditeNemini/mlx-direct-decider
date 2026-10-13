@@ -8,6 +8,8 @@ technical connection is a shared need: turn application state and a question int
 a bounded decision that host code can use.
 
 JEV MLX is an independently maintained library for existing causal MLX-LM models.
+The optional [MLX-VLM integration](multimodal.md) adds text/image choices using
+compatible pretrained vision-language checkpoints, also without fine-tuning.
 The related projects below are separate implementations. Links describe technical
 similarities and alternatives; they do not establish vendor affiliations or
 checkpoint compatibility.
@@ -15,7 +17,7 @@ checkpoint compatibility.
 ## Reuse existing weights without additional training
 
 **JEV MLX adds decision scoring to a compatible MLX-LM checkpoint without training
-or fine-tuning it, adding a decision head or adapter, or requiring separate
+or fine-tuning it, adding a trained decision head or weight adapter, or requiring separate
 decision-model weights.** If compatible base weights are already available locally,
 reuse them. Otherwise obtain the base checkpoint first; the backend loads a local
 directory and does not download weights.

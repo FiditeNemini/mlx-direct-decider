@@ -7,6 +7,8 @@ its tokenizer supports verified one-token codes, real semantic inference runs, a
 cached/fresh numerical parity is measured. It does not imply perfect decisions or
 compatibility with every conversion of an architecture.
 
+See the [MLX / MLX-LM / MLX-VLM guide](multimodal.md) for image decisions and runtime roles. The text/cache measurements below describe MLX-LM only.
+
 ## Reuse the MLX-LM interface across model families
 
 JEV MLX calls the official `mlx_lm.load` and model/cache interfaces rather than
@@ -50,9 +52,28 @@ hashes were not recomputed. A separate
 [tokenizer preflight](../benchmarks/results/compatibility-2026-10-13/tokenizer-preflight.json)
 checked 2 and 64 application candidates, plus the two reserved outcomes.
 
+## Llama and Mistral runtime additions · 2026-10-13
+
+The first three original development cases also ran on these pinned public
+checkpoints, with three numerical cache-parity records each:
+
+| Checkpoint | Runtime completed | Correct / 3 | Wrong actions | Parity passed |
+| :--- | ---: | ---: | ---: | ---: |
+| Llama-3.2-1B-Instruct-4bit (`llama`) | 3/3 | 0/3 | 1 | 3/3 |
+| Mistral-7B-Instruct-v0.3-mlx-4Bit (`mistral`) | 3/3 | 3/3 | 0 | 3/3 |
+
+Both tokenizers passed 2 and 64 business candidates plus the two reserved choices.
+Mistral requires reading its verified continuation token IDs rather than assuming
+standalone letter IDs are identical. The model weights and text cache policy are
+unchanged. The small Llama checkpoint rejected two valid actions and acted when
+nothing should be closed; successful loading does not imply useful decision quality.
+Mistral's 3/3 is a development smoke result, not general accuracy. Exact revisions,
+full inputs, errors, parity records and source hashes are linked in the
+[runtime manifest](../benchmarks/results/runtime-2026-10-13/manifest.json).
+
 ## Coverage still to validate
 
-Prioritize representative Llama, Mistral, Phi, DeepSeek, and GPT-OSS checkpoints,
+Prioritize representative Phi, DeepSeek, and GPT-OSS checkpoints,
 then additional Qwen and Gemma sizes and conversions. Their implementations or
 architecture mappings exist in the pinned
 [MLX-LM source](https://github.com/ml-explore/mlx-lm/tree/v0.31.3/mlx_lm/models),
@@ -97,7 +118,7 @@ The compatibility table must be read together with the results document. A token
 check alone is not a real-model validation. Other locally inventoried checkpoints,
 including Qwen3.6, other Gemma conversions and Nemotron, have not completed the full
 quality and compatibility campaign. The smoke results above do not certify them.
-Multi-question batching and vision inputs are not supported.
+Multi-question batching remains unsupported. Image inputs use the separate experimental [MLX-VLM backend](multimodal.md), with fresh context and its own checkpoint checks.
 
 Recorded Qwen and GLM comparison tables describe historical source revisions.
 The subsequent `579daf3` cache-boundary change preserves complete page/system

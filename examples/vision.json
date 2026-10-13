@@ -1,0 +1,9 @@
+{
+  "state": {},
+  "utterance": "Classify the attached image using the allowed colors.",
+  "question": "What is the dominant color in the attached image?",
+  "candidates": [
+    {"id": "red", "description": "The image is predominantly red", "value": "red"},
+    {"id": "blue", "description": "The image is predominantly blue", "value": "blue"}
+  ]
+}

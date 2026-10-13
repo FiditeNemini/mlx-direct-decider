@@ -2,6 +2,16 @@
 
 [Back to home](README.md)
 
+## Unreleased
+
+- Optional MLX-VLM text/image decisions with the original model head, no fine-tuning,
+  per-call local images, fresh context, Python API and CLI. Recorded Qwen3-VL and
+  SmolVLM smoke results include failures; the Gemma VLM loading limitation is explicit.
+- Dedicated Idefics3 PIL processor adapter and contextual option-token verification
+  for Mistral's SentencePiece boundary behavior. Existing text cache policy is retained.
+- Bilingual [runtime and multimodal guide](docs/multimodal.md), synthetic examples,
+  reproducible smoke commands and checkpoint-specific evidence.
+
 ## 0.1.0 — prepared release
 
 Initial experimental JEV MLX implementation. Public repository/registry

@@ -78,6 +78,23 @@ def test_code_merging_into_prompt_is_rejected():
         prepare_prompt(MergingTokenizer(), request())
 
 
+def test_standalone_and_continuation_token_ids_can_differ():
+    class BoundaryTokenizer(CharacterTokenizer):
+        def encode(self, text, **kwargs):
+            if text in ("0", "1", "2"):
+                return [1000 + ord(text)]
+            return super().encode(text, **kwargs)
+
+        def decode(self, tokens):
+            return super().decode([t - 1000 if t >= 1000 else t for t in tokens])
+
+    tokenizer = BoundaryTokenizer()
+    prompt = prepare_prompt(tokenizer, request())
+    assert [c.code for c in prompt.choices] == ["0", "1", "2"]
+    assert [c.token_id for c in prompt.choices] == [ord("0"), ord("1"), ord("2")]
+    assert tokenizer.encode("0") == [1000 + ord("0")]
+
+
 def test_candidate_order_changes_prompt_and_mapping():
     a = Candidate("a", "Open A")
     b = Candidate("b", "Open B")

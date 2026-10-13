@@ -23,6 +23,10 @@ def main(argv: list[str] | None = None) -> int:
     decide.add_argument(
         "--no-cache", action="store_true", help="Disable prefix-cache reuse for this request."
     )
+    decide.add_argument("--backend", choices=("mlx-lm", "mlx-vlm"), default="mlx-lm")
+    decide.add_argument(
+        "--image", action="append", default=[], help="Local image path (MLX-VLM only; repeatable)."
+    )
     web = sub.add_parser("serve", help="Run the local browser demo and HTTP API.")
     web.add_argument("--host", choices=("127.0.0.1", "localhost"), default="127.0.0.1")
     web.add_argument("--port", type=int, default=8765)
@@ -30,11 +34,13 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument(
             "--model",
             default=os.environ.get("JEV_MLX_MODEL"),
-            help="Local MLX-LM model directory, or JEV_MLX_MODEL.",
+            help="Local MLX model directory, or JEV_MLX_MODEL.",
         )
     args = parser.parse_args(argv)
     if not args.model:
         parser.error("provide --model or set JEV_MLX_MODEL to a local model directory")
+    if args.command == "decide" and args.image and args.backend != "mlx-vlm":
+        parser.error("--image requires --backend mlx-vlm")
     try:
         from .engine import MLXDecisionEngine
         from .server import request_from_dict, serve
@@ -42,8 +48,14 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "decide":
             text = sys.stdin.read() if args.request == "-" else Path(args.request).read_text()
             request = request_from_dict(json.loads(text))
-            engine = MLXDecisionEngine(args.model)
-            result = engine.decide(request, use_cache=not args.no_cache)
+            if args.backend == "mlx-vlm":
+                from .vlm import MLXVLMDecisionEngine
+
+                engine = MLXVLMDecisionEngine(args.model)
+                result = engine.decide(request, images=args.image)
+            else:
+                engine = MLXDecisionEngine(args.model)
+                result = engine.decide(request, use_cache=not args.no_cache)
             print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False, allow_nan=False))
         else:
             engine = MLXDecisionEngine(args.model)

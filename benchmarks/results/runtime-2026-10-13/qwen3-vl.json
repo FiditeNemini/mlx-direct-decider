@@ -1,0 +1,696 @@
+{
+  "scope": "Seven synthetic development smoke cases; not general vision accuracy",
+  "hardware": {
+    "machine": "arm64",
+    "system": "macOS-26.7-arm64-arm-64bit-Mach-O"
+  },
+  "model": {
+    "name": "Qwen3-VL-4B-Instruct-4bit",
+    "backend": "mlx-vlm",
+    "model_type": "qwen3_vl",
+    "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+    "input_files_sha256": {
+      "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+      "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+      "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+      "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+    },
+    "quantization": {
+      "group_size": 64,
+      "bits": 4,
+      "mode": "affine"
+    },
+    "dependencies": {
+      "mlx": "0.31.2",
+      "mlx-vlm": "0.6.4",
+      "transformers": "5.9.0",
+      "tokenizers": "0.22.2"
+    }
+  },
+  "source_sha256": {
+    "mlx_vlm.py": "4f73570a32468f2caf9ec86f82c6353cb457fac8bcf46b6925d409baeb376c09",
+    "vlm.py": "6379433e596236e4b6096f1d22a862f07831380194611f9ada533640a4581084",
+    "prompt.py": "e6ffa2df07b26c4ab1360d8d2652676706de5571bf59a32cee901aaf3c1beaa1",
+    "engine.py": "10aebdb027d54fbc42f49f7a249abc2f4149b613de6d063c5e91fe300ba15baa",
+    "vlm_smoke.py": "783f36ca840260a4b53063975c45c7dc1e48a954210844eb65c664aef15b8985",
+    "token_codes.py": "02e30d3cdb7cd54ca8fd471d144bc109c9c35b99e9b46cddcc3417f8ad3b833b",
+    "vlm_loaders.py": "1f5d59696761622e4947fc19a24afbc8b6e873c3745670d92067173c1a3778fe"
+  },
+  "weights_rehashed": false,
+  "correct": 7,
+  "cases": 7,
+  "repeated_red_max_logit_difference": 0.0,
+  "records": [
+    {
+      "case": "text_only",
+      "request": {
+        "state": {},
+        "utterance": "Choose red",
+        "candidates": [
+          {
+            "id": "red",
+            "description": "Choose red",
+            "value": null
+          },
+          {
+            "id": "blue",
+            "description": "Choose blue",
+            "value": null
+          }
+        ],
+        "state_version": 0,
+        "question": "Select the single allowed action requested by the user.",
+        "kind": "enum"
+      },
+      "expected": "red",
+      "correct": true,
+      "result": {
+        "candidate_id": "red",
+        "status": "selected",
+        "raw_selected_id": "red",
+        "raw_scores": {
+          "red": 49.5,
+          "blue": 26.375,
+          "__no_match__": 21.375,
+          "__abstain__": 18.25
+        },
+        "scores": {
+          "red": 0.9999999999088023,
+          "blue": 9.056076988846974e-11,
+          "__no_match__": 6.101936677048841e-13,
+          "__abstain__": 2.681003867537302e-14
+        },
+        "margin": 23.125,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 901.5259580046404,
+          "inference_ms": 901.5227499767207,
+          "queue_ms": 0.003208027919754386,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3933979780,
+          "decision_ms": 901.7436670255847
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 431,
+          "prefill_tokens": 431,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 0,
+          "image_sha256": []
+        },
+        "request_id": "0e96420fbaa24ace9d43d6e266ded9e2",
+        "selected_value": null
+      }
+    },
+    {
+      "case": "red",
+      "request": {
+        "state": {},
+        "utterance": "Classify the attached image using the allowed colors.",
+        "candidates": [
+          {
+            "id": "red",
+            "description": "The image is predominantly red",
+            "value": "red"
+          },
+          {
+            "id": "blue",
+            "description": "The image is predominantly blue",
+            "value": "blue"
+          }
+        ],
+        "state_version": 0,
+        "question": "What is the dominant color in the attached image?",
+        "kind": "enum"
+      },
+      "expected": "red",
+      "correct": true,
+      "result": {
+        "candidate_id": "red",
+        "status": "selected",
+        "raw_selected_id": "red",
+        "raw_scores": {
+          "red": 47.25,
+          "blue": 26.625,
+          "__no_match__": 21.875,
+          "__abstain__": 18.25
+        },
+        "scores": {
+          "red": 0.9999999988869446,
+          "blue": 1.1032560311155687e-09,
+          "__no_match__": 9.545034912216476e-12,
+          "__abstain__": 2.543665644545682e-13
+        },
+        "margin": 20.625,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1086.062624992337,
+          "inference_ms": 1085.928624990629,
+          "queue_ms": 0.1340000017080456,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3934192560,
+          "decision_ms": 1086.338583001634
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 533,
+          "prefill_tokens": 533,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "2d6b427e5004d6c942d89c085804f09605f3f81e7909bc7bdf878e5da282ad87"
+          ]
+        },
+        "request_id": "52cd68ca0d7b46ee81a8441ca432ebb7",
+        "selected_value": "red"
+      }
+    },
+    {
+      "case": "blue_changed_image",
+      "request": {
+        "state": {},
+        "utterance": "Classify the attached image using the allowed colors.",
+        "candidates": [
+          {
+            "id": "red",
+            "description": "The image is predominantly red",
+            "value": "red"
+          },
+          {
+            "id": "blue",
+            "description": "The image is predominantly blue",
+            "value": "blue"
+          }
+        ],
+        "state_version": 1,
+        "question": "What is the dominant color in the attached image?",
+        "kind": "enum"
+      },
+      "expected": "blue",
+      "correct": true,
+      "result": {
+        "candidate_id": "blue",
+        "status": "selected",
+        "raw_selected_id": "blue",
+        "raw_scores": {
+          "red": 34.5,
+          "blue": 48.0,
+          "__no_match__": 26.375,
+          "__abstain__": 21.25
+        },
+        "scores": {
+          "red": 1.3709572062981129e-06,
+          "blue": 0.9999986286345156,
+          "__no_match__": 4.058646560580254e-10,
+          "__abstain__": 2.4133594622308075e-12
+        },
+        "margin": 13.5,
+        "state_version": 1,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1060.7294579967856,
+          "inference_ms": 1060.671832994558,
+          "queue_ms": 0.0576250022277236,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3934196152,
+          "decision_ms": 1060.998875007499
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 533,
+          "prefill_tokens": 533,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "f13483345d7e5a87840447a406371e9058d16b44a89c390a66983d66b6c3611e"
+          ]
+        },
+        "request_id": "d543d9003d68444b89fa793607cca40f",
+        "selected_value": "blue"
+      }
+    },
+    {
+      "case": "red_repeated",
+      "request": {
+        "state": {},
+        "utterance": "Classify the attached image using the allowed colors.",
+        "candidates": [
+          {
+            "id": "red",
+            "description": "The image is predominantly red",
+            "value": "red"
+          },
+          {
+            "id": "blue",
+            "description": "The image is predominantly blue",
+            "value": "blue"
+          }
+        ],
+        "state_version": 0,
+        "question": "What is the dominant color in the attached image?",
+        "kind": "enum"
+      },
+      "expected": "red",
+      "correct": true,
+      "result": {
+        "candidate_id": "red",
+        "status": "selected",
+        "raw_selected_id": "red",
+        "raw_scores": {
+          "red": 47.25,
+          "blue": 26.625,
+          "__no_match__": 21.875,
+          "__abstain__": 18.25
+        },
+        "scores": {
+          "red": 0.9999999988869446,
+          "blue": 1.1032560311155687e-09,
+          "__no_match__": 9.545034912216476e-12,
+          "__abstain__": 2.543665644545682e-13
+        },
+        "margin": 20.625,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1060.955875000218,
+          "inference_ms": 1060.9033340006135,
+          "queue_ms": 0.05254099960438907,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3934196152,
+          "decision_ms": 1061.3383339950815
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 533,
+          "prefill_tokens": 533,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "2d6b427e5004d6c942d89c085804f09605f3f81e7909bc7bdf878e5da282ad87"
+          ]
+        },
+        "request_id": "2c6799ba63c04f6f9d52bc2cb49d7b49",
+        "selected_value": "red"
+      }
+    },
+    {
+      "case": "red_reversed_choices",
+      "request": {
+        "state": {},
+        "utterance": "Classify the attached image using the allowed colors.",
+        "candidates": [
+          {
+            "id": "blue",
+            "description": "The image is predominantly blue",
+            "value": "blue"
+          },
+          {
+            "id": "red",
+            "description": "The image is predominantly red",
+            "value": "red"
+          }
+        ],
+        "state_version": 0,
+        "question": "What is the dominant color in the attached image?",
+        "kind": "enum"
+      },
+      "expected": "red",
+      "correct": true,
+      "result": {
+        "candidate_id": "red",
+        "status": "selected",
+        "raw_selected_id": "red",
+        "raw_scores": {
+          "blue": 35.25,
+          "red": 48.75,
+          "__no_match__": 26.625,
+          "__abstain__": 21.5
+        },
+        "scores": {
+          "blue": 1.3709572065183501e-06,
+          "red": 0.9999986287951602,
+          "__no_match__": 2.4616935763246105e-10,
+          "__abstain__": 1.4637765069857261e-12
+        },
+        "margin": 13.5,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1060.7534580049105,
+          "inference_ms": 1060.7096659950912,
+          "queue_ms": 0.04379200981929898,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3934196152,
+          "decision_ms": 1061.1679999856278
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 533,
+          "prefill_tokens": 533,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "2d6b427e5004d6c942d89c085804f09605f3f81e7909bc7bdf878e5da282ad87"
+          ]
+        },
+        "request_id": "917c0d4c08ec496299f4805e9bce7e34",
+        "selected_value": "red"
+      }
+    },
+    {
+      "case": "boolean_red",
+      "request": {
+        "state": {},
+        "utterance": "Answer the question using the attached image.",
+        "candidates": [
+          {
+            "id": "true",
+            "description": "True: the proposition is supported by the provided context.",
+            "value": true
+          },
+          {
+            "id": "false",
+            "description": "False: the proposition is contradicted by the provided context.",
+            "value": false
+          }
+        ],
+        "state_version": 0,
+        "question": "Is the image predominantly red?",
+        "kind": "boolean"
+      },
+      "expected": "true",
+      "correct": true,
+      "result": {
+        "candidate_id": "true",
+        "status": "selected",
+        "raw_selected_id": "true",
+        "raw_scores": {
+          "true": 45.5,
+          "false": 32.0,
+          "__no_match__": 27.375,
+          "__abstain__": 23.5
+        },
+        "scores": {
+          "true": 0.9999986153234741,
+          "false": 1.3709571880492196e-06,
+          "__no_match__": 1.3440391340514864e-08,
+          "__abstain__": 2.7894642303579367e-10
+        },
+        "margin": 13.5,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1129.4498330098577,
+          "inference_ms": 1129.399708006531,
+          "queue_ms": 0.050125003326684237,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3951906212,
+          "decision_ms": 1129.743249999592
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 546,
+          "prefill_tokens": 546,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "2d6b427e5004d6c942d89c085804f09605f3f81e7909bc7bdf878e5da282ad87"
+          ]
+        },
+        "request_id": "e070688c81d34551892a32fbba2bdb97",
+        "selected_value": true
+      }
+    },
+    {
+      "case": "boolean_blue",
+      "request": {
+        "state": {},
+        "utterance": "Answer the question using the attached image.",
+        "candidates": [
+          {
+            "id": "true",
+            "description": "True: the proposition is supported by the provided context.",
+            "value": true
+          },
+          {
+            "id": "false",
+            "description": "False: the proposition is contradicted by the provided context.",
+            "value": false
+          }
+        ],
+        "state_version": 0,
+        "question": "Is the image predominantly red?",
+        "kind": "boolean"
+      },
+      "expected": "false",
+      "correct": true,
+      "result": {
+        "candidate_id": "false",
+        "status": "selected",
+        "raw_selected_id": "false",
+        "raw_scores": {
+          "true": 35.5,
+          "false": 40.25,
+          "__no_match__": 38.0,
+          "__abstain__": 33.5
+        },
+        "scores": {
+          "true": 0.007757824683740647,
+          "false": 0.8966826155575186,
+          "__no_match__": 0.09450965235786678,
+          "__abstain__": 0.001049907400874026
+        },
+        "margin": 2.25,
+        "state_version": 0,
+        "model": {
+          "name": "Qwen3-VL-4B-Instruct-4bit",
+          "backend": "mlx-vlm",
+          "model_type": "qwen3_vl",
+          "config_sha256": "07406d087dfb8a8849427a4da81bc9edd1dd942e518493629b5a983169b47820",
+          "input_files_sha256": {
+            "chat_template.jinja": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+            "chat_template.json": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4",
+            "preprocessor_config.json": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "81ec7bb9530159b326c0bef1d0b6c33d392090524014ea3f0123a3c1eb9c2af5",
+            "video_preprocessor_config.json": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1"
+          },
+          "quantization": {
+            "group_size": 64,
+            "bits": 4,
+            "mode": "affine"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-vlm": "0.6.4",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          }
+        },
+        "timing": {
+          "total_ms": 1132.4433329864405,
+          "inference_ms": 1132.3759160004556,
+          "queue_ms": 0.06741698598489165,
+          "load_ms": 2333.9586250076536,
+          "peak_memory_bytes": 3951907464,
+          "decision_ms": 1132.8165410086513
+        },
+        "cache": {
+          "hit": false,
+          "scope": "cold",
+          "reused_tokens": 0,
+          "prompt_tokens": 546,
+          "prefill_tokens": 546,
+          "entries": 0,
+          "bytes": 0,
+          "enabled": false,
+          "reason": "VLM requests always use fresh visual/text context",
+          "image_count": 1,
+          "image_sha256": [
+            "f13483345d7e5a87840447a406371e9058d16b44a89c390a66983d66b6c3611e"
+          ]
+        },
+        "request_id": "dfc12c1042fc4f8a87cdab0a3b0690a1",
+        "selected_value": false
+      }
+    }
+  ]
+}

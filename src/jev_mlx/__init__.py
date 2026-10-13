@@ -17,6 +17,7 @@ from .types import (
     DecisionResult,
     boolean_request,
 )
+from .vlm import MLXVLMDecisionEngine
 
 __version__ = "0.1.0"
 
@@ -32,6 +33,7 @@ __all__ = [
     "DecisionSession",
     "InvalidDecisionError",
     "MLXDecisionEngine",
+    "MLXVLMDecisionEngine",
     "ReplayDecisionError",
     "StaleDecisionError",
     "boolean_request",

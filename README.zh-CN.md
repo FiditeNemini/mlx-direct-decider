@@ -1,4 +1,4 @@
-# JEV MLX：让已有 MLX 大模型直接做决策，无需微调
+# JEV MLX：让已有 MLX 模型直接做有类型决策，无需微调
 
 <p align="center">
   <img src="docs/assets/jev-mlx-hero.zh-CN.svg" alt="JEV MLX — 受 JEV 启发，基于 MLX 的本地语义决策" width="1280" />
@@ -6,9 +6,9 @@
 
 <p align="center"><strong>已有 MLX 大模型 → 本地决策引擎。</strong><br />无需 fine-tuning，无需额外决策模型权重。</p>
 
-**JEV MLX** 是面向 Apple Silicon Mac 的开源 Python 库，使用 [MLX](https://github.com/ml-explore/mlx) 和 [MLX-LM](https://github.com/ml-explore/mlx-lm) 进行本地大模型（local LLM）动作选择。它根据应用状态和自然语言请求，从应用允许的动作中选出一个，或返回 `no_match` / `abstain`。你可以通过 Python API、CLI 或本地 HTTP 服务接入语义路由（semantic routing）、enum / boolean 决策和自然语言应用控制。
+**JEV MLX** 是面向 Apple Silicon Mac 的开源 Python 库，使用 [MLX](https://github.com/ml-explore/mlx)、[MLX-LM](https://github.com/ml-explore/mlx-lm) 及可选的 [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) 进行本地大模型（local LLM）动作选择。它根据应用状态和自然语言请求，从应用允许的动作中选出一个，或返回 `no_match` / `abstain`。你可以通过 Python API、CLI 或本地 HTTP 服务接入语义路由（semantic routing）、enum / boolean 决策和自然语言应用控制。
 
-**复用你已有的兼容 MLX-LM 检查点，无需额外训练、微调或专用决策权重。** 模型照常处理提示词，JEV MLX 从原始输出头读取最后一个输入位置的候选 logits。模型权重和输出头保持不变，直接决策无需生成后续文本。
+**复用你已有的兼容 MLX-LM 或 MLX-VLM 检查点，无需额外训练、微调或专用决策权重。** 模型照常处理提示词，JEV MLX 从原始输出头读取最后一个输入位置的候选 logits。模型权重和输出头保持不变，直接决策无需生成后续文本。
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -109,6 +109,16 @@ jev-mlx decide --request examples/decision.json
 
 <a name="results"></a>
 
+## MLX、MLX-LM 和 MLX-VLM 支持
+
+- **MLX：**共用计算底座，无需单独的 Metal 后端。
+- **MLX-LM：**通过 `MLXDecisionEngine` 做文本决策，支持有容量上限的前缀复用。
+- **MLX-VLM：**通过 `MLXVLMDecisionEngine` 或
+  `jev-mlx decide --backend mlx-vlm --image ...` 做文本＋图片决策，无需微调。
+
+使用 `python -m pip install -e '.[mlx,vlm]'` 安装图片支持。
+[图片快速开始与真实模型检查](docs/multimodal.zh-CN.md)记录 Qwen3-VL、SmolVLM 的错误，以及 Gemma 检查点的加载限制。VLM 请求目前重新计算完整上下文；HTTP／游戏演示仍使用文本状态。各文本检查点的覆盖范围见[模型指南](docs/models.zh-CN.md)。
+
 ## 实测结果，连同局限一起公开
 
 **新增六领域测试 · Apple M2 Max · 64 GiB · 36 个虚构英文场景。**
@@ -194,7 +204,7 @@ Qwen 在原始集的 3 个未通过场景包括拒绝状态区分和排序后的
 
 候选映射为经过 tokenizer 验证的单 token 编码，再映射回业务 ID。直接评分读取因果模型的下一 token logits，不生成 JSON 续写；没有重写官方量化输出头。混合缓存只保留完整、可复用的前缀边界。
 
-实现细节见[架构](docs/architecture.zh-CN.md)与[官方框架审查](docs/framework-audit.zh-CN.md)。首版范围是**英文、单轮、单步选择**，不包含通用聊天、多步规划、任意参数生成、视觉理解、训练或 GPU 批处理。**中文文档不表示中文模型能力已经验证。**
+实现细节见[架构](docs/architecture.zh-CN.md)与[官方框架审查](docs/framework-audit.zh-CN.md)。首版范围是**英文、单轮、单步选择**，实验性的文本＋图片决策使用独立的 [MLX-VLM API](docs/multimodal.zh-CN.md)。不包含通用聊天、多步规划、任意参数生成、训练或 GPU 批处理。**中文文档不表示中文模型能力已经验证。**
 
 <a name="related-projects"></a>
 
@@ -215,9 +225,9 @@ Qwen 在原始集的 3 个未通过场景包括拒绝状态区分和排序后的
 
 ## 常见问题
 
-### JEV MLX 如何使用 MLX 和 MLX-LM？
+### JEV MLX 如何使用 MLX、MLX-LM 和 MLX-VLM？
 
-MLX 提供数组与计算框架，MLX-LM 加载并运行本地语言模型。JEV MLX 在此基础上提供应用定义的候选项、候选评分、拒绝结果和版本化执行。直接决策读取经过验证的单 token 选项编码对应的下一 token logits，不生成 JSON 续写。实现细节见[架构](docs/architecture.zh-CN.md)。
+MLX 提供数组与计算框架，MLX-LM 运行文本模型，可选的 MLX-VLM 后端运行文本／图片模型。Metal 执行由 MLX 负责。图片决策使用全新上下文，现有文本后端保留前缀复用。JEV MLX 在此基础上提供应用定义的候选项、候选评分、拒绝结果和版本化执行。直接决策读取经过验证的单 token 选项编码对应的下一 token logits，不生成 JSON 续写。实现细节见[架构](docs/architecture.zh-CN.md)。
 
 完整模型仍然处理输入。读取最后位置的 logits，不代表只运行最后一层或替换输出头。
 
@@ -253,7 +263,7 @@ JEV MLX 为已有兼容的因果 MLX-LM 检查点增加有限候选动作选择�
 
 ### JEV MLX 是官方 JEV 实现或通用聊天助手吗？
 
-JEV MLX 是位于 [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX) 的独立 JEV 启发项目。它使用已有 MLX-LM 模型，不使用 JEV 权重，也不复现未公开的 JEV 训练方法。0.1 支持英文、单轮、单步选择，通用聊天、视觉理解和多步规划不在范围内。
+JEV MLX 是位于 [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX) 的独立 JEV 启发项目。它使用已有 MLX-LM 模型，不使用 JEV 权重，也不复现未公开的 JEV 训练方法。0.1 支持英文、单轮、单步选择，通用聊天和多步规划不在范围内。实验性的文本／图片候选选择见[多模态指南](docs/multimodal.zh-CN.md)。
 
 ## 继续阅读
 

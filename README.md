@@ -1,14 +1,14 @@
-# JEV MLX: decisions from existing MLX LLMs, without fine-tuning
+# JEV MLX: typed decisions from MLX models, without fine-tuning
 
 <p align="center">
   <img src="docs/assets/jev-mlx-hero.en.svg" alt="JEV MLX — JEV-inspired local decisions, powered by MLX" width="1280" />
 </p>
 
-<p align="center"><strong>Your existing MLX LLM → a local decision engine.</strong><br />No fine-tuning. No extra decision-model weights.</p>
+<p align="center"><strong>Your existing compatible MLX model → a local decision engine.</strong><br />No fine-tuning. No extra decision-model weights.</p>
 
-**JEV MLX** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx) and [MLX-LM](https://github.com/ml-explore/mlx-lm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
+**JEV MLX** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx), [MLX-LM](https://github.com/ml-explore/mlx-lm), and optional [MLX-VLM](https://github.com/Blaizzy/mlx-vlm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
 
-**Use a compatible MLX-LM checkpoint you already have: no extra training, fine-tuning, or decision-specific weights.** The model processes the prompt normally; JEV MLX reads candidate logits at the final input position from its original output head. The weights and output head remain unchanged, and direct decisions require no generated continuation.
+**Use a compatible MLX-LM or MLX-VLM checkpoint you already have: no extra training, fine-tuning, or decision-specific weights.** The model processes the prompt normally; JEV MLX reads candidate logits at the final input position from its original output head. The weights and output head remain unchanged, and direct decisions require no generated continuation.
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -109,6 +109,19 @@ Results include the candidate ID, raw logits, candidate scores, margin, state ve
 
 <a name="results"></a>
 
+## MLX, MLX-LM and MLX-VLM support
+
+- **MLX:** shared compute foundation; no separate Metal backend is needed.
+- **MLX-LM:** text decisions through `MLXDecisionEngine`, with bounded prefix reuse.
+- **MLX-VLM:** text + image decisions through `MLXVLMDecisionEngine` or
+  `jev-mlx decide --backend mlx-vlm --image ...`, without fine-tuning.
+
+Install image support with `python -m pip install -e '.[mlx,vlm]'`.
+[Image quick start and real-model checks](docs/multimodal.md) include Qwen3-VL,
+SmolVLM's mistakes, and the Gemma checkpoint loading limitation. VLM requests
+currently recompute the full context; the HTTP/game demos still use text state.
+See the [model guide](docs/models.md) for checkpoint-specific text coverage.
+
 ## Measurements, with their limits
 
 **New six-domain evaluation · Apple M2 Max · 64 GiB · 36 fictional English cases.**
@@ -194,7 +207,7 @@ Application state + utterance + allowed choices
 
 Choices map to tokenizer-verified single-token codes, then back to business IDs. Direct scoring reads a causal model's next-token logits without generating a JSON continuation. It retains the official quantized output head. Hybrid caches reuse only complete, valid prefix boundaries.
 
-See the [architecture](docs/architecture.md) and [framework audit](docs/framework-audit.md). Version 0.1 focuses on **English, single-turn, single-step choices**. General chat, multi-step planning, arbitrary arguments, vision, training, and GPU batching are outside its scope. **Chinese documentation does not mean Chinese model behavior has been validated.**
+See the [architecture](docs/architecture.md) and [framework audit](docs/framework-audit.md). Version 0.1 focuses on **English, single-turn, single-step choices**. Experimental text + image decisions use the separate [MLX-VLM API](docs/multimodal.md). General chat, multi-step planning, arbitrary arguments, training, and GPU batching are outside its scope. **Chinese documentation does not mean Chinese model behavior has been validated.**
 
 <a name="related-projects"></a>
 
@@ -215,9 +228,9 @@ Read the [AnyJev, OpenDecider, and Laya comparison](docs/decision-models.md) for
 
 ## Frequently asked questions
 
-### How does JEV MLX use MLX and MLX-LM?
+### How does JEV MLX use MLX, MLX-LM and MLX-VLM?
 
-MLX provides the array and compute framework; MLX-LM loads and runs the local language model. JEV MLX adds application-supplied choices, candidate scoring, rejection outcomes, and versioned execution. Direct decisions read next-token logits for verified single-token option codes without generating a JSON continuation. See the [architecture](docs/architecture.md).
+MLX provides the array and compute framework; MLX-LM runs text models, and the optional MLX-VLM backend runs text/image models. Metal execution is handled by MLX. Image decisions use fresh context; the existing text backend retains prefix reuse. JEV MLX adds application-supplied choices, candidate scoring, rejection outcomes, and versioned execution. Direct decisions read next-token logits for verified single-token option codes without generating a JSON continuation. See the [architecture](docs/architecture.md).
 
 The full model still processes the input. Reading final-position logits does not mean running only the final layer or replacing the output head.
 
@@ -253,7 +266,7 @@ Latency depends on the checkpoint, hardware, input, and reusable prefix. The [me
 
 ### Is JEV MLX an official JEV implementation or a general chat assistant?
 
-JEV MLX is an independent JEV-inspired project at [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX). It uses existing MLX-LM models, not JEV weights, and does not reproduce unpublished JEV training. Version 0.1 supports English, single-turn, single-step choices; general chat, vision, and multi-step planning are outside its scope.
+JEV MLX is an independent JEV-inspired project at [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX). It uses existing MLX-LM models, not JEV weights, and does not reproduce unpublished JEV training. Version 0.1 supports English, single-turn, single-step choices; general chat and multi-step planning are outside its scope. Experimental text/image choices are documented in the [multimodal guide](docs/multimodal.md).
 
 ## Documentation
 
