@@ -19,6 +19,7 @@
 
 <p align="center">
   <a href="#quick-start">快速开始</a> ·
+  <a href="#models">已测模型</a> ·
   <a href="#blocks">游戏演示</a> ·
   <a href="#results">实测结果</a> ·
   <a href="#related-projects">相关项目</a> ·
@@ -107,8 +108,6 @@ jev-mlx decide --request examples/decision.json
 
 返回结果包含候选 ID、原始 logits、候选分数、margin、状态版本、模型身份、真实耗时和缓存信息。[Python API](docs/python-api.zh-CN.md) 包含 boolean 判断、状态更新与执行示例。
 
-<a name="results"></a>
-
 ## MLX、MLX-LM 和 MLX-VLM 支持
 
 - **MLX：**共用计算底座，无需单独的 Metal 后端。
@@ -118,6 +117,35 @@ jev-mlx decide --request examples/decision.json
 
 使用 `python -m pip install -e '.[mlx,vlm]'` 安装图片支持。
 [图片快速开始与真实模型检查](docs/multimodal.zh-CN.md)记录 Qwen3-VL、SmolVLM 的错误，以及 Gemma 检查点的加载限制。VLM 请求目前重新计算完整上下文；HTTP／游戏演示仍使用文本状态。各文本检查点的覆盖范围见[模型指南](docs/models.zh-CN.md)。
+
+<a name="models"></a>
+
+## 本地实测模型完整清单
+
+**截至 2026-10-13，共实测 11 个不同检查点 · Apple M2 Max · 64 GiB。**
+全部复用现有模型权重，无需额外 fine-tuning 或专用决策权重。下表记录直接候选评分；能够完成运行与决策是否正确分别标明。
+
+| 本地检查点 | 后端／输入 | 已记录的验证 |
+| :--- | :--- | :--- |
+| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **30/36 正确**。 |
+| `GLM-4.7-Flash-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **21/36 正确**。 |
+| `gemma-4-26b-a4b-it-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **31/36 正确**。 |
+| `Qwen3-4B` | MLX-LM · 文本 | 3 题开发冒烟检查：**1/3 正确**；缓存一致性 **3/3 通过**。 |
+| `NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit` | MLX-LM · 文本 | 3 题开发冒烟检查：**1/3 正确**；缓存一致性 **3/3 通过**。 |
+| `qwen3.6-35b-a3b-mlx-4bit` | MLX-LM · 文本 | 3 题开发冒烟检查：**3/3 正确**；缓存一致性 **3/3 通过**。 |
+| `gemma-4-e4b-it-4bit` | MLX-LM · 文本；MLX-VLM · 图片尝试 | 文本冒烟检查 **2/3 正确**，缓存一致性 **3/3 通过**；图片路径在**模型加载阶段受阻**。 |
+| `Llama-3.2-1B-Instruct-4bit` | MLX-LM · 文本 | 3 题开发冒烟检查：**0/3 正确**；缓存一致性 **3/3 通过**。 |
+| `Mistral-7B-Instruct-v0.3-mlx-4Bit` | MLX-LM · 文本 | 3 题开发冒烟检查：**3/3 正确**；缓存一致性 **3/3 通过**。 |
+| `Qwen3-VL-4B-Instruct-4bit` | MLX-VLM · 文本＋图片 | 7 题合成开发用例：**7/7 正确**，覆盖换图、候选重排及布尔判断。 |
+| `SmolVLM-500M-Instruct-4bit` | MLX-VLM · 文本＋图片 | 7 题合成开发用例：**3/7 正确**；保留误判及候选顺序敏感的记录。 |
+
+36 题冻结评测、3 题开发检查与 7 题合成视觉检查使用不同输入，应按各自范围理解。完成完整评测的模型也出现过错误动作；小规模冒烟检查不能证明通用可靠性，也不表示同一模型家族的所有版本都兼容。
+
+[文本模型详情与证据](docs/models.zh-CN.md) ·
+[图片模型详情与证据](docs/multimodal.zh-CN.md) ·
+[完整 36 题结果](docs/extended-results.zh-CN.md)
+
+<a name="results"></a>
 
 ## 实测结果，连同局限一起公开
 
@@ -245,9 +273,7 @@ JEV MLX 为已有兼容的因果 MLX-LM 检查点增加有限候选动作选择�
 
 ### 已经评测了哪些 MLX 模型？
 
-已记录的本地检查点包括 Qwen3.5-9B-OptiQ-4bit、GLM-4.7-Flash-4bit 和 Gemma 4 26B-A4B MoE。三个模型都在新增 36 条测试中返回过错误动作；这些检查点的评测不表示兼容所有 MLX 模型。具体版本、结果和局限见[支持模型](docs/models.zh-CN.md)。
-
-另有 Qwen3、Qwen3.6 MoE、Nemotron 和 Gemma E4B 检查点完成了小规模运行检查，同一份指南将它们与完整质量评测分开记录。
+[首页模型表](#models)列出全部 11 个本地实测检查点，覆盖 Qwen、GLM、Gemma、NVIDIA Nemotron、Llama、Mistral 与 SmolVLM，标明文本／图片路径及加载失败。[文本兼容性指南](docs/models.zh-CN.md)和[多模态指南](docs/multimodal.zh-CN.md)保留精确版本、完整结果与局限；完整评测和小规模冒烟检查分别标注。
 
 ### 推理需要云端 API 或重新训练模型吗？
 

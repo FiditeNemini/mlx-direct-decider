@@ -19,6 +19,7 @@
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
+  <a href="#models">Tested models</a> ·
   <a href="#blocks">Game demo</a> ·
   <a href="#results">Measured results</a> ·
   <a href="#related-projects">Related projects</a> ·
@@ -107,8 +108,6 @@ jev-mlx decide --request examples/decision.json
 
 Results include the candidate ID, raw logits, candidate scores, margin, state version, model identity, actual timing, and cache details. See the [Python API](docs/python-api.md) for booleans, state updates, and versioned execution.
 
-<a name="results"></a>
-
 ## MLX, MLX-LM and MLX-VLM support
 
 - **MLX:** shared compute foundation; no separate Metal backend is needed.
@@ -121,6 +120,40 @@ Install image support with `python -m pip install -e '.[mlx,vlm]'`.
 SmolVLM's mistakes, and the Gemma checkpoint loading limitation. VLM requests
 currently recompute the full context; the HTTP/game demos still use text state.
 See the [model guide](docs/models.md) for checkpoint-specific text coverage.
+
+<a name="models"></a>
+
+## All locally tested model checkpoints
+
+**11 distinct checkpoints tested locally as of 2026-10-13 · Apple M2 Max · 64 GiB.**
+All use existing model weights, with no additional fine-tuning or decision-specific
+weights. The table records direct candidate scoring; completed runtime checks and
+decision accuracy are separate facts.
+
+| Local checkpoint | Backend / input | Recorded validation |
+| :--- | :--- | :--- |
+| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **30/36 correct** on the extension. |
+| `GLM-4.7-Flash-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **21/36 correct** on the extension. |
+| `gemma-4-26b-a4b-it-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **31/36 correct** on the extension. |
+| `Qwen3-4B` | MLX-LM · text | 3-case development smoke: **1/3 correct**; cache parity **3/3 passed**. |
+| `NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit` | MLX-LM · text | 3-case development smoke: **1/3 correct**; cache parity **3/3 passed**. |
+| `qwen3.6-35b-a3b-mlx-4bit` | MLX-LM · text | 3-case development smoke: **3/3 correct**; cache parity **3/3 passed**. |
+| `gemma-4-e4b-it-4bit` | MLX-LM · text; MLX-VLM · image attempt | Text smoke: **2/3 correct**, cache parity **3/3 passed**. Image path: **blocked during model loading**. |
+| `Llama-3.2-1B-Instruct-4bit` | MLX-LM · text | 3-case development smoke: **0/3 correct**; cache parity **3/3 passed**. |
+| `Mistral-7B-Instruct-v0.3-mlx-4Bit` | MLX-LM · text | 3-case development smoke: **3/3 correct**; cache parity **3/3 passed**. |
+| `Qwen3-VL-4B-Instruct-4bit` | MLX-VLM · text + images | 7 synthetic development cases: **7/7 correct**, including image changes, reversed choices and booleans. |
+| `SmolVLM-500M-Instruct-4bit` | MLX-VLM · text + images | 7 synthetic development cases: **3/7 correct**; mistakes and candidate-order sensitivity recorded. |
+
+The 36-case frozen evaluation, 3-case development checks and 7-case synthetic
+vision checks use different inputs and should be read within their own scope.
+The fully evaluated models also returned wrong actions; small smoke checks do
+not establish general reliability or compatibility with every model in a family.
+
+[Text model details and evidence](docs/models.md) ·
+[Image model details and evidence](docs/multimodal.md) ·
+[Full 36-case results](docs/extended-results.md)
+
+<a name="results"></a>
 
 ## Measurements, with their limits
 
@@ -248,9 +281,11 @@ Point JEV MLX at a compatible local MLX-LM checkpoint using `--model` or `JEV_ML
 
 ### Which MLX models have been evaluated?
 
-Recorded local checkpoints include Qwen3.5-9B-OptiQ-4bit, GLM-4.7-Flash-4bit, and Gemma 4 26B-A4B MoE. All three returned wrong actions in the 36-case extension. Evaluation of these checkpoints does not establish compatibility with every MLX model. Exact revisions, results, and limits are in the [model compatibility guide](docs/models.md).
-
-Additional Qwen3, Qwen3.6 MoE, Nemotron, and Gemma E4B checkpoints completed small runtime checks. These are recorded separately from full quality evaluations in the same guide.
+The [homepage model table](#models) lists all 11 locally tested checkpoints across
+Qwen, GLM, Gemma, NVIDIA Nemotron, Llama, Mistral and SmolVLM, including text/image
+paths and loading failures. The [text compatibility guide](docs/models.md) and
+[multimodal guide](docs/multimodal.md) retain exact versions, complete results and
+limits. Full evaluations and small smoke checks are identified separately.
 
 ### Does inference require a cloud API or model training?
 
