@@ -25,7 +25,7 @@ project owner on 2026-09-19. Its bytes are retained as historical source materia
 - Xiaohongshu ID: `6236648830`
 - Image and QR code: copied without pixel edits, cropping, or regeneration.
 
-The image is owner-provided social material, not a JEV MLX model result or benchmark
+The image is owner-provided social material, not a MLX ZeroEffort Decider model result or benchmark
 artifact. It is not a donation/payment QR code. A sponsorship destination is still
 awaiting an owner-provided public link.
 

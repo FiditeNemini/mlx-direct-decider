@@ -2,11 +2,56 @@
 
 [Back to home](../README.md)
 
-The project is **JEV MLX**, hosted at [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX). The name makes the JEV inspiration and MLX runtime explicit. The distribution and CLI are `jev-mlx`; the Python import is `jev_mlx`.
+The project is **MLX ZeroEffort Decider**, hosted at
+[ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider).
+The owner selected this name on **2026-10-13**. Its tagline is:
+**Decisions from existing models. No fine-tuning required.**
 
-The public display name changed from MLXJ on 2026-09-20. Existing recordings and benchmark records retain their original names and bytes. This rename does not change the package, CLI, Python API, or measured model behavior.
+| Public name | Value |
+| :--- | :--- |
+| Distribution and CLI | `mlx-zeroeffort-decider` |
+| Python import | `mlx_zeroeffort_decider` |
+| Local model variable | `MLX_ZEROEFFORT_MODEL` |
+| Opt-in model-test variable | `MLX_ZEROEFFORT_TEST_MODEL` |
 
-This is an independent project inspired by Jev, not an official TypeSafe AI release or the existing [bnsd55/jevmlx](https://github.com/bnsd55/jevmlx) project. It does not use Jev weights or reproduce its unpublished training method.
+The `jev_mlx` import, `jev-mlx` command, `JEV_MLX_MODEL` and `JEV_TEST_MODEL`
+remain compatible. The canonical and legacy Python namespaces share the same
+classes and implementation; requests and sessions can be used through either
+namespace. No model weights, inference behavior, or cache policy changed.
+The implementation source stays under `src/jev_mlx` so existing source links
+and callers remain valid. A rename does not publish a package to PyPI.
+
+Here, ZeroEffort refers to the absence of an additional fine-tuning workflow.
+Applications still supply a compatible local checkpoint, state and candidates.
+
+## Implementation and compatibility
+
+The new namespace delegates to the existing implementation so request/result
+classes keep their identity across imports. Package metadata and the shared CLI
+register the new command and model variable; the legacy command and variable
+remain accepted, with an explicit `--model` taking precedence. These connections
+belong to the packaging/parser rather than a model adapter. Optional-backend
+installation errors now name the new distribution. They do not affect scoring.
+
+Server health metadata and current UI labels use the new project name; clients
+that compare the literal health `project` string should use the new name.
+Benchmark environment metadata records the new distribution version. These are
+identity/diagnostic changes, with no inference, scheduling or cache changes.
+Historical benchmark files are preserved. Namespace identity, environment
+precedence, optional-dependency-free imports and both CLI entries are verified
+separately from the recorded model-quality evaluations.
+
+## Previous names and recorded evidence
+
+Earlier names include **JEV MLX**, **JEVKit MLX** and **MLXJ**. The display-only
+rename from MLXJ to JEV MLX occurred on 2026-09-20. Recordings, frozen protocols,
+and benchmark evidence retain their original names, commands, source paths and
+bytes. Older reproduction commands still work through compatibility entries.
+The GitHub repository keeps its existing history and issues under the new name.
+
+This remains an independent project inspired by Jev, not an official TypeSafe AI
+release or the existing [bnsd55/jevmlx](https://github.com/bnsd55/jevmlx) project.
+It does not use Jev weights or reproduce unpublished training methods.
 
 ## Earlier research
 

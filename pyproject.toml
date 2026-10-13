@@ -3,14 +3,14 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jev-mlx"
+name = "mlx-zeroeffort-decider"
 version = "0.1.0"
 description = "Use existing MLX LLMs and VLMs for local typed decisions on Apple Silicon, without fine-tuning or extra decision weights."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE", "NOTICE.md"]
-authors = [{name = "JEV MLX contributors"}]
+authors = [{name = "MLX ZeroEffort Decider contributors"}]
 keywords = [
   "mlx", "mlx-lm", "apple-silicon", "llm", "local-llm",
   "local-inference", "action-selection", "semantic-routing", "jev",
@@ -26,10 +26,10 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/ItsOdeLeo/JEV-MLX"
-Repository = "https://github.com/ItsOdeLeo/JEV-MLX"
-Documentation = "https://github.com/ItsOdeLeo/JEV-MLX#documentation"
-Issues = "https://github.com/ItsOdeLeo/JEV-MLX/issues"
+Homepage = "https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider"
+Repository = "https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider"
+Documentation = "https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider#documentation"
+Issues = "https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider/issues"
 
 [project.optional-dependencies]
 mlx = ["mlx==0.31.2", "mlx-lm==0.31.3", "transformers==5.9.0", "tokenizers==0.22.2"]
@@ -38,12 +38,14 @@ dev = ["pytest>=8,<10", "build>=1,<2", "ruff>=0.11,<1", "setuptools>=77"]
 browser = ["playwright==1.63.0"]
 
 [project.scripts]
+mlx-zeroeffort-decider = "mlx_zeroeffort_decider.cli:main"
 jev-mlx = "jev_mlx.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
+mlx_zeroeffort_decider = ["py.typed"]
 jev_mlx = ["static/*", "py.typed"]
 
 [tool.pytest.ini_options]

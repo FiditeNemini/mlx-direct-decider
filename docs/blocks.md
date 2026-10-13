@@ -1,8 +1,8 @@
-# JEV MLX Blocks
+# MLX ZeroEffort Decider Blocks
 
 [Back to home](../README.md)
 
-JEV MLX Blocks is a falling-block game in which a local model chooses where to place
+MLX ZeroEffort Decider Blocks is a falling-block game in which a local model chooses where to place
 the next piece. The board makes each choice visible: pieces stack, completed rows
 disappear, and a bad sequence can end the game. It is an original, simplified rule
 implementation, not an official Tetris product or an implementation of competitive
@@ -13,14 +13,14 @@ for this rename, and the original videos and decision records remain unchanged.
 
 ## Run locally
 
-Install JEV MLX in its own environment following the [quick start](../README.md#quick-start),
+Install MLX ZeroEffort Decider in its own environment following the [quick start](../README.md#quick-start),
 then start the server with an existing compatible local checkpoint:
 
 ```sh
-jev-mlx serve --model /absolute/path/to/local/checkpoint --port 8765
+mlx-zeroeffort-decider serve --model /absolute/path/to/local/checkpoint --port 8765
 ```
 
-Open [JEV MLX Blocks](http://127.0.0.1:8765/blocks). You can start continuous local-model
+Open [MLX ZeroEffort Decider Blocks](http://127.0.0.1:8765/blocks). You can start continuous local-model
 play, request a single placement, pause, reset, or play manually. These modes share
 the same board rules. Manual play does not require inference; new model decisions
 require the local MLX server. No cloud API or API key is involved.
@@ -41,7 +41,7 @@ Each candidate includes factual consequences computed by the game rules, such as
 rows cleared, resulting maximum stack height, and holes. This is useful structured
 input, not visual perception: the model does not receive a screenshot. The rules
 code does not rank placements or choose a best move. It provides the candidates;
-JEV MLX scores their single-token codes using the configured local model.
+MLX ZeroEffort Decider scores their single-token codes using the configured local model.
 
 The selected candidate identifies both rotation and landing column. The game code
 performs the rotation, drop, collision checks, row clearing, scoring, and drawing.

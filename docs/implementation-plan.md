@@ -1,4 +1,4 @@
-# JEV MLX implementation plan
+# MLX ZeroEffort Decider implementation plan
 
 [Back to home](../README.md)
 

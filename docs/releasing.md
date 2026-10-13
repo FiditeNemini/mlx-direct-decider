@@ -2,16 +2,16 @@
 
 [Back to home](../README.md)
 
-JEV MLX is distributed as `jev-mlx`, imported as `jev_mlx`, and invoked with
-the `jev-mlx` CLI. Version 0.1 artifacts can be prepared
+MLX ZeroEffort Decider is distributed as `mlx-zeroeffort-decider`, imported as `mlx_zeroeffort_decider`, and invoked with
+the `mlx-zeroeffort-decider` CLI. Version 0.1 artifacts can be prepared
 locally without choosing an external account. Building a distribution does not
 publish it. The local project directory
 does not reserve a package name, and installation examples currently use the
 source checkout or local wheel rather than PyPI.
 
-The current source repository is [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX).
-Its checkout directory is `JEV-MLX`; the distribution, CLI, and import names above
-are unchanged. A repository rename does not publish a package to a registry.
+The current source repository is [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider).
+Its checkout directory is `MLX-ZeroEffort-Decider`; the distribution, CLI, and import names above
+are listed above; legacy names remain compatible. A repository rename does not publish a package to a registry.
 
 The latest evidence includes the completed three-model/four-method
 [36-case warm comparison](extended-results.md), the separate
@@ -52,8 +52,8 @@ release notes.
 ```sh
 python -m pytest -m 'not model'
 python -m ruff check src tests benchmarks scripts
-JEV_TEST_MODEL="$JEV_MLX_MODEL" python -m pytest tests/test_model.py
-python scripts/check_parity.py --model "$JEV_MLX_MODEL" \
+MLX_ZEROEFFORT_TEST_MODEL="$MLX_ZEROEFFORT_MODEL" python -m pytest tests/test_model.py
+python scripts/check_parity.py --model "$MLX_ZEROEFFORT_MODEL" \
   --output results/release-parity.json
 ```
 
@@ -67,8 +67,8 @@ From a clean, reviewed checkout with `'.[dev]'` installed:
 
 ```sh
 python -m build
-python -m zipfile -l dist/jev_mlx-0.1.0-py3-none-any.whl
-tar -tzf dist/jev_mlx-0.1.0.tar.gz
+python -m zipfile -l dist/mlx_zeroeffort_decider-0.1.0-py3-none-any.whl
+tar -tzf dist/mlx_zeroeffort_decider-0.1.0.tar.gz
 shasum -a 256 dist/*
 ```
 
@@ -82,10 +82,10 @@ Test the absolute wheel path in a fresh environment outside the source checkout:
 ```sh
 python3 -m venv /tmp/jev-wheel-check
 /tmp/jev-wheel-check/bin/python -m pip install --no-deps \
-  /absolute/path/to/dist/jev_mlx-0.1.0-py3-none-any.whl
-/tmp/jev-wheel-check/bin/jev-mlx --help
+  /absolute/path/to/dist/mlx_zeroeffort_decider-0.1.0-py3-none-any.whl
+/tmp/jev-wheel-check/bin/mlx-zeroeffort-decider --help
 /tmp/jev-wheel-check/bin/python -c \
-  'from jev_mlx import __version__; print(__version__)'
+  'from mlx_zeroeffort_decider import __version__; print(__version__)'
 ```
 
 Choose a fresh directory name if the environment already exists. On Apple

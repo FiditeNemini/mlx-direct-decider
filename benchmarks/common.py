@@ -86,7 +86,7 @@ def memory_snapshot() -> dict[str, Any]:
 def environment_metadata() -> dict[str, Any]:
     deps = {}
     for package in (
-        "jev-mlx",
+        "mlx-zeroeffort-decider",
         "mlx",
         "mlx-lm",
         "mlx-metal",

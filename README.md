@@ -1,14 +1,14 @@
-# JEV MLX: typed decisions from MLX models, without fine-tuning
+# MLX ZeroEffort Decider: decisions from existing models, no fine-tuning required
 
 <p align="center">
-  <img src="docs/assets/jev-mlx-hero.en.svg" alt="JEV MLX — JEV-inspired local decisions, powered by MLX" width="1280" />
+  <img src="docs/assets/mlx-zeroeffort-decider-hero.en.svg" alt="MLX ZeroEffort Decider — decisions from existing models, no fine-tuning required" width="1280" />
 </p>
 
-<p align="center"><strong>Your existing compatible MLX model → a local decision engine.</strong><br />No fine-tuning. No extra decision-model weights.</p>
+<p align="center"><strong>Your existing compatible MLX model → a local decision engine.</strong><br />No fine-tuning required. No extra decision-model weights.</p>
 
-**JEV MLX** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx), [MLX-LM](https://github.com/ml-explore/mlx-lm), and optional [MLX-VLM](https://github.com/Blaizzy/mlx-vlm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
+**MLX ZeroEffort Decider** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx), [MLX-LM](https://github.com/ml-explore/mlx-lm), and optional [MLX-VLM](https://github.com/Blaizzy/mlx-vlm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
 
-**Use a compatible MLX-LM or MLX-VLM checkpoint you already have: no extra training, fine-tuning, or decision-specific weights.** The model processes the prompt normally; JEV MLX reads candidate logits at the final input position from its original output head. The weights and output head remain unchanged, and direct decisions require no generated continuation.
+**Use a compatible MLX-LM or MLX-VLM checkpoint you already have: no extra training, fine-tuning, or decision-specific weights.** The model processes the prompt normally; MLX ZeroEffort Decider reads candidate logits at the final input position from its original output head. The weights and output head remain unchanged, and direct decisions require no generated continuation.
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -41,7 +41,7 @@
 
 ## A local model plays Blocks
 
-![JEV MLX Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks/preview.gif)
+![MLX ZeroEffort Decider Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks/preview.gif)
 
 **Qwen3.5-9B · 20 model-selected placements · 4 cleared rows · 400 points.** The recording retains the former MLXJ name. The GIF shows the entire second development run at **4× playback**, including inference waits. The model chooses from every legal vertical-drop placement using structured board data and rule-computed outcomes; there is no best-move fallback. This is turn-based play, not screenshot understanding or frame-by-frame control.
 
@@ -51,11 +51,11 @@ The first attempt refused to place a piece. Both attempts are retained in the [g
 
 ## MLX action selection and semantic routing
 
-**JEV MLX** uses the current application state, a user utterance, and dynamic allowed choices to select a stable business ID with a local model. No-match and abstention are explicit outcomes.
+**MLX ZeroEffort Decider** uses the current application state, a user utterance, and dynamic allowed choices to select a stable business ID with a local model. No-match and abstention are explicit outcomes.
 
 Embed it in an existing tool: open a feature, select a visible item, pause a player, or answer a boolean / enum question. Inference runs on your Mac with an existing checkpoint; no training is required.
 
-> **Project and package:** The project is JEV MLX. The distribution and CLI are `jev-mlx`, with Python imports from `jev_mlx`. Version 0.1 is experimental and has not been published to PyPI.
+> **Project and package:** The project is MLX ZeroEffort Decider. The distribution and CLI are `mlx-zeroeffort-decider`, with Python imports from `mlx_zeroeffort_decider`. Version 0.1 is experimental and has not been published to PyPI.
 
 | Capability | What it means for your application |
 | :--- | :--- |
@@ -76,19 +76,19 @@ Requires **Apple Silicon, native ARM Python 3.11+**, and a local MLX-LM checkpoi
 Clone the repository and install:
 
 ```sh
-git clone https://github.com/ItsOdeLeo/JEV-MLX.git
-cd JEV-MLX
+git clone https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider.git
+cd MLX-ZeroEffort-Decider
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[mlx]'
-export JEV_MLX_MODEL=/absolute/path/to/your/local/mlx-model
+export MLX_ZEROEFFORT_MODEL=/absolute/path/to/your/local/mlx-model
 ```
 
 ```python
 import os
-from jev_mlx import Candidate, DecisionRequest, MLXDecisionEngine
+from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXDecisionEngine
 
-engine = MLXDecisionEngine(os.environ["JEV_MLX_MODEL"])
+engine = MLXDecisionEngine(os.environ["MLX_ZEROEFFORT_MODEL"])
 result = engine.decide(DecisionRequest(
     state={"focused_window": "notes"},
     utterance="Close it",
@@ -103,7 +103,7 @@ print(result.margin, result.timing)
 The CLI uses the same request contract:
 
 ```sh
-jev-mlx decide --request examples/decision.json
+mlx-zeroeffort-decider decide --request examples/decision.json
 ```
 
 Results include the candidate ID, raw logits, candidate scores, margin, state version, model identity, actual timing, and cache details. See the [Python API](docs/python-api.md) for booleans, state updates, and versioned execution.
@@ -113,7 +113,7 @@ Results include the candidate ID, raw logits, candidate scores, margin, state ve
 - **MLX:** shared compute foundation; no separate Metal backend is needed.
 - **MLX-LM:** text decisions through `MLXDecisionEngine`, with bounded prefix reuse.
 - **MLX-VLM:** text + image decisions through `MLXVLMDecisionEngine` or
-  `jev-mlx decide --backend mlx-vlm --image ...`, without fine-tuning.
+  `mlx-zeroeffort-decider decide --backend mlx-vlm --image ...`, without fine-tuning.
 
 Install image support with `python -m pip install -e '.[mlx,vlm]'`.
 [Image quick start and real-model checks](docs/multimodal.md) include Qwen3-VL,
@@ -246,13 +246,13 @@ See the [architecture](docs/architecture.md) and [framework audit](docs/framewor
 
 ## Related decision projects: AnyJev, OpenDecider, and Laya
 
-Developers evaluating **AnyJev**, **OpenDecider**, **Laya**, or **Laya-MLX** may also be looking for local action selection, classification, or semantic routing. **JEV MLX focuses on existing compatible causal MLX-LM checkpoints on Apple Silicon, with no fine-tuning or separate decision-model weights.** Application-defined choices are scored through the original model output head. AnyJev also offers a path without training; the implementations and score semantics differ.
+Developers evaluating **AnyJev**, **OpenDecider**, **Laya**, or **Laya-MLX** may also be looking for local action selection, classification, or semantic routing. **MLX ZeroEffort Decider focuses on existing compatible causal MLX-LM checkpoints on Apple Silicon, with no fine-tuning or separate decision-model weights.** Application-defined choices are scored through the original model output head. AnyJev also offers a path without training; the implementations and score semantics differ.
 
-| Project | Documented approach | Relationship to JEV MLX |
+| Project | Documented approach | Relationship to MLX ZeroEffort Decider |
 | :--- | :--- | :--- |
-| [AnyJev](https://github.com/nokia-applied-research/AnyJev) | A training-free `Decider` with option rotations and label-prior correction; a separate self-distilled `Tacit` model path. | Shared use of existing LLMs; JEV MLX provides native MLX scoring and application execution guards, without AnyJev's L0 corrections. |
-| [OpenDecider](https://github.com/manjunathshiva/opendecider) | Open-weight System 1 decision models with typed outputs and serving clients. | Related decision-model alternative; JEV MLX uses its own request and execution contracts. |
-| [Laya](https://github.com/NandhaKishorM/laya) · Convai Innovations | Encoder-based models for choice, ordered score, and yes/no questions. | Related typed-decision approach; JEV MLX scores option-token logits from causal language models. |
+| [AnyJev](https://github.com/nokia-applied-research/AnyJev) | A training-free `Decider` with option rotations and label-prior correction; a separate self-distilled `Tacit` model path. | Shared use of existing LLMs; MLX ZeroEffort Decider provides native MLX scoring and application execution guards, without AnyJev's L0 corrections. |
+| [OpenDecider](https://github.com/manjunathshiva/opendecider) | Open-weight System 1 decision models with typed outputs and serving clients. | Related decision-model alternative; MLX ZeroEffort Decider uses its own request and execution contracts. |
+| [Laya](https://github.com/NandhaKishorM/laya) · Convai Innovations | Encoder-based models for choice, ordered score, and yes/no questions. | Related typed-decision approach; MLX ZeroEffort Decider scores option-token logits from causal language models. |
 | [Laya-MLX](https://github.com/mizorewww/laya-mlx) | Independent MLX runtime for Laya's encoder and decision heads on Apple Silicon. | Shared MLX platform and local decision use case; separate model architecture and API. |
 
 Read the [AnyJev, OpenDecider, and Laya comparison](docs/decision-models.md) for source snapshots, integration boundaries, and evaluation considerations. These are related projects, not bundled backends or vendor partnerships.
@@ -261,23 +261,23 @@ Read the [AnyJev, OpenDecider, and Laya comparison](docs/decision-models.md) for
 
 ## Frequently asked questions
 
-### How does JEV MLX use MLX, MLX-LM and MLX-VLM?
+### How does MLX ZeroEffort Decider use MLX, MLX-LM and MLX-VLM?
 
-MLX provides the array and compute framework; MLX-LM runs text models, and the optional MLX-VLM backend runs text/image models. Metal execution is handled by MLX. Image decisions use fresh context; the existing text backend retains prefix reuse. JEV MLX adds application-supplied choices, candidate scoring, rejection outcomes, and versioned execution. Direct decisions read next-token logits for verified single-token option codes without generating a JSON continuation. See the [architecture](docs/architecture.md).
+MLX provides the array and compute framework; MLX-LM runs text models, and the optional MLX-VLM backend runs text/image models. Metal execution is handled by MLX. Image decisions use fresh context; the existing text backend retains prefix reuse. MLX ZeroEffort Decider adds application-supplied choices, candidate scoring, rejection outcomes, and versioned execution. Direct decisions read next-token logits for verified single-token option codes without generating a JSON continuation. See the [architecture](docs/architecture.md).
 
 The full model still processes the input. Reading final-position logits does not mean running only the final layer or replacing the output head.
 
-### Can I use JEV MLX as a local semantic router?
+### Can I use MLX ZeroEffort Decider as a local semantic router?
 
 Yes. Describe the currently allowed routes or actions as candidates with stable business IDs, supply the application state and user request, and inspect the selected ID. The host application defines and executes the actions. `no_match` and `abstain` handle unsuitable or ambiguous requests. See the [Python API](docs/python-api.md).
 
-### How does JEV MLX compare with AnyJev, OpenDecider, and Laya-MLX?
+### How does MLX ZeroEffort Decider compare with AnyJev, OpenDecider, and Laya-MLX?
 
-JEV MLX adds bounded action selection to existing compatible causal MLX-LM checkpoints without fine-tuning or decision-specific weights. AnyJev's `Decider` also reuses existing LLMs without training and adds corrections for option ordering and label priors. OpenDecider and Laya publish trained decision-model families, and Laya-MLX runs Laya weights. Their users can load published checkpoints without training them themselves. See the [decision-model comparison](docs/decision-models.md).
+MLX ZeroEffort Decider adds bounded action selection to existing compatible causal MLX-LM checkpoints without fine-tuning or decision-specific weights. AnyJev's `Decider` also reuses existing LLMs without training and adds corrections for option ordering and label priors. OpenDecider and Laya publish trained decision-model families, and Laya-MLX runs Laya weights. Their users can load published checkpoints without training them themselves. See the [decision-model comparison](docs/decision-models.md).
 
-### Does installing JEV MLX make every MacBook model compatible?
+### Does installing MLX ZeroEffort Decider make every MacBook model compatible?
 
-Point JEV MLX at a compatible local MLX-LM checkpoint using `--model` or `JEV_MLX_MODEL`. Its model loader is shared across architectures; each checkpoint still needs a supported model implementation, compatible tokenizer and chat template, accessible logits, and enough memory. Installation does not attach it to other apps or load GGUF models from Ollama. The [compatibility guide](docs/models.md) separates full evaluations, small runtime checks, and untested families.
+Point MLX ZeroEffort Decider at a compatible local MLX-LM checkpoint using `--model` or `MLX_ZEROEFFORT_MODEL`. Its model loader is shared across architectures; each checkpoint still needs a supported model implementation, compatible tokenizer and chat template, accessible logits, and enough memory. Installation does not attach it to other apps or load GGUF models from Ollama. The [compatibility guide](docs/models.md) separates full evaluations, small runtime checks, and untested families.
 
 ### Which MLX models have been evaluated?
 
@@ -291,17 +291,17 @@ limits. Full evaluations and small smoke checks are identified separately.
 
 Inference runs locally on an Apple Silicon Mac with an existing compatible MLX-LM checkpoint. No cloud API, extra training, fine-tuning, new decision head, or decision-specific checkpoint is required. If you already have compatible base weights, reuse them. Otherwise obtain those base weights separately and pass their local directory to the engine; the package does not download weights.
 
-### How do I install JEV MLX?
+### How do I install MLX ZeroEffort Decider?
 
-Clone [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX), create a native ARM Python 3.11+ environment, and run `python -m pip install -e '.[mlx]'` from the checkout. Set `JEV_MLX_MODEL` to your local checkpoint directory. Follow the [quick start](#quick-start) for a runnable example. Version 0.1 is experimental and has not been published to PyPI.
+Clone [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider), create a native ARM Python 3.11+ environment, and run `python -m pip install -e '.[mlx]'` from the checkout. Set `MLX_ZEROEFFORT_MODEL` to your local checkpoint directory. Follow the [quick start](#quick-start) for a runnable example. Version 0.1 is experimental and has not been published to PyPI.
 
 ### How fast is local MLX action selection?
 
 Latency depends on the checkpoint, hardware, input, and reusable prefix. The [measured results](#results) distinguish loaded weights with a reusable page prefix from startup, cold KV, and page updates. Warm measurements are not a fixed latency guarantee or evidence of reliable unattended execution.
 
-### Is JEV MLX an official JEV implementation or a general chat assistant?
+### Is MLX ZeroEffort Decider an official JEV implementation or a general chat assistant?
 
-JEV MLX is an independent JEV-inspired project at [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX). It uses existing MLX-LM models, not JEV weights, and does not reproduce unpublished JEV training. Version 0.1 supports English, single-turn, single-step choices; general chat and multi-step planning are outside its scope. Experimental text/image choices are documented in the [multimodal guide](docs/multimodal.md).
+MLX ZeroEffort Decider is an independent JEV-inspired project at [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider). It uses existing MLX-LM models, not JEV weights, and does not reproduce unpublished JEV training. Version 0.1 supports English, single-turn, single-step choices; general chat and multi-step planning are outside its scope. Experimental text/image choices are documented in the [multimodal guide](docs/multimodal.md).
 
 ## Documentation
 

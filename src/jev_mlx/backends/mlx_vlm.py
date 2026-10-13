@@ -70,7 +70,7 @@ class MLXVLMBackend:
             from mlx_vlm.prompt_utils import apply_chat_template
             from mlx_vlm.utils import prepare_inputs
         except ImportError as exc:
-            raise RuntimeError("Install jev-mlx[vlm] on Apple Silicon to use MLX-VLM") from exc
+            raise RuntimeError("Install mlx-zeroeffort-decider[vlm] on Apple Silicon to use MLX-VLM") from exc
         self.mx = mx
         self.model, self.processor = load_local_vlm(path, config)
         mx.synchronize()

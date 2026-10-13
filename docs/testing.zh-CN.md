@@ -22,9 +22,9 @@
 
 这些是特定机器、模型、英文场景和实现版本的结果。没有证明任意模型兼容、固定 100 ms、零语义错误或概率已校准。中文文档与中文界面文本，也不代表中文指令或中英混合指令已经通过模型评测。
 
-原始评测、截图和录屏使用项目旧称 JEVKit MLX；证据文件保留原名称、源码哈希和记录时间，没有为更名而改写。下文复现命令使用当前 `jev-mlx` 命令、`jev_mlx` 模块和 `JEV_MLX_MODEL` 环境变量。当时更名验证重新做了核心测试与独立 wheel 的真实模型调用，**并非重新运行整套质量评测和浏览器模型测试**，见[更名验证记录](../benchmarks/results/rename-release-checks/verification.json)。
+原始评测、截图和录屏使用项目旧称 JEVKit MLX；证据文件保留原名称、源码哈希和记录时间，没有为更名而改写。下文复现命令使用当前 `mlx-zeroeffort-decider` 命令、`mlx_zeroeffort_decider` 模块和 `MLX_ZEROEFFORT_MODEL` 环境变量。当时更名验证重新做了核心测试与独立 wheel 的真实模型调用，**并非重新运行整套质量评测和浏览器模型测试**，见[更名验证记录](../benchmarks/results/rename-release-checks/verification.json)。
 
-后续游戏和桌面展示录像使用旧称 MLXJ。这些视频和原始决策记录没有因为当前对外名称改为 JEV MLX 而重新录制或修改。
+后续游戏和桌面展示录像使用旧称 MLXJ。这些视频和原始决策记录没有因为当前对外名称改为 MLX ZeroEffort Decider 而重新录制或修改。
 
 ## 到底测了什么
 
@@ -177,18 +177,18 @@ Apple Silicon 上安装真实推理依赖，运行一个决策和可选模型集
 
 ```bash
 python -m pip install -e '.[mlx,dev,browser]'
-export JEV_MLX_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
-jev-mlx decide --request examples/decision.json
-JEV_TEST_MODEL="$JEV_MLX_MODEL" python -m pytest tests/test_model.py -q
+export MLX_ZEROEFFORT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
+mlx-zeroeffort-decider decide --request examples/decision.json
+MLX_ZEROEFFORT_TEST_MODEL="$MLX_ZEROEFFORT_MODEL" python -m pytest tests/test_model.py -q
 ```
 
 先跑开发集；若要调整提示词或阈值，只使用开发集。再以固定配置运行完整冻结集与缓存对照：
 
 ```bash
-python -m benchmarks.run --model "$JEV_MLX_MODEL" --split dev \
+python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split dev \
   --modes direct --repeats 1 --output results/local-qwen-dev
 
-python -m benchmarks.run --model "$JEV_MLX_MODEL" --split test \
+python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split test \
   --modes direct --conditions kv_cold same_page_new_utterance page_update \
   --repeats 1 --margin-threshold 0 --parity \
   --parity-atol 0.5 --parity-rtol 0 --parity-score-atol 0.1 \
@@ -198,16 +198,16 @@ python -m benchmarks.run --model "$JEV_MLX_MODEL" --split test \
 运行同模型三方法对照，以及单独的新进程冷启动检查：
 
 ```bash
-python -m benchmarks.run --model "$JEV_MLX_MODEL" --split test \
+python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split test \
   --modes direct code json --repeats 1 \
   --output results/local-qwen-comparison
 
-python -m benchmarks.cold_start --model "$JEV_MLX_MODEL" \
+python -m benchmarks.cold_start --model "$MLX_ZEROEFFORT_MODEL" \
   --modes direct code json json_code --repeats 3 \
   --output results/local-qwen-process-cold
 ```
 
-这些命令运行当前源码，不能保证重现历史源码的同一耗时。换 GLM 时设置新的 `JEV_MLX_MODEL` 并使用新的输出目录；原 GLM 冷启动记录每种方法只重复 2 次。查看输出中的 `metadata.json`、`trials.jsonl`、`summary.json` 和 `parity.jsonl`，保留失败与完整输入，比较模型身份、源码哈希和缓存命中条件后再比较速度。
+这些命令运行当前源码，不能保证重现历史源码的同一耗时。换 GLM 时设置新的 `MLX_ZEROEFFORT_MODEL` 并使用新的输出目录；原 GLM 冷启动记录每种方法只重复 2 次。查看输出中的 `metadata.json`、`trials.jsonl`、`summary.json` 和 `parity.jsonl`，保留失败与完整输入，比较模型身份、源码哈希和缓存命中条件后再比较速度。
 
 复现六领域扩展时，显式传入 `--fixtures-dir benchmarks/fixtures/extended-v1`，先跑其独立开发集，再跑冻结测试集；本次三模型四方法对照只使用 `--conditions same_page_new_utterance`。完整命令与另外声明的 Gemma 缓存阶段见[固定协议](extended-evaluation-protocol.zh-CN.md)，实际完成范围见[扩展报告](extended-results.zh-CN.md)。不要修改冻结文件或根据这些已公开测试结果调整阈值后仍称其为未见评测。
 
@@ -215,8 +215,8 @@ python -m benchmarks.cold_start --model "$JEV_MLX_MODEL" \
 
 ```bash
 source .venv/bin/activate
-export JEV_MLX_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
-jev-mlx serve --port 8765
+export MLX_ZEROEFFORT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
+mlx-zeroeffort-decider serve --port 8765
 ```
 
 终端二安装测试用 Chromium 并执行采集：

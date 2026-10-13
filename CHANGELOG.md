@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+- Renamed the project and repository to MLX ZeroEffort Decider. The distribution
+  and CLI are `mlx-zeroeffort-decider`, with imports from `mlx_zeroeffort_decider`.
+  Existing `jev_mlx` / `jev-mlx` callers remain compatible. Current pages and UI
+  use the new name; benchmark evidence, recordings and previous release entries
+  preserve their historical names. No fine-tuning or model behavior change is involved.
+
 - Optional MLX-VLM text/image decisions with the original model head, no fine-tuning,
   per-call local images, fresh context, Python API and CLI. Recorded Qwen3-VL and
   SmolVLM smoke results include failures; the Gemma VLM loading limitation is explicit.

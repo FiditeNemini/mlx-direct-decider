@@ -1,4 +1,4 @@
-# 为 JEV MLX 做贡献
+# 为 MLX ZeroEffort Decider 做贡献
 
 [返回项目首页](README.zh-CN.md)
 
@@ -15,7 +15,7 @@ python -m ruff check src tests benchmarks scripts
 python -m build
 ```
 
-在 Apple Silicon 上，安装 `'.[mlx,dev]'` 以运行真实推理。一次只运行一个检查点，并为 `tests/test_model.py` 明确设置 `JEV_TEST_MODEL`。核心测试使用注入的后端；它们不能证明模型质量、Metal 执行或真实检查点的缓存正确性。
+在 Apple Silicon 上，安装 `'.[mlx,dev]'` 以运行真实推理。一次只运行一个检查点，并为 `tests/test_model.py` 明确设置 `MLX_ZEROEFFORT_TEST_MODEL`。核心测试使用注入的后端；它们不能证明模型质量、Metal 执行或真实检查点的缓存正确性。
 
 ## 实现原则
 

@@ -5,7 +5,7 @@
 使用独立的本地检查点启动真实 MLX 后端：
 
 ```sh
-jev-mlx serve --model /path/to/local/mlx-model --port 8765
+mlx-zeroeffort-decider serve --model /path/to/local/mlx-model --port 8765
 ```
 
 在浏览器打开 `http://127.0.0.1:8765`。服务器只绑定回环地址，不会为演示下载脚本、字体、图片或模型权重。这是一个单用户开发服务：所有标签页共享同一个虚构桌面和状态版本。它不是面向生产环境的多租户服务器。
@@ -26,7 +26,7 @@ Morrow Studio 是原创的虚构桌面，包含课程库、野外笔记和模拟
 }
 ```
 
-浏览器定位这个已有的 DOM 按钮，并调用其真实点击处理函数。同一个处理函数也接受手动点击。模型点击会将发出的票据交给执行器；执行器检查原始选择、当前状态版本与单次使用要求，再应用状态转换。回执记录已执行动作与前后版本；浏览器随后渲染返回的状态。浏览器还会派发 `jev-mlx:receipt` 事件，包含回执和观察到的视图，供集成测试使用。
+浏览器定位这个已有的 DOM 按钮，并调用其真实点击处理函数。同一个处理函数也接受手动点击。模型点击会将发出的票据交给执行器；执行器检查原始选择、当前状态版本与单次使用要求，再应用状态转换。回执记录已执行动作与前后版本；浏览器随后渲染返回的状态。浏览器还会派发 `mlx-zeroeffort-decider:receipt` 事件，包含回执和观察到的视图，供集成测试使用。
 
 这是在边界明确的本地应用上进行的真实浏览器交互。它不是任意网站导航、JavaScript 代码生成、视觉计算机操作模型或开放式参数生成。播放器模拟播放状态与进度，不会下载或播放真实课程视频。
 
@@ -51,8 +51,8 @@ python -m playwright install chromium --only-shell
 媒体转换还需要单独安装 **ffmpeg 和 ffprobe**，并确保它们在 `PATH` 中；在 macOS 上，可以使用 `brew install ffmpeg`。启动真实后端并保持运行：
 
 ```sh
-export JEV_MLX_MODEL=/path/to/local/mlx-model
-jev-mlx serve --model "$JEV_MLX_MODEL" --port 8765
+export MLX_ZEROEFFORT_MODEL=/path/to/local/mlx-model
+mlx-zeroeffort-decider serve --model "$MLX_ZEROEFFORT_MODEL" --port 8765
 ```
 
 在使用同一项目环境的第二个终端中，单次录制预先定义的八条请求，然后生成展示媒体：
@@ -112,12 +112,12 @@ curl --fail-with-body http://127.0.0.1:8765/v1/decide \
 
 ## CLI
 
-命令名是 `jev-mlx`，在可执行文件名中同时保留 JEV 与 MLX。
+命令名是 `mlx-zeroeffort-decider`，在可执行文件名中同时保留 JEV 与 MLX。
 
 ```sh
-jev-mlx decide --model /path/to/local/mlx-model --request examples/decision.json
-cat examples/decision.json | jev-mlx decide --model /path/to/local/mlx-model
-JEV_MLX_MODEL=/path/to/local/mlx-model jev-mlx serve
+mlx-zeroeffort-decider decide --model /path/to/local/mlx-model --request examples/decision.json
+cat examples/decision.json | mlx-zeroeffort-decider decide --model /path/to/local/mlx-model
+MLX_ZEROEFFORT_MODEL=/path/to/local/mlx-model mlx-zeroeffort-decider serve
 ```
 
 `--no-cache` 会禁用该 CLI 请求的前缀复用。一次性 CLI 命令会启动新进程加载模型；要测量模型已加载后的表现，应使用持续运行的 Python 引擎或 HTTP 服务。

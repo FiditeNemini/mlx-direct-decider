@@ -2,7 +2,7 @@
 
 [返回项目首页](../README.zh-CN.md)
 
-JEV MLX 复用 Apple Silicon 上兼容的预训练检查点，无需 fine-tuning、新决策头或专用决策权重。模型仍需处理完整输入；JEV MLX 读取最后输入位置上经过验证的候选 token logits，不生成或解析回答字符串。
+MLX ZeroEffort Decider 复用 Apple Silicon 上兼容的预训练检查点，无需 fine-tuning、新决策头或专用决策权重。模型仍需处理完整输入；MLX ZeroEffort Decider 读取最后输入位置上经过验证的候选 token logits，不生成或解析回答字符串。
 
 | 组件 | 接入方式 |
 | :--- | :--- |
@@ -23,7 +23,7 @@ python -m pip install -e '.[mlx,vlm]'
 已测试环境固定为 MLX 0.31.2、MLX-LM 0.31.3、MLX-VLM 0.6.4、Transformers 5.9.0 与 Tokenizers 0.22.2。MLX-VLM 0.7.8 要求更新的 Transformers，这里不宣称它与当前固定环境兼容。本地加载权重并禁用远程代码；若没有现成模型，需先单独获取普通兼容检查点。
 
 ```python
-from jev_mlx import Candidate, DecisionRequest, MLXVLMDecisionEngine
+from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXVLMDecisionEngine
 
 engine = MLXVLMDecisionEngine("/absolute/path/to/Qwen3-VL-4B-Instruct-4bit")
 request = DecisionRequest(
@@ -42,12 +42,12 @@ print(result.status, result.candidate_id, result.selected_value)
 CLI 使用相同 JSON 请求，并明确传入本地图片路径：
 
 ```sh
-jev-mlx decide --backend mlx-vlm \
+mlx-zeroeffort-decider decide --backend mlx-vlm \
   --model /absolute/path/to/Qwen3-VL-4B-Instruct-4bit \
   --request examples/vision.json --image examples/synthetic-red.png
 ```
 
-省略 `images` / `--image` 时，通过 MLX-VLM 做纯文本决策。后续请求复用已加载引擎。布尔请求使用 `DecisionRequest.boolean(...)`，通过相同结果校验返回有类型的 `True` / `False`。现有 `jev-mlx serve` 与浏览器演示继续使用 MLX-LM 和结构化文本状态，不接受图片上传。
+省略 `images` / `--image` 时，通过 MLX-VLM 做纯文本决策。后续请求复用已加载引擎。布尔请求使用 `DecisionRequest.boolean(...)`，通过相同结果校验返回有类型的 `True` / `False`。现有 `mlx-zeroeffort-decider serve` 与浏览器演示继续使用 MLX-LM 和结构化文本状态，不接受图片上传。
 
 ## 输入上限与缓存行为
 

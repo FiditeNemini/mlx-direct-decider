@@ -4,6 +4,11 @@
 
 ## 尚未打包发布的更新
 
+- 项目及仓库更名为 MLX ZeroEffort Decider。发行包与 CLI 为 `mlx-zeroeffort-decider`，
+  导入名为 `mlx_zeroeffort_decider`；保留 `jev_mlx` / `jev-mlx` 兼容入口。
+  当前页面和界面使用新名称，benchmark 证据、录像及早期发布记录保留历史名称。
+  不涉及 fine-tuning 或模型行为变化。
+
 - 可选的 MLX-VLM 文本／图片决策：使用原模型输出头，无需微调；按次接收本地图片并计算全新上下文，提供 Python API 与 CLI。保留 Qwen3-VL、SmolVLM 的冒烟结果与错误，明确 Gemma VLM 的加载限制。
 - 专属 Idefics3 PIL 处理器适配，以及针对 Mistral SentencePiece 边界行为的上下文候选 token 校验；保留现有文本缓存策略。
 - 双语[运行组件与多模态指南](docs/multimodal.zh-CN.md)、合成图片示例、可复现检查命令及检查点证据。

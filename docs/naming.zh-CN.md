@@ -2,11 +2,46 @@
 
 [返回项目首页](../README.zh-CN.md)
 
-项目名称为 **JEV MLX**，仓库为 [ItsOdeLeo/JEV-MLX](https://github.com/ItsOdeLeo/JEV-MLX)。名称直接体现 JEV 启发来源和 MLX 运行框架。发行包与命令行为 `jev-mlx`，Python 导入为 `jev_mlx`。
+项目名称为 **MLX ZeroEffort Decider**，仓库为
+[ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider)。
+作者于 **2026-10-13** 选定此名称。副标题明确写为：
+**Decisions from existing models. No fine-tuning required.**
+即：**让已有模型直接做决策，无需微调。**
 
-2026-09-20，项目对外名称由 MLXJ 改为 JEV MLX。已有录像和评测记录保留原始名称与文件内容；此次更名不改变发行包、命令行、Python API 或已测模型行为。
+| 对外标识 | 名称 |
+| :--- | :--- |
+| 发行包与 CLI | `mlx-zeroeffort-decider` |
+| Python 导入 | `mlx_zeroeffort_decider` |
+| 本地模型环境变量 | `MLX_ZEROEFFORT_MODEL` |
+| 显式模型测试环境变量 | `MLX_ZEROEFFORT_TEST_MODEL` |
 
-这是受 Jev 启发的独立项目，不是 TypeSafe AI 官方项目，也不是已有的 [bnsd55/jevmlx](https://github.com/bnsd55/jevmlx)。项目不使用 Jev 权重，也没有复现其未公开训练方法。
+原有 `jev_mlx` 导入、`jev-mlx` 命令、`JEV_MLX_MODEL` 和 `JEV_TEST_MODEL` 继续兼容。
+新旧 Python 命名空间共用相同类与实现，请求和会话可以交叉使用。
+模型权重、推理行为与缓存策略没有变化。实现源码保留在 `src/jev_mlx`，
+以维持现有源码链接和调用方兼容。更名不表示向 PyPI 发布包。
+
+ZeroEffort 在这里指无需额外的 fine-tuning 流程；应用仍需提供兼容的本地检查点、状态与候选项。
+
+## 实现与兼容性
+
+新命名空间转接到现有实现，使请求／结果类在新旧导入之间保持同一对象身份。
+包元数据与共用 CLI 注册新命令和模型环境变量；旧命令和变量继续可用，明确传入的
+`--model` 优先。这些连接属于打包／参数解析层，不能放进某个模型适配模块。
+可选后端的安装错误信息改用新发行包名，不影响评分。
+
+服务端健康信息与当前界面显示新项目名；对健康信息 `project` 字符串做严格比较的调用方
+应使用新名称。Benchmark 环境元数据记录新发行包版本。这些只改变身份信息／诊断文本，
+不改变推理、调度或缓存。历史 benchmark 文件保持原样。命名空间身份、环境变量优先级、
+不依赖可选运行库的导入及新旧 CLI 入口单独验证，与已记录的模型质量评测区分。
+
+## 旧称与历史证据
+
+旧称包括 **JEV MLX**、**JEVKit MLX** 与 **MLXJ**。2026-09-20 曾将展示名称从
+MLXJ 改为 JEV MLX。录像、冻结协议及 benchmark 证据保留原始名称、命令、源码路径与文件字节；
+旧复现命令仍可通过兼容入口运行。GitHub 仓库在新名称下保留原有提交历史与 issues。
+
+项目仍是受 Jev 启发的独立实现，不是 TypeSafe AI 官方项目，也不是已有的
+[bnsd55/jevmlx](https://github.com/bnsd55/jevmlx)。不使用 Jev 权重，也不复现未公开训练方法。
 
 ## 早期检索记录
 

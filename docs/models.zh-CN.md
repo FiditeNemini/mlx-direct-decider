@@ -8,12 +8,12 @@
 
 ## 跨模型家族复用 MLX-LM 接口
 
-JEV MLX 调用官方 `mlx_lm.load` 和模型／缓存接口，并未将支持范围硬编码为某几个
+MLX ZeroEffort Decider 调用官方 `mlx_lm.load` 和模型／缓存接口，并未将支持范围硬编码为某几个
 Qwen、Gemma 或 GLM 检查点。因此，新的兼容检查点可以直接使用，无需为每个模型
-单独编写 JEV MLX 适配，也不需要 fine-tuning。仍需核对架构支持、聊天模板、
+单独编写 MLX ZeroEffort Decider 适配，也不需要 fine-tuning。仍需核对架构支持、聊天模板、
 选项 token 编码、下一 token logits、缓存行为和可用内存。
 
-安装 JEV MLX 不会自动接管所有本地应用。通过 `--model` 或 `JEV_MLX_MODEL`
+安装 MLX ZeroEffort Decider 不会自动接管所有本地应用。通过 `--model` 或 `MLX_ZEROEFFORT_MODEL`
 指定本地检查点。MLX-LM 能够[转换受支持的源模型](https://github.com/ml-explore/mlx-lm#python-api)
 为 MLX 权重；转换或量化与微调是不同步骤。Ollama 的 GGUF 文件需要其他运行时／
 后端，嵌入、语音或纯图像模型不满足这里的因果文本决策接口。
@@ -58,7 +58,7 @@ Qwen、Gemma 或 GLM 检查点。因此，新的兼容检查点可以直接使�
 优先选择 Phi、DeepSeek、GPT-OSS 的代表性检查点，再扩展 Qwen、
 Gemma 的其他大小和转换版本。固定版本的
 [MLX-LM 源代码](https://github.com/ml-explore/mlx-lm/tree/v0.31.3/mlx_lm/models)
-中存在这些架构的实现或映射，但这里尚未宣称新增了这些家族的 JEV MLX 检查点验证。
+中存在这些架构的实现或映射，但这里尚未宣称新增了这些家族的 MLX ZeroEffort Decider 检查点验证。
 先检查加载、模板与 token 行为，再检查缓存数值一致性，最后用冻结的代表性场景
 评估语义质量。发现具体接口不兼容时再增加适配；适配无需训练模型权重。
 
@@ -98,6 +98,6 @@ Qwen／GLM 的本地检查点精确来源记录在 [`checkpoints.json`](../bench
 | [mlx-community/GLM-4.7-Flash-4bit](https://huggingface.co/mlx-community/GLM-4.7-Flash-4bit/tree/1454cffb1a21737e162f508e5bc70be9def89276) | `1454cffb1a21737e162f508e5bc70be9def89276` |
 | [mlx-community/gemma-4-26b-a4b-it-4bit](https://huggingface.co/mlx-community/gemma-4-26b-a4b-it-4bit/tree/8bcfa0de037c2b1bfa323a1e8d1f0132243b9e87) | `8bcfa0de037c2b1bfa323a1e8d1f0132243b9e87` |
 
-要精确复现，请单独获取对应修订、核对哈希，再将本地目录传给 JEV MLX。本软件包既不包含也不修改模型权重，并禁用分词器远程代码。默认提示词上限为 4,096 token，超过上限会明确报错。除权重外，还需要为快照、临时计算数组、分配器以及其他应用预留内存。软件包不会更改系统内存限制或共享环境。
+要精确复现，请单独获取对应修订、核对哈希，再将本地目录传给 MLX ZeroEffort Decider。本软件包既不包含也不修改模型权重，并禁用分词器远程代码。默认提示词上限为 4,096 token，超过上限会明确报错。除权重外，还需要为快照、临时计算数组、分配器以及其他应用预留内存。软件包不会更改系统内存限制或共享环境。
 
-Qwen 基础检查点采用 [Apache 2.0](https://huggingface.co/Qwen/Qwen3.5-9B/blob/main/LICENSE)，[OptiQ 转换模型卡](https://huggingface.co/mlx-community/Qwen3.5-9B-OptiQ-4bit)也声明了该许可证。[GLM 基础模型卡](https://huggingface.co/zai-org/GLM-4.7-Flash)和 [MLX 转换模型卡](https://huggingface.co/mlx-community/GLM-4.7-Flash-4bit)声明采用 MIT。Gemma 4 的本地转换模型卡声明采用 Apache 2.0，与 [Google 的 Gemma 4 许可证页面](https://ai.google.dev/gemma/apache_2)一致；保留的转换模型卡未固定其原始基础模型修订。精确的来源验证边界见 [Gemma 审查](gemma4-audit.zh-CN.md)。这些许可证独立于 JEV MLX 自身的 MIT 许可证。项目未使用任何 Jev 权重或训练产物。
+Qwen 基础检查点采用 [Apache 2.0](https://huggingface.co/Qwen/Qwen3.5-9B/blob/main/LICENSE)，[OptiQ 转换模型卡](https://huggingface.co/mlx-community/Qwen3.5-9B-OptiQ-4bit)也声明了该许可证。[GLM 基础模型卡](https://huggingface.co/zai-org/GLM-4.7-Flash)和 [MLX 转换模型卡](https://huggingface.co/mlx-community/GLM-4.7-Flash-4bit)声明采用 MIT。Gemma 4 的本地转换模型卡声明采用 Apache 2.0，与 [Google 的 Gemma 4 许可证页面](https://ai.google.dev/gemma/apache_2)一致；保留的转换模型卡未固定其原始基础模型修订。精确的来源验证边界见 [Gemma 审查](gemma4-audit.zh-CN.md)。这些许可证独立于 MLX ZeroEffort Decider 自身的 MIT 许可证。项目未使用任何 Jev 权重或训练产物。

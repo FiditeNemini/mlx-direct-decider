@@ -15,7 +15,7 @@ file without a language defaults to English. Recorded inputs and results are
 unchanged in either language. Missing fields remain missing.
 
 The original artifacts retain the project's previous name. They have not been
-rewritten or retouched. The replay uses the current JEV MLX display name for its interface. Python and CLI identifiers remain `jev_mlx` and `jev-mlx`.
+rewritten or retouched. The replay uses the current MLX ZeroEffort Decider display name for its interface. Current Python and CLI identifiers are `mlx_zeroeffort_decider` and `mlx-zeroeffort-decider`; legacy names remain compatible.
 This single browser smoke run is separate from the held-out model benchmark;
 see [measured results and limitations](../results.md).
 
