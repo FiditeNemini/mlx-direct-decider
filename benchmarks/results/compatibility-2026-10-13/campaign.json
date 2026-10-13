@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-13",
+  "scope": "compatibility_smoke_subset_not_a_quality_benchmark",
+  "runtime_source_commit": "f8f2464eea14da53511d40fe49876f926c49ceee",
+  "runtime_source_verified_against_recorded_sha256": true,
+  "runtime_changes_required": false,
+  "training_or_fine_tuning_performed": false,
+  "weights_downloaded": false,
+  "checkpoint_weight_hashes_recomputed": false,
+  "split": "dev",
+  "cases_per_checkpoint": 3,
+  "full_split_case_count": 16,
+  "reproduction_command": "python -m benchmarks.run --model /path/to/local/checkpoint --split dev --limit 3 --modes direct --conditions same_page_new_utterance --parity --output runs/checkpoint-smoke",
+  "notes": [
+    "Each checkpoint ran in a separate process from an export of the recorded runtime source commit.",
+    "The local working-tree loaded-model changes were not included.",
+    "Each parity row compares cached and updated-state decisions against fresh computation using the harness tolerances; this does not measure correctness.",
+    "Only the first three original development cases were used; no full or held-out quality evaluation was performed.",
+    "Model identities include configuration and tokenizer hashes; complete weight-file hashes were not recomputed.",
+    "Tokenizer-only checks include 2 and 64 application candidates, plus the two reserved outcomes."
+  ],
+  "models": [
+    {
+      "model": "Qwen3-4B",
+      "case_count": 3,
+      "completed": true,
+      "counts": {
+        "correct": 1,
+        "selected": 1,
+        "executable": 2,
+        "false_action": 1,
+        "rejected": 2,
+        "abstained": 0,
+        "schema_valid": 3,
+        "failed": 0,
+        "raw_choice_available": 3,
+        "raw_correct": 1,
+        "raw_selected": 1,
+        "raw_false_action": 1
+      },
+      "parity": {
+        "completed": 3,
+        "planned": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "config_sha256": "8ba006f74fecfaaeb392872a60f4a480e7ec9860153d2e1b769ec81f9a147f8a"
+    },
+    {
+      "model": "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit",
+      "case_count": 3,
+      "completed": true,
+      "counts": {
+        "correct": 1,
+        "selected": 0,
+        "executable": 2,
+        "false_action": 0,
+        "rejected": 3,
+        "abstained": 0,
+        "schema_valid": 3,
+        "failed": 0,
+        "raw_choice_available": 3,
+        "raw_correct": 1,
+        "raw_selected": 0,
+        "raw_false_action": 0
+      },
+      "parity": {
+        "completed": 3,
+        "planned": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "config_sha256": "36462c9be8a5509c7d0914672a1d8dbe8942abcd0089cf11001775065feadce8"
+    },
+    {
+      "model": "qwen3.6-35b-a3b-mlx-4bit",
+      "case_count": 3,
+      "completed": true,
+      "counts": {
+        "correct": 3,
+        "selected": 2,
+        "executable": 2,
+        "false_action": 0,
+        "rejected": 1,
+        "abstained": 0,
+        "schema_valid": 3,
+        "failed": 0,
+        "raw_choice_available": 3,
+        "raw_correct": 3,
+        "raw_selected": 2,
+        "raw_false_action": 0
+      },
+      "parity": {
+        "completed": 3,
+        "planned": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "config_sha256": "a822a9e48b0aafbe3144ec37d4fb067e178ed96615ce6e4420b3149893cc5767"
+    },
+    {
+      "model": "gemma-4-e4b-it-4bit",
+      "case_count": 3,
+      "completed": true,
+      "counts": {
+        "correct": 2,
+        "selected": 3,
+        "executable": 2,
+        "false_action": 1,
+        "rejected": 0,
+        "abstained": 0,
+        "schema_valid": 3,
+        "failed": 0,
+        "raw_choice_available": 3,
+        "raw_correct": 2,
+        "raw_selected": 3,
+        "raw_false_action": 1
+      },
+      "parity": {
+        "completed": 3,
+        "planned": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "config_sha256": "780ccb3a514a5f1ced161d383f948fc22eca9b84b752ca19494f625bd9bad7a6"
+    }
+  ],
+  "files_sha256": {
+    "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit/metadata.json": "a3f0f71fa4aecec841388064c2d388fdb3875fdccb1c9c662fc77aea975e0a84",
+    "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit/parity.jsonl": "20fcc6c44a25b23038c34a8d72a6985eb302676a0c5049891d5c40fe9e12ccea",
+    "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit/summary.json": "ce9b7d55aa499e95aaf5f1c9c63f020f7e1510273ad797a1f7b9966c1e31bc8b",
+    "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit/trials.jsonl": "d7c1a5ff528837823be806429834638ed05e02baeccf3410474f51434a3cfd1c",
+    "Qwen3-4B/metadata.json": "e390223844d13def97fe3b1c007cb545b568153edbbf677c8e7d7637ba6957c5",
+    "Qwen3-4B/parity.jsonl": "9d5cc95a9e352cf476262ce585e7f225573dccbe4c1791409a103aee40879bbb",
+    "Qwen3-4B/summary.json": "737c5382552c915f34eb9bf104207402e03848ac62f4497332226ca78f82355c",
+    "Qwen3-4B/trials.jsonl": "d3aa54515bd8ed408416fd752c7a41fba999d3ec416e697466dfb43219c0e09d",
+    "gemma-4-e4b-it-4bit/metadata.json": "103718bb77c2321a3f961c79d2e01048d6046f7d12e80b5d1323223177f32e1c",
+    "gemma-4-e4b-it-4bit/parity.jsonl": "fb41d2bc3aadc87ad68c7729c704662a9de2aeb964b37cb794b9222093a32bcb",
+    "gemma-4-e4b-it-4bit/summary.json": "37b0f327cdbf22ef29419fe8a5db045cfb04739ebdc5ba42f0c1a711562d1c0f",
+    "gemma-4-e4b-it-4bit/trials.jsonl": "34f56666a2604ddfb4ac307162509cda39333df99f68c28522a55436424b86fd",
+    "qwen3.6-35b-a3b-mlx-4bit/metadata.json": "05aad3a30e7060738fa768e0018f15f3b7ddb3fda5fc9ad933d55d224112afcb",
+    "qwen3.6-35b-a3b-mlx-4bit/parity.jsonl": "c1c6b64d19fcd651eb27ad093d780463e15a3f9c07153ad4061a0fe11852e579",
+    "qwen3.6-35b-a3b-mlx-4bit/summary.json": "768ecff4faab2b261a53c10433949bebbaf0de02f2ac6364cbb6877379b4a65a",
+    "qwen3.6-35b-a3b-mlx-4bit/trials.jsonl": "f832784fceaec7a16ae6be40e640916a0eed196769b00089bfab640eb761f984",
+    "tokenizer-preflight.json": "b23e44acb533ff5aef130b5fe415bc852c02c05ecca87bd8ded8baeeb2a9064f"
+  }
+}

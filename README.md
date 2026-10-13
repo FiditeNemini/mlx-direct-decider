@@ -1,10 +1,10 @@
-# JEV MLX: local LLM action selection with MLX
+# JEV MLX: decisions from existing MLX LLMs, without fine-tuning
 
 <p align="center">
   <img src="docs/assets/jev-mlx-hero.en.svg" alt="JEV MLX — JEV-inspired local decisions, powered by MLX" width="1280" />
 </p>
 
-<p align="center"><strong>Current state + a sentence → one allowed choice.</strong><br />Reuse an existing MLX model. No additional training.</p>
+<p align="center"><strong>Your existing MLX LLM → a local decision engine.</strong><br />No fine-tuning. No extra decision-model weights.</p>
 
 **JEV MLX** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx) and [MLX-LM](https://github.com/ml-explore/mlx-lm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
 
@@ -198,17 +198,18 @@ See the [architecture](docs/architecture.md) and [framework audit](docs/framewor
 
 <a name="related-projects"></a>
 
-## Related decision projects: OpenDecider and Laya
+## Related decision projects: AnyJev, OpenDecider, and Laya
 
-Developers evaluating **OpenDecider**, **Laya**, or **Laya-MLX** may also be looking for local action selection, classification, or semantic routing. **JEV MLX's main distinction is reusing an existing compatible causal MLX-LM checkpoint without extra training or separate decision-model weights.** Application-defined choices are scored through the original model output head.
+Developers evaluating **AnyJev**, **OpenDecider**, **Laya**, or **Laya-MLX** may also be looking for local action selection, classification, or semantic routing. **JEV MLX focuses on existing compatible causal MLX-LM checkpoints on Apple Silicon, with no fine-tuning or separate decision-model weights.** Application-defined choices are scored through the original model output head. AnyJev also offers a path without training; the implementations and score semantics differ.
 
 | Project | Documented approach | Relationship to JEV MLX |
 | :--- | :--- | :--- |
+| [AnyJev](https://github.com/nokia-applied-research/AnyJev) | A training-free `Decider` with option rotations and label-prior correction; a separate self-distilled `Tacit` model path. | Shared use of existing LLMs; JEV MLX provides native MLX scoring and application execution guards, without AnyJev's L0 corrections. |
 | [OpenDecider](https://github.com/manjunathshiva/opendecider) | Open-weight System 1 decision models with typed outputs and serving clients. | Related decision-model alternative; JEV MLX uses its own request and execution contracts. |
 | [Laya](https://github.com/NandhaKishorM/laya) · Convai Innovations | Encoder-based models for choice, ordered score, and yes/no questions. | Related typed-decision approach; JEV MLX scores option-token logits from causal language models. |
 | [Laya-MLX](https://github.com/mizorewww/laya-mlx) | Independent MLX runtime for Laya's encoder and decision heads on Apple Silicon. | Shared MLX platform and local decision use case; separate model architecture and API. |
 
-Read the [JEV MLX, OpenDecider, and Laya comparison](docs/decision-models.md) for source snapshots, integration boundaries, and evaluation considerations. These are related projects, not bundled backends or vendor partnerships.
+Read the [AnyJev, OpenDecider, and Laya comparison](docs/decision-models.md) for source snapshots, integration boundaries, and evaluation considerations. These are related projects, not bundled backends or vendor partnerships.
 
 <a name="faq"></a>
 
@@ -224,13 +225,19 @@ The full model still processes the input. Reading final-position logits does not
 
 Yes. Describe the currently allowed routes or actions as candidates with stable business IDs, supply the application state and user request, and inspect the selected ID. The host application defines and executes the actions. `no_match` and `abstain` handle unsuitable or ambiguous requests. See the [Python API](docs/python-api.md).
 
-### How does JEV MLX compare with OpenDecider and Laya-MLX?
+### How does JEV MLX compare with AnyJev, OpenDecider, and Laya-MLX?
 
-JEV MLX adds bounded action selection to existing compatible causal MLX-LM checkpoints without extra training or decision-specific weights. OpenDecider and Laya publish trained decision-model families, and Laya-MLX runs Laya weights. Their users can load published checkpoints without training them themselves. The distinction is which weights are required; APIs and score semantics also differ. See the [decision-model comparison](docs/decision-models.md).
+JEV MLX adds bounded action selection to existing compatible causal MLX-LM checkpoints without fine-tuning or decision-specific weights. AnyJev's `Decider` also reuses existing LLMs without training and adds corrections for option ordering and label priors. OpenDecider and Laya publish trained decision-model families, and Laya-MLX runs Laya weights. Their users can load published checkpoints without training them themselves. See the [decision-model comparison](docs/decision-models.md).
+
+### Does installing JEV MLX make every MacBook model compatible?
+
+Point JEV MLX at a compatible local MLX-LM checkpoint using `--model` or `JEV_MLX_MODEL`. Its model loader is shared across architectures; each checkpoint still needs a supported model implementation, compatible tokenizer and chat template, accessible logits, and enough memory. Installation does not attach it to other apps or load GGUF models from Ollama. The [compatibility guide](docs/models.md) separates full evaluations, small runtime checks, and untested families.
 
 ### Which MLX models have been evaluated?
 
 Recorded local checkpoints include Qwen3.5-9B-OptiQ-4bit, GLM-4.7-Flash-4bit, and Gemma 4 26B-A4B MoE. All three returned wrong actions in the 36-case extension. Evaluation of these checkpoints does not establish compatibility with every MLX model. Exact revisions, results, and limits are in the [model compatibility guide](docs/models.md).
+
+Additional Qwen3, Qwen3.6 MoE, Nemotron, and Gemma E4B checkpoints completed small runtime checks. These are recorded separately from full quality evaluations in the same guide.
 
 ### Does inference require a cloud API or model training?
 
@@ -254,7 +261,7 @@ JEV MLX is an independent JEV-inspired project at [ItsOdeLeo/JEV-MLX](https://gi
 | :--- | :--- |
 | [Python API](docs/python-api.md) | Enum / boolean, result fields, and versioned execution |
 | [Model compatibility](docs/models.md) | Checkpoints, quantization, dependencies, licenses, and limits |
-| [OpenDecider and Laya comparison](docs/decision-models.md) | Related decision projects, MLX runtimes, and integration boundaries |
+| [AnyJev, OpenDecider, and Laya comparison](docs/decision-models.md) | Related decision projects, MLX runtimes, and integration boundaries |
 | [Evaluation](docs/evaluation.md) · [Results](docs/results.md) | All baselines, raw evidence, versions, and failures |
 | [Testing guide](docs/testing.md) | Methodology, results, and reproduction |
 | [Local HTTP](docs/http-and-demo.md) | CLI, service, and actual browser operations |

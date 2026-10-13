@@ -1,0 +1,81 @@
+{
+  "model_inference_run": false,
+  "rows": [
+    {
+      "model": "Qwen3-4B",
+      "level": "tokenizer_preflight_only",
+      "checks": [
+        {
+          "candidates": 2,
+          "compiled_choices": 4,
+          "prompt_tokens": 445,
+          "state_tokens": 431
+        },
+        {
+          "candidates": 64,
+          "compiled_choices": 66,
+          "prompt_tokens": 1608,
+          "state_tokens": 1592
+        }
+      ],
+      "ok": true
+    },
+    {
+      "model": "NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit",
+      "level": "tokenizer_preflight_only",
+      "checks": [
+        {
+          "candidates": 2,
+          "compiled_choices": 4,
+          "prompt_tokens": 456,
+          "state_tokens": 443
+        },
+        {
+          "candidates": 64,
+          "compiled_choices": 66,
+          "prompt_tokens": 1680,
+          "state_tokens": 1665
+        }
+      ],
+      "ok": true
+    },
+    {
+      "model": "qwen3.6-35b-a3b-mlx-4bit",
+      "level": "tokenizer_preflight_only",
+      "checks": [
+        {
+          "candidates": 2,
+          "compiled_choices": 4,
+          "prompt_tokens": 463,
+          "state_tokens": 449
+        },
+        {
+          "candidates": 64,
+          "compiled_choices": 66,
+          "prompt_tokens": 1626,
+          "state_tokens": 1610
+        }
+      ],
+      "ok": true
+    },
+    {
+      "model": "gemma-4-e4b-it-4bit",
+      "level": "tokenizer_preflight_only",
+      "checks": [
+        {
+          "candidates": 2,
+          "compiled_choices": 4,
+          "prompt_tokens": 463,
+          "state_tokens": 453
+        },
+        {
+          "candidates": 64,
+          "compiled_choices": 66,
+          "prompt_tokens": 1627,
+          "state_tokens": 1615
+        }
+      ],
+      "ok": true
+    }
+  ]
+}

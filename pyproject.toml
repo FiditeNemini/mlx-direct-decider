@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jev-mlx"
 version = "0.1.0"
-description = "Local LLM action selection and semantic routing with MLX on Apple Silicon; no extra training or decision-specific weights."
+description = "Use existing MLX LLMs for local decisions and semantic routing on Apple Silicon, without fine-tuning or extra decision weights."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

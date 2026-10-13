@@ -7,6 +7,62 @@ its tokenizer supports verified one-token codes, real semantic inference runs, a
 cached/fresh numerical parity is measured. It does not imply perfect decisions or
 compatibility with every conversion of an architecture.
 
+## Reuse the MLX-LM interface across model families
+
+JEV MLX calls the official `mlx_lm.load` and model/cache interfaces rather than
+selecting from a hardcoded list of Qwen, Gemma, or GLM checkpoints. A new compatible
+checkpoint can therefore work without model-specific JEV MLX code or fine-tuning.
+It still needs a supported architecture, a usable chat template, verified option
+token codes, next-token logits, correct cache behavior, and sufficient memory.
+
+Installing JEV MLX does not attach it to every local application. Supply a local
+checkpoint through `--model` or `JEV_MLX_MODEL`. MLX-LM can
+[convert supported source models](https://github.com/ml-explore/mlx-lm#python-api)
+to MLX weights; conversion or quantization is separate from fine-tuning. Ollama's
+GGUF files need a different runtime/backend, and embedding, speech, or image-only
+models do not implement this causal text-decision interface.
+
+## Additional runtime smoke checks · 2026-10-13
+
+Four existing local checkpoints ran the **first three original development cases**
+with the unchanged published runtime at `f8f2464`. Each also completed three
+cache-parity records using the existing harness tolerances. No weights were
+downloaded or trained, and no runtime adaptation was needed for these checkpoints.
+
+| Local checkpoint directory | Runtime decisions completed | Correct / 3 dev cases | Wrong actions | Cache-parity records passed |
+| :--- | ---: | ---: | ---: | ---: |
+| Qwen3-4B | 3/3 | 1/3 | 1 | 3/3 |
+| NVIDIA-Nemotron-3-Nano-30B-A3B-OptiQ-4bit | 3/3 | 1/3 | 0 | 3/3 |
+| qwen3.6-35b-a3b-mlx-4bit | 3/3 | 3/3 | 0 | 3/3 |
+| gemma-4-e4b-it-4bit | 3/3 | 2/3 | 1 | 3/3 |
+
+**These are runtime smoke checks, not a full or held-out quality evaluation.**
+Nemotron rejected both executable requests; Qwen3 returned a wrong action, and
+Gemma E4B acted when nothing should be closed. Even 3/3 correct does not establish
+general decision quality. This pass exercises text inputs only, including for
+checkpoints whose original architecture also supports other modalities.
+
+The [campaign manifest](../benchmarks/results/compatibility-2026-10-13/campaign.json)
+links each checkpoint's complete trials, parity records, and environment metadata
+through its file manifest. It records source hashes and reproduction commands.
+Configuration and tokenizer hashes identify the tested copies; complete weight-file
+hashes were not recomputed. A separate
+[tokenizer preflight](../benchmarks/results/compatibility-2026-10-13/tokenizer-preflight.json)
+checked 2 and 64 application candidates, plus the two reserved outcomes.
+
+## Coverage still to validate
+
+Prioritize representative Llama, Mistral, Phi, DeepSeek, and GPT-OSS checkpoints,
+then additional Qwen and Gemma sizes and conversions. Their implementations or
+architecture mappings exist in the pinned
+[MLX-LM source](https://github.com/ml-explore/mlx-lm/tree/v0.31.3/mlx_lm/models),
+but no new JEV MLX checkpoint validation for these families is claimed here.
+Check loading and prompt/token behavior first, numerical cache parity next, then
+decision quality on frozen representative cases. Add an adapter only for a
+demonstrated interface mismatch; adaptation does not require training weights.
+
+## Recorded full evaluations
+
 The 0.1 runtime is pinned to MLX 0.31.2 / MLX-LM 0.31.3 / Transformers 5.9.0 /
 Tokenizers 0.22.2. The actual host is Apple M2 Max with 64 GiB unified memory and
 Python 3.13.2. Full hardware and dependency metadata accompany each run.
@@ -39,7 +95,8 @@ The table below preserves verification on the **original 28-case suite**:
 
 The compatibility table must be read together with the results document. A tokenizer
 check alone is not a real-model validation. Other locally inventoried checkpoints,
-including Qwen3.6, other Gemma conversions and Nemotron, are not certified by this release.
+including Qwen3.6, other Gemma conversions and Nemotron, have not completed the full
+quality and compatibility campaign. The smoke results above do not certify them.
 Multi-question batching and vision inputs are not supported.
 
 Recorded Qwen and GLM comparison tables describe historical source revisions.

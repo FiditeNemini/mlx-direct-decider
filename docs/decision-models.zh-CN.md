@@ -1,9 +1,9 @@
-# JEV MLX、OpenDecider 与 Laya：本地决策推理对照
+# JEV MLX 与 AnyJev：无需微调，让已有 LLM 直接做决策
 
 [返回项目首页](../README.zh-CN.md)
 
 这份说明帮助评估本地动作选择、分类和语义路由的开发者，将 JEV MLX 与
-OpenDecider、Laya、Laya-MLX 放在同一技术领域中理解。它们的共同需求是：
+AnyJev、OpenDecider、Laya、Laya-MLX 放在同一技术领域中理解。它们的共同需求是：
 把应用状态和问题转化为宿主代码能够使用的有限决策。
 
 JEV MLX 是独立维护、面向已有因果 MLX-LM 模型的库。下列相关项目各自拥有独立
@@ -27,11 +27,26 @@ JEV MLX 是独立维护、面向已有因果 MLX-LM 模型的库。下列相关�
 直接加载已发布权重，不必亲自训练。主要区别是**复用已有兼容基础模型权重，
 还是加载专用决策模型检查点**，不应表述为其他项目的用户必须自行训练模型。
 
+## 与 AnyJev 共同复用已有 LLM 的方向
+
+[AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md)
+也提供无需训练的 `Decider` 路径。其 L0 方法包含候选轮换和标签先验校正；
+独立的 `Tacit` 路径则使用自蒸馏检查点。二者共享从已有 LLM 读取决策的基本思路。
+
+JEV MLX 聚焦 Apple Silicon 上的原生 MLX-LM 推理、动态业务 ID、明确拒绝、
+有效前缀复用和版本化应用执行。直接评分未包含 AnyJev 的 L0 校正，候选分数
+也不是经过校准的正确概率。查看的 AnyJev 后端目录包含 Hugging Face、vLLM、
+SGLang 和 llama.cpp 实现，路线图将 MLX 列为后续后端工作。项目各自独立，
+当前没有随本库提供相互适配器。
+
+这是技术对照，不构成速度或准确率优势证明。本仓库尚无二者共同运行的基准测试。
+
 ## 实现方式对照
 
 | 项目 | 模型与运行时方向 | 集成区别 |
 | :--- | :--- | :--- |
 | **JEV MLX** | 在 Apple Silicon 上复用已有兼容的因果 MLX-LM 权重，读取原始选项 token logits，无需额外训练。 | 动态候选项、稳定业务 ID、`no_match` / `abstain`、状态版本和单次执行授权。 |
+| [AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md) | 无需训练地读取 LLM 输出，配合候选轮换和标签先验校正；另有自蒸馏模型。 | 自己的带类型问题约定及运行时后端；本库尚未提供 AnyJev 集成。 |
 | [OpenDecider](https://github.com/manjunathshiva/opendecider/blob/b830ea46961105da8c30e30a5f11ccce211bbf43/README.md) | 开放权重的 System 1 决策模型系列，包含编码器与解码器路线。 | 自己的带类型问题约定、服务客户端及模型对应的运行时。 |
 | [Laya](https://github.com/NandhaKishorM/laya/blob/3cf26cbcb18725dbc2d127bb8bb2c4c43243ae63/README.md) · Convai Innovations | 基于编码器的决策模型，提供选择、有序评分和是非输出。 | 自己的问题结构、决策头与检查点路由。 |
 | [Laya-MLX](https://github.com/mizorewww/laya-mlx/blob/ca5940aa9286dbbdfaacbecbdb7b337295ad36a2/README.md) | Laya 编码器和决策头的独立 MLX 实现。 | 面向 Laya 检查点的 Apple Silicon 本地推理，API 与 JEV MLX 分开。 |
@@ -68,7 +83,11 @@ Laya 模型，则查看 Laya-MLX 的转换与推理说明。这些是评估起�
 
 ## 来源快照
 
-**2026-10-08** 查看的一手 README 修订如下：
+AnyJev 于 **2026-10-13** 对照
+[README 修订 `b03158e`](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md)
+及其[后端目录](https://github.com/nokia-applied-research/AnyJev/tree/b03158e9ba18e84c01054aaa393481925088db07/anyjev/backends)查看。
+
+其他项目于 **2026-10-08** 查看的一手 README 修订如下：
 
 - [OpenDecider · `b830ea4`](https://github.com/manjunathshiva/opendecider/blob/b830ea46961105da8c30e30a5f11ccce211bbf43/README.md)。
 - [Laya · `3cf26cb`](https://github.com/NandhaKishorM/laya/blob/3cf26cbcb18725dbc2d127bb8bb2c4c43243ae63/README.md)。
