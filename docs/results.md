@@ -21,13 +21,13 @@ correct, including one wrong filtered-first action among 26 enum requests.
 Keep both datasets and their runtime revisions separate. This page preserves
 the historical Qwen/GLM results and release verification below.
 
-The project is now named **JEV MLX**. The historical Qwen/GLM measurements,
+The project is now named **MLX Direct Decider**. The historical Qwen/GLM measurements,
 original release-candidate checks, screenshots, and recordings were collected under its former name,
 **JEVKit MLX**. Their metadata still identifies `jevkit-mlx`, the `jevkit_mlx`
 module, original source paths, and recorded commit/file hashes. Those evidence
 files and media have not been rewritten or renamed to imply a new measurement.
-Current reproduction commands use the `jev-mlx` CLI, the `jev_mlx` Python module,
-and `JEV_MLX_MODEL`. Separate verification of the
+Current reproduction commands use the `mlx-direct-decider` CLI, the `mlx_direct_decider` Python module,
+and `MLX_DIRECT_MODEL`. Separate verification of the
 renamed package is recorded in
 [rename release checks](../benchmarks/results/rename-release-checks/verification.json).
 

@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SOURCE = HERE.parent / "assets" / "browser-demo"
+SOURCE = HERE.parent / "assets" / "browser-demo-direct"
 SCREENSHOTS = {
     "open-feature-without-playing-content": "02-library.png",
     "first-follows-filtered-reversed-visible-order": "03-course-player.png",
@@ -39,9 +39,9 @@ def build() -> dict:
     capture = {key: value for key, value in transcript.items() if key != "url"}
     bundle = {
         "format_version": 1,
-        "source": "../assets/browser-demo/browser-transcript.json",
+        "source": "../assets/browser-demo-direct/browser-transcript.json",
         "source_sha256": hashlib.sha256(raw).hexdigest(),
-        "provenance": "../assets/browser-demo/provenance.json",
+        "provenance": "../assets/browser-demo-direct/provenance.json",
         "capture": capture,
         "screenshots_by_case": SCREENSHOTS,
         "initial_screenshot": "01-desktop.png",

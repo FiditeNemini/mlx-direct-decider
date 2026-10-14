@@ -116,6 +116,10 @@
     {
       "en": "docs/blocks.md",
       "zh-CN": "docs/blocks.zh-CN.md"
+    },
+    {
+      "en": "docs/assets/live-demo-direct/README.md",
+      "zh-CN": "docs/assets/live-demo-direct/README.zh-CN.md"
     }
   ]
 }

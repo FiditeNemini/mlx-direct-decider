@@ -21,13 +21,13 @@ Gemma 31/36、Qwen 30/36、GLM 21/36；错误 enum 动作
 请分别看待两个数据集及其运行代码版本。本页保留
 下文的历史 Qwen／GLM 结果和发布验证。
 
-项目现称 **JEV MLX**。历史 Qwen／GLM 测量、
+项目现称 **MLX Direct Decider**。历史 Qwen／GLM 测量、
 最初的候选发布验证、截图和录屏采集时使用旧称
 **JEVKit MLX**。其元数据仍标记 `jevkit-mlx`、`jevkit_mlx`
 模块、原始源码路径以及当时记录的提交／文件哈希。这些证据
 文件和媒体未被改写或重命名，以免让人误以为重新测量过。
-当前复现命令使用 `jev-mlx` CLI、`jev_mlx` Python 模块
-和 `JEV_MLX_MODEL`。更名后包的
+当前复现命令使用 `mlx-direct-decider` CLI、`mlx_direct_decider` Python 模块
+和 `MLX_DIRECT_MODEL`。更名后包的
 独立验证记录见
 [更名发布检查](../benchmarks/results/rename-release-checks/verification.json)。
 

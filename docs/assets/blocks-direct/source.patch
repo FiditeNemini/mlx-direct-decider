@@ -1,0 +1,48 @@
+diff --git a/docs/demo/index.html b/docs/demo/index.html
+index 19a0cf6..870aa41 100644
+--- a/docs/demo/index.html
++++ b/docs/demo/index.html
+@@ -11,7 +11,7 @@
+   <script src="app.js" defer></script>
+ </head>
+ <body>
+-  <header class="topbar"><a class="brand" href="../../README.md">JEV <span>MLX</span><small data-i18n="brandSubtitle">Recorded browser decisions</small></a><div class="top-actions"><span class="recorded-pill"><i></i><span data-i18n="replayBadge">RECORDED REPLAY</span></span></div></header>
++  <header class="topbar"><a class="brand" href="../../README.md">MLX <span>Direct Decider</span><small data-i18n="brandSubtitle">Recorded browser decisions</small></a><div class="top-actions"><span class="recorded-pill"><i></i><span data-i18n="replayBadge">RECORDED REPLAY</span></span></div></header>
+   <main>
+     <section class="hero"><div><div class="eyebrow" data-i18n="eyebrow">FROM WORDS TO A VERIFIED CLICK</div><h1 data-i18n="title">Small decisions.<br>Recorded in the browser.</h1><p data-i18n="intro">Explore a real local-model run, one decision at a time. Inspect the words, the available choices, and the action that actually happened.</p></div><div class="recording-note"><span class="note-icon">◷</span><strong data-i18n="offlineTitle">A recording, not live inference.</strong><p data-i18n="offlineBody">Everything here comes from the published transcript. Changing a scene only reads saved results. No model, server, or network connection is used.</p><a href="../assets/browser-demo/browser-transcript.json" data-i18n="sourceLink">Inspect original transcript ↗</a></div></section>
+     <div class="run-strip"><div><span data-i18n="runLabel">CAPTURED RUN</span><strong id="run-date"></strong></div><div><span data-i18n="modelLabel">LOCAL MODEL</span><strong id="run-model"></strong></div><div><span data-i18n="scopeLabel">THIS RECORDING</span><strong id="run-count"></strong></div><a href="../results.md" data-i18n="evaluationLink">Full evaluation & limitations ↗</a></div>
+diff --git a/examples/record_showcase.py b/examples/record_showcase.py
+index 187f145..eeda8ac 100644
+--- a/examples/record_showcase.py
++++ b/examples/record_showcase.py
+@@ -111,7 +111,7 @@ def source_hashes() -> dict[str, str]:
+ 
+ def package_versions() -> dict[str, str | None]:
+     values = {}
+-    for name in ("playwright", "jev-mlx", "mlx", "mlx-lm", "transformers", "tokenizers"):
++    for name in ("playwright", "mlx-direct-decider", "mlx", "mlx-lm", "transformers", "tokenizers"):
+         try:
+             values[name] = version(name)
+         except PackageNotFoundError:
+diff --git a/src/jev_mlx/static/blocks.js b/src/jev_mlx/static/blocks.js
+index 0e52215..f4570c1 100644
+--- a/src/jev_mlx/static/blocks.js
++++ b/src/jev_mlx/static/blocks.js
+@@ -73,7 +73,7 @@ function requestFor(moves) {
+     kind: "enum", state_version: game.version,
+     question: "Choose a single legal final placement for the current falling block, following the user's goal. Every candidate is executable. Candidate descriptions are exact resulting board facts, calculated by the game rules. The game supplies no recommended placement. A hole is an empty cell below an occupied cell in the same column. Smaller height and roughness mean a lower, flatter stack. Choose only from the supplied placements.",
+     utterance: "Drop the current piece into one of the listed legal placements now. Choose the placement you judge best; any equally good placement is acceptable. Prefer clearing rows when possible, then fewer holes and a low, flat stack. It is fine if this turn clears no rows.",
+-    state: {game: "MLXJ Blocks", width: WIDTH, height: HEIGHT, coordinates: "origin top-left; x right; y down; '.' empty", board_rows: boardRows(), current_piece: game.current, next_pieces: game.queue.slice(0, 3), lines: game.lines, pieces: game.pieces, current_metrics: boardMetrics(game.board), move_rule: "Choose rotation and column before a straight vertical hard drop; no sideways movement after dropping."},
++    state: {game: "MLX Direct Decider Blocks", width: WIDTH, height: HEIGHT, coordinates: "origin top-left; x right; y down; '.' empty", board_rows: boardRows(), current_piece: game.current, next_pieces: game.queue.slice(0, 3), lines: game.lines, pieces: game.pieces, current_metrics: boardMetrics(game.board), move_rule: "Choose rotation and column before a straight vertical hard drop; no sideways movement after dropping."},
+     candidates: moves.map((p) => ({id: p.id, description: `Drop ${p.type}, orientation ${p.rotation}, leftmost column ${p.x + 1}: clears ${p.lines} rows; resulting holes ${p.holes}, max height ${p.maxHeight}, total column heights ${p.aggregateHeight}, surface roughness ${p.roughness}.`, value: {rotation: p.rotation, x: p.x}})),
+   };
+ }
+@@ -255,7 +255,7 @@ $("reset").addEventListener("click", () => reset());
+ $("manual-mode").addEventListener("click", () => manual("enter"));
+ $("download").addEventListener("click", () => {
+   const blob = new Blob([JSON.stringify({session: window.blocksSession, model: modelIdentity, state: JSON.parse(window.render_game_to_text()), events: transcript}, null, 2)], {type: "application/json"});
+-  const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `mlxj-blocks-seed-${game.seed}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 1000);
++  const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `mlx-direct-decider-blocks-seed-${game.seed}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+ });
+ document.addEventListener("keydown", (event) => {
+   if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName) || event.ctrlKey || event.metaKey || event.altKey) return;

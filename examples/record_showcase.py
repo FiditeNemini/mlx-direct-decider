@@ -111,7 +111,7 @@ def source_hashes() -> dict[str, str]:
 
 def package_versions() -> dict[str, str | None]:
     values = {}
-    for name in ("playwright", "jev-mlx", "mlx", "mlx-lm", "transformers", "tokenizers"):
+    for name in ("playwright", "mlx-direct-decider", "mlx", "mlx-lm", "transformers", "tokenizers"):
         try:
             values[name] = version(name)
         except PackageNotFoundError:

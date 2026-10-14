@@ -7,8 +7,8 @@ MLX Direct Decider Blocks 是一个由本地模型选择方块落点的游戏。
 这是原创的简化规则实现，不是官方俄罗斯方块产品，也不实现竞技俄罗斯方块的完整规则。
 本演示没有复制第三方游戏代码。
 
-已有录像中的 **MLXJ** 是更名前的名称。本次更名没有重新录制游戏，
-原始视频和决策记录保持不变。
+当前展示素材已使用 **MLX Direct Decider** 名称重新录制。
+更名前的录像保留原名称与原始记录，仍可在下方历史报告中查看。
 
 ## 本地运行
 
@@ -95,6 +95,23 @@ PLAYWRIGHT_BROWSERS_PATH=.cache/playwright .venv/bin/python examples/record_bloc
 
 每次使用新的输出目录。失败、拒绝和执行错误都应与成功运行一并保留。
 固定种子可复现方块序列，不保证不同硬件或依赖版本下的模型分数完全一致。
+
+## 当前名称的录制
+
+2026 年 10 月 14 日在同一台 Apple M2 Max 上，使用 Qwen3.5-9B-OptiQ-4bit、
+种子 42 与当前界面重新录制。**20 次决策全部执行，消除 6 行、得到 600 分**，
+随后达到预定步数上限。没有浏览器或录制错误，没有重试或替换模型输出。
+
+[完整原速录像](assets/blocks-direct/full-run.mp4) ·
+[4 倍速 GIF](assets/blocks-direct/preview.gif) · [原始 WebM](assets/blocks-direct/original.webm) ·
+[完整记录](assets/blocks-direct/transcript.json) · [源码与媒体哈希](assets/blocks-direct/provenance.json)
+
+完整视频保留 152.24 秒，包括推理等待。GIF 以明确标注的 4 倍速保留全部时间线。
+当次决策 p50 / p95 为 **6.641 / 9.062 秒**；这些耗时只描述正常桌面活动下的
+本次演示，不是隔离环境中的性能基准。执行了落点也不代表每次选择都是最优。
+
+录制使用已提交代码的干净导出与本次 demo 名称修正补丁，没有带入无关工作区改动。
+原始源码哈希与模型输出全部保留。下方单独记录历史尝试。
 
 <a name="recorded-development-attempts"></a>
 

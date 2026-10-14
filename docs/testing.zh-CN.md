@@ -24,7 +24,7 @@
 
 原始评测、截图和录屏使用项目旧称 JEVKit MLX；证据文件保留原名称、源码哈希和记录时间，没有为更名而改写。下文复现命令使用当前 `mlx-direct-decider` 命令、`mlx_direct_decider` 模块和 `MLX_DIRECT_MODEL` 环境变量。当时更名验证重新做了核心测试与独立 wheel 的真实模型调用，**并非重新运行整套质量评测和浏览器模型测试**，见[更名验证记录](../benchmarks/results/rename-release-checks/verification.json)。
 
-后续游戏和桌面展示录像使用旧称 MLXJ。这些视频和原始决策记录没有因为当前对外名称改为 MLX Direct Decider 而重新录制或修改。
+早期游戏和桌面展示录像保留旧称 MLXJ，原始记录没有修改。当前浏览器、桌面与游戏展示素材已于 2026 年 10 月 14 日使用 MLX Direct Decider 名称重新录制，详见[当前回放](demo/index.html?lang=zh-CN)、[桌面录像](assets/live-demo-direct/README.zh-CN.md)与[游戏录像](blocks.zh-CN.md)。这些演示不替代历史 benchmark。
 
 ## 到底测了什么
 

@@ -1,0 +1,79 @@
+{
+  "kind": "Fresh real-model browser capture with MLX Direct Decider branding",
+  "run_created_utc": "2026-10-14T12:32:25.887452+00:00",
+  "scope": "Illustrative browser integration run, separate from the held-out benchmark.",
+  "source_export": {
+    "base_revision": "c3842af893069b78d71f9220a12269f4798de993",
+    "scope": "Clean committed source plus the listed demo branding changes. Unrelated working-tree changes are excluded.",
+    "branding_files": {
+      "docs/demo/index.html": "6e3a1a6e98205d2de446249d1ea76e9996c21b8edf14a275a0fd11133c8df57c",
+      "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+      "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698"
+    },
+    "patch_sha256": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06"
+  },
+  "source_sha256": {
+    "examples/browser_smoke.py": "2786ffb8949b1c74776769fe543848418fabcc54e681ba0f15f841f839876d77",
+    "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698",
+    "pyproject.toml": "f700ea4bcbf8d0e6ce524310edcbb6838707b6704ea0395f3da5a50faf49e380",
+    "src/jev_mlx/__init__.py": "a32a2474d96360eb6a083962be5d075d0c018edd79fcb46c98193eb7283a9d10",
+    "src/jev_mlx/backends/__init__.py": "3262ab71b23c6b43d5d4ad4fbec4ec8f62ba43547cdbdad717493a595a5e6220",
+    "src/jev_mlx/backends/mlx_lm.py": "5451a2ebdcc71defad8aca0564190b1eb5e14ef869157f032068f3ef93052430",
+    "src/jev_mlx/backends/mlx_vlm.py": "5e149a24dcee6794af309bb8cf884da620568cab76462aabdd4ecebe1d6d5f46",
+    "src/jev_mlx/backends/vlm_loaders.py": "1f5d59696761622e4947fc19a24afbc8b6e873c3745670d92067173c1a3778fe",
+    "src/jev_mlx/cli.py": "3529f9ce15c52e4721e592f0f44b8359e0938b5b46cefaeab625bb2607eb4875",
+    "src/jev_mlx/demo.py": "cbf21b0375eb9b027ba904d4f739f977627c8777d2a5113f5d2321ebffd8d8bf",
+    "src/jev_mlx/engine.py": "10aebdb027d54fbc42f49f7a249abc2f4149b613de6d063c5e91fe300ba15baa",
+    "src/jev_mlx/prompt.py": "e6ffa2df07b26c4ab1360d8d2652676706de5571bf59a32cee901aaf3c1beaa1",
+    "src/jev_mlx/server.py": "8e3a795abc4a8d0af56d858228269ff1c518a4f7a44fa04cb827e6818f3ae10b",
+    "src/jev_mlx/session.py": "25e05c1866d9fd30360c4dc5d97cee7b7c7086570b9454434c5332ce10d06436",
+    "src/jev_mlx/static/app.js": "da43b835df6a76b74382cd0dd66be3aa38f6a989324cadb6a4c22ff48575679f",
+    "src/jev_mlx/static/blocks-engine.js": "a7e74e0cfa0863155f63fb0daf4d8f0196ad7a50590ee9cbbb731e34d6520f03",
+    "src/jev_mlx/static/blocks.css": "128c4c385019694d7be205fc97cdba80030cd37c76523c85515d20b65a14d0c5",
+    "src/jev_mlx/static/blocks.html": "eefe530332bef1c9f7c64171c3b6db417e5b611ca2e97b961657e5dfb85fc8a5",
+    "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+    "src/jev_mlx/static/index.html": "28b7213713ed83d231473883438068799dd5ea5479ddf190c10c0a0135202677",
+    "src/jev_mlx/static/style.css": "376b3e0ca720b04d9972ced1f4fb22cec0a929562a35821f1e9dd0b55d248b98",
+    "src/jev_mlx/token_codes.py": "02e30d3cdb7cd54ca8fd471d144bc109c9c35b99e9b46cddcc3417f8ad3b833b",
+    "src/jev_mlx/types.py": "f58e3d27a2fd2ea3ace839cdef75b50aa3fe793c8a47a56ce043e21f1b4c5c94",
+    "src/jev_mlx/vlm.py": "6379433e596236e4b6096f1d22a862f07831380194611f9ada533640a4581084"
+  },
+  "model": {
+    "name": "Qwen3.5-9B-OptiQ-4bit",
+    "model_type": "qwen3_5",
+    "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+    "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+    "quantization": {
+      "default_bits": 4,
+      "group_size": 64,
+      "mode": "affine",
+      "layer_bits_counts": {
+        "8": 93,
+        "4": 157
+      },
+      "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+    },
+    "dependencies": {
+      "mlx": "0.31.2",
+      "mlx-lm": "0.31.3",
+      "transformers": "5.9.0",
+      "tokenizers": "0.22.2"
+    },
+    "cache_types": [
+      "ArraysCache",
+      "KVCache"
+    ]
+  },
+  "artifact_sha256": {
+    "01-desktop.png": "4c40bbcb25ec6212cdbc59b265dd444c69f31aeb7cca5b7699ac0554d7df2fc9",
+    "02-library.png": "d32a9de734aa06fbcdb7808c7aae2a70ac6e0794e9630924e77174179425511b",
+    "03-course-player.png": "ee8e088ad6fea6f5980751c0d4fc46446c7f04355bdbcd11000fb4f903e0bbf4",
+    "03b-player-control.png": "693d91390ec90ab0b83d938ea68fd421ae438556c379ba52940b9dca7d111dd3",
+    "04-stale-protection.png": "0b363121be932161c8da18eb44c08fe85804396ea77c0d8abf694a2f7b1cff0b",
+    "browser-transcript.json": "ad16fbd0d7331db47346518bc869f1bb5c2b7689576208352a14d450e3c79bc3",
+    "source.json": "1051a09f4942e90003de8c75211d78e0ca3c264bc16646d805481a7c9e863168",
+    "source.patch": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06",
+    "video/page@fa167fe0a243fc9c984bd6d7497aa8e8.webm": "4fbd37e1f77c2bcc869a44f624985c55cbbb8435511eec435b561085fcdeb296"
+  },
+  "note": "Clean exported release source plus the recorded branding patch; unrelated working-tree changes excluded. All capture files copied byte-for-byte; historical captures remain unchanged."
+}

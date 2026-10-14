@@ -1,0 +1,80 @@
+{
+  "format_version": 1,
+  "scope": "Illustrative live-model recording, not a held-out quality benchmark.",
+  "source": "transcript.json and original.webm from examples/record_showcase.py",
+  "capture_recovery": null,
+  "presentation": "Full recording, without trimming or speed changes. MP4 re-encodes the original; GIF reduces dimensions, frame rate and colors and loops. No model result, measured latency or execution receipt is rewritten.",
+  "ffmpeg": "ffmpeg version 7.1.3 Copyright (c) 2000-2025 the FFmpeg developers",
+  "gif_settings": {
+    "width": 960,
+    "fps": 8,
+    "colors": 128
+  },
+  "media": {
+    "original.webm": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "vp8",
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "format": {
+        "duration": "56.560000",
+        "size": "2841230"
+      }
+    },
+    "full-run.mp4": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "format": {
+        "duration": "56.560000",
+        "size": "1917217"
+      }
+    },
+    "preview.gif": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "gif",
+          "width": 960,
+          "height": 600
+        }
+      ],
+      "format": {
+        "duration": "56.510000",
+        "size": "6880073"
+      }
+    }
+  },
+  "artifact_sha256": {
+    "final.png": "4f8be130a2bada6dce767d1c85a450c6fd8571250b478f0a9ccf4af4116b7f93",
+    "full-run.mp4": "d4ad12d915dbe1546ce18b4b2ce8974d616647d64bc9e01c08a2e582230520d0",
+    "initial.png": "17dacc7433013bf6e218624a55bce0f5769aaf2b784cdb3fe3bfb3b3fb01be0c",
+    "original.webm": "215b3b3d2869b448560ad525560a3d54d118d7de3d39079daf41b395fa0d9b8c",
+    "preview.gif": "a5b5fb3985da6394690a0bd4c675689c78682daedcb6bc08b04eaf0cf5157260",
+    "transcript.json": "ea891136c04abffaff8b7d6fd223a1bef915d925fe54a5a1ec6e56a4ab002096",
+    "source.patch": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06",
+    "source.json": "1051a09f4942e90003de8c75211d78e0ca3c264bc16646d805481a7c9e863168"
+  },
+  "source_export": {
+    "base_revision": "c3842af893069b78d71f9220a12269f4798de993",
+    "scope": "Clean committed source plus the listed demo branding changes. Unrelated working-tree changes are excluded.",
+    "branding_files": {
+      "docs/demo/index.html": "6e3a1a6e98205d2de446249d1ea76e9996c21b8edf14a275a0fd11133c8df57c",
+      "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+      "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698"
+    },
+    "patch_sha256": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06"
+  }
+}

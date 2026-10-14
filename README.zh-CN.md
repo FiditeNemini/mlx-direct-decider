@@ -41,13 +41,13 @@
 
 ## 看本地模型玩方块
 
-![MLX Direct Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks/preview.gif)
+![MLX Direct Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks-direct/preview.gif)
 
-**Qwen3.5-9B · 模型选择 20 次落点 · 消除 4 行 · 400 分。** 录制画面保留更名前的 MLXJ 名称。GIF 以 **4 倍速**展示第二轮完整开发运行，包含推理等待。模型读取结构化棋盘和规则计算的结果，从所有合法垂直落点中选择；没有“最佳落点”算法代走。这是每块一步的回合制决策，不是看截图或逐帧控制。
+**Qwen3.5-9B · 模型选择 20 次落点 · 消除 6 行 · 600 分。** 于 2026 年 10 月 14 日使用 MLX Direct Decider 名称重新录制。GIF 以 **4 倍速**展示完整运行，包含推理等待。模型读取结构化棋盘和规则计算的结果，从所有合法垂直落点中选择；没有“最佳落点”算法代走。这是每块一步的回合制决策，不是看截图或逐帧控制。
 
-[本地运行游戏](docs/blocks.zh-CN.md) · [原速完整录像](docs/assets/blocks/full-run.mp4) · [全部决策记录](docs/assets/blocks/attempt-2.json)
+[本地运行游戏](docs/blocks.zh-CN.md) · [原速完整录像](docs/assets/blocks-direct/full-run.mp4) · [全部决策记录](docs/assets/blocks-direct/transcript.json)
 
-第一轮在落下第一块前就被模型拒绝了，两次尝试都保留在[中文游戏报告](docs/blocks.zh-CN.md#recorded-development-attempts)。澄清游戏指令后，第二轮达到预设的 20 块上限，决策 p50 / p95 为 **5.78 / 11.57 秒**。这是开发演示，不是冻结的游戏基准或速度优势证明。手动模式可通过静态服务器运行；新的 AI 决策需要本地 MLX 后端。
+本次单轮开发演示达到预定 20 步上限，没有重试、浏览器错误或录制错误。包括首次拒绝在内的早期尝试仍保留在[历史游戏报告](docs/blocks.zh-CN.md#recorded-development-attempts)。这不是留出游戏 benchmark，也不是速度声明。手动游玩可使用静态服务器；新的 AI 决策需要本地 MLX 后端。
 
 ## 基于 MLX 的动作选择与语义路由
 
@@ -210,7 +210,7 @@ Qwen 在原始集的 3 个未通过场景包括拒绝状态区分和排序后的
 
 虚构桌面 Morrow Studio 用于说明如何把允许动作连接到真实 DOM 控件、验证状态版本并查看执行回执。
 
-[本地安装与集成说明](docs/http-and-demo.zh-CN.md) · [八次请求的完整录制](docs/assets/live-demo/README.zh-CN.md) · [原始浏览器记录](docs/assets/browser-demo/browser-transcript.json)
+[本地安装与集成说明](docs/http-and-demo.zh-CN.md) · [八次请求的完整录制](docs/assets/live-demo-direct/README.zh-CN.md) · [原始浏览器记录](docs/assets/browser-demo-direct/browser-transcript.json)
 
 [静态证据回放](docs/demo/index.html?lang=zh-CN)读取保存的结果，不需要模型或服务。克隆仓库后在本地打开 `docs/demo/index.html`；GitHub 会将 HTML 文件显示为源码。输入新请求需要本地 MLX 服务。这个集成示例只操作虚构应用中预先允许的按钮，不负责任意网站导航。
 

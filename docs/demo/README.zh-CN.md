@@ -4,9 +4,9 @@
 
 直接用浏览器打开 `index.html` 即可，包括通过 `file://` 打开。这是离线的中英文**录制回放**，不是实时模型演示。观看时不需要 Python、模型、HTTP 服务、CDN 或网络连接。
 
-页面展示公开[浏览器记录](../assets/browser-demo/browser-transcript.json)中的全部 16 个场景及独立的状态变化检查。原始英文话语、候选 ID、logits、分数、实测耗时、缓存信息和执行回执都予以保留。界面语言随主页入口确定：中文主页进入中文回放，英文主页进入英文回放。语言参数为 `?lang=en` 或 `?lang=zh-CN`；不带语言参数直接打开时默认英文。语言只影响界面，不翻译原始输入或结果；缺失字段仍保持缺失。
+页面展示公开[浏览器记录](../assets/browser-demo-direct/browser-transcript.json)中的全部 16 个场景及独立的状态变化检查。原始英文话语、候选 ID、logits、分数、实测耗时、缓存信息和执行回执都予以保留。界面语言随主页入口确定：中文主页进入中文回放，英文主页进入英文回放。语言参数为 `?lang=en` 或 `?lang=zh-CN`；不带语言参数直接打开时默认英文。语言只影响界面，不翻译原始输入或结果；缺失字段仍保持缺失。
 
-原始材料保留项目旧称，没有改写或修图。回放界面使用当前 MLX Direct Decider 展示名称。当前 Python 与 CLI 标识为 `mlx_direct_decider` 和 `mlx-direct-decider`，旧入口继续兼容。
+当前展示的截图与录像已使用 MLX Direct Decider 名称重新录制。更名前的材料保留在[历史录制目录](../assets/browser-demo/)，两次录制均未修图或改写结果。回放界面同样使用 MLX Direct Decider 名称。当前 Python 与 CLI 标识为 `mlx_direct_decider` 和 `mlx-direct-decider`，旧入口继续兼容。
 
 这一次浏览器冒烟运行独立于留出的模型 benchmark；参见[实测结果与限制](../results.zh-CN.md)。
 

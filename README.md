@@ -41,13 +41,13 @@
 
 ## A local model plays Blocks
 
-![MLX Direct Decider Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks/preview.gif)
+![MLX Direct Decider Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks-direct/preview.gif)
 
-**Qwen3.5-9B · 20 model-selected placements · 4 cleared rows · 400 points.** The recording retains the former MLXJ name. The GIF shows the entire second development run at **4× playback**, including inference waits. The model chooses from every legal vertical-drop placement using structured board data and rule-computed outcomes; there is no best-move fallback. This is turn-based play, not screenshot understanding or frame-by-frame control.
+**Qwen3.5-9B · 20 model-selected placements · 6 cleared rows · 600 points.** Freshly recorded with the MLX Direct Decider name on October 14, 2026. The GIF shows the complete run at **4× playback**, including inference waits. The model chooses from every legal vertical-drop placement using structured board data and rule-computed outcomes; there is no best-move fallback. This is turn-based play, not screenshot understanding or frame-by-frame control.
 
-[Run the game locally](docs/blocks.md) · [Full-speed video](docs/assets/blocks/full-run.mp4) · [All decisions](docs/assets/blocks/attempt-2.json)
+[Run the game locally](docs/blocks.md) · [Full-speed video](docs/assets/blocks-direct/full-run.mp4) · [All decisions](docs/assets/blocks-direct/transcript.json)
 
-The first attempt refused to place a piece. Both attempts are retained in the [game report](docs/blocks.md#recorded-development-attempts). After clarifying the game instruction, the second run reached its planned 20-piece limit. Its decision p50 / p95 was **5.78 / 11.57 seconds**; this is an illustrative development run, not a held-out game benchmark or a speed claim. Manual play can run on a static server; new AI decisions require the local MLX backend.
+This single illustrative development run reached its planned 20-piece limit without retries, browser errors or recording errors. Earlier attempts, including the initial refusal, remain in the [historical game report](docs/blocks.md#recorded-development-attempts). This is not a held-out game benchmark or a speed claim. Manual play can run on a static server; new AI decisions require the local MLX backend.
 
 ## MLX action selection and semantic routing
 
@@ -218,7 +218,7 @@ The [full report](docs/results.md) includes p50/p95, rejection, executable cover
 
 The fictional Morrow Studio desktop demonstrates how to connect allowed actions to real DOM controls, validate state versions, and inspect execution receipts.
 
-[Local setup and integration guide](docs/http-and-demo.md) · [Recorded eight-request walkthrough](docs/assets/live-demo/README.md) · [Original browser transcript](docs/assets/browser-demo/browser-transcript.json)
+[Local setup and integration guide](docs/http-and-demo.md) · [Recorded eight-request walkthrough](docs/assets/live-demo-direct/README.md) · [Original browser transcript](docs/assets/browser-demo-direct/browser-transcript.json)
 
 The [static evidence replay](docs/demo/index.html?lang=en) reads saved results without a model or server. Clone the repository and open `docs/demo/index.html` locally; GitHub displays HTML files as source. New requests require the local MLX service. This integration example controls allowlisted buttons in a fictional application; it does not navigate arbitrary websites.
 

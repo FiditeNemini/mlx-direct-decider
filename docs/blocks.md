@@ -8,8 +8,8 @@ disappear, and a bad sequence can end the game. It is an original, simplified ru
 implementation, not an official Tetris product or an implementation of competitive
 Tetris rules. No third-party game code is copied into this demo.
 
-The existing recordings show the earlier **MLXJ** name. They were not re-recorded
-for this rename, and the original videos and decision records remain unchanged.
+Current demo media were freshly recorded with the **MLX Direct Decider** name.
+Earlier recordings retain their original names and remain available below.
 
 ## Run locally
 
@@ -113,6 +113,27 @@ execution errors alongside successful runs. A fixed seed reproduces the piece
 sequence; it does not guarantee identical model scores across hardware or
 dependency versions.
 
+## Current branded recording
+
+The October 14, 2026 capture uses Qwen3.5-9B-OptiQ-4bit on the same Apple M2 Max,
+with seed 42 and the current interface. All **20 decisions executed**, clearing
+**6 rows for 600 points**, before the planned piece limit. No browser or recording
+errors occurred, and no inference was retried or replaced.
+
+[Complete 1× video](assets/blocks-direct/full-run.mp4) ·
+[4× GIF](assets/blocks-direct/preview.gif) · [Original WebM](assets/blocks-direct/original.webm) ·
+[Full transcript](assets/blocks-direct/transcript.json) · [Source and media hashes](assets/blocks-direct/provenance.json)
+
+The full video retains 152.24 seconds, including inference waits.
+The GIF preserves the entire timeline at a labeled 4× speed. Recorded decision
+p50 / p95 were **6.641 / 9.062 seconds**. These timings describe this
+illustrative capture, with normal desktop activity; they are not an isolated
+performance benchmark. Executed placements do not establish optimal choices.
+
+The capture used a clean export of committed source plus the recorded demo
+branding patch; unrelated working-tree changes were excluded. Original source
+hashes and all raw outcomes are retained. Historical attempts follow separately.
+
 <a name="recorded-development-attempts"></a>
 
 ## Recorded development attempts
@@ -128,7 +149,7 @@ After the first refusal, only the game's instruction was clarified: a move may c
 
 Percentiles use linear interpolation over all 20 `result.timing.decision_ms` values. This excludes browser animation and transport. The second run used 9–34 candidates and 1,213–2,693 prompt tokens; its first request reused the existing initial-board cache, and the next 19 reused only the 300-token stable prefix. Changing boards and many candidate descriptions require substantial new prefill, so these game decisions take seconds; the warm semantic benchmarks' millisecond results do not transfer to this workload.
 
-The [complete video](assets/blocks/full-run.mp4) preserves all 156.6 seconds at 1× speed, including inference waits. The README GIF shows the complete second attempt at **4× speed**, labeled in the image. [Provenance](assets/blocks/provenance.json) retains both originals and source hashes; the second run's runtime hashes match commit `d0d8a55`.
+The [complete video](assets/blocks/full-run.mp4) preserves all 156.6 seconds at 1× speed, including inference waits. The [historical GIF](assets/blocks/preview.gif) shows the complete second attempt at **4× speed**, labeled in the image. [Provenance](assets/blocks/provenance.json) retains both originals and source hashes; the second run's runtime hashes match commit `d0d8a55`.
 
 ## Current scope
 

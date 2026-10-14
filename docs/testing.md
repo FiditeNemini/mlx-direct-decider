@@ -22,9 +22,11 @@ These results apply to the specific machine, models, English scenarios, and impl
 
 The original evaluations, screenshots, and recordings use the project's former name, JEVKit MLX. Evidence files retain their original name, source hashes, and recording times; they were not rewritten for the rename. Reproduction commands below use the current `mlx-direct-decider` command, `mlx_direct_decider` module, and `MLX_DIRECT_MODEL` environment variable. Rename verification reran the core suite and a real-model call from an independent wheel; **it did not rerun the full quality evaluation or browser model tests**. See the [rename verification record](../benchmarks/results/rename-release-checks/verification.json).
 
-Later game and desktop-showcase recordings display the earlier MLXJ name. Those
-videos and original decision records were not re-recorded or altered for the
-current MLX Direct Decider display name.
+Earlier game and desktop-showcase recordings retain the MLXJ name and unchanged
+original records. Current browser, desktop and game demo assets were recorded
+again on October 14, 2026 with MLX Direct Decider branding; see the
+[current replay](demo/index.html?lang=en), [desktop recording](assets/live-demo-direct/README.md),
+and [game recording](blocks.md). These captures do not replace the historical benchmark.
 
 ## What was tested
 

@@ -7,15 +7,16 @@ offline, bilingual **recorded replay**, not a live model demonstration. It needs
 no Python runtime, model, HTTP server, CDN, or network connection at viewing time.
 
 The page exposes all 16 cases and the separate state-change check from the
-existing public [browser transcript](../assets/browser-demo/browser-transcript.json).
+existing public [browser transcript](../assets/browser-demo-direct/browser-transcript.json).
 It preserves the original English utterances, candidate IDs, logits, scores,
 measured timings, cache information, and execution receipts. The interface follows
 the language selected on the homepage (`?lang=en` or `?lang=zh-CN`); opening the
 file without a language defaults to English. Recorded inputs and results are
 unchanged in either language. Missing fields remain missing.
 
-The original artifacts retain the project's previous name. They have not been
-rewritten or retouched. The replay uses the current MLX Direct Decider display name for its interface. Current Python and CLI identifiers are `mlx_direct_decider` and `mlx-direct-decider`; legacy names remain compatible.
+The displayed artifacts were recorded again with the MLX Direct Decider name.
+Earlier captures remain unchanged in [the historical capture folder](../assets/browser-demo/).
+Neither capture has been retouched. The replay uses MLX Direct Decider for its interface. Current Python and CLI identifiers are `mlx_direct_decider` and `mlx-direct-decider`; legacy names remain compatible.
 This single browser smoke run is separate from the held-out model benchmark;
 see [measured results and limitations](../results.md).
 

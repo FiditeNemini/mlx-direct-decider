@@ -73,7 +73,7 @@ function requestFor(moves) {
     kind: "enum", state_version: game.version,
     question: "Choose a single legal final placement for the current falling block, following the user's goal. Every candidate is executable. Candidate descriptions are exact resulting board facts, calculated by the game rules. The game supplies no recommended placement. A hole is an empty cell below an occupied cell in the same column. Smaller height and roughness mean a lower, flatter stack. Choose only from the supplied placements.",
     utterance: "Drop the current piece into one of the listed legal placements now. Choose the placement you judge best; any equally good placement is acceptable. Prefer clearing rows when possible, then fewer holes and a low, flat stack. It is fine if this turn clears no rows.",
-    state: {game: "MLXJ Blocks", width: WIDTH, height: HEIGHT, coordinates: "origin top-left; x right; y down; '.' empty", board_rows: boardRows(), current_piece: game.current, next_pieces: game.queue.slice(0, 3), lines: game.lines, pieces: game.pieces, current_metrics: boardMetrics(game.board), move_rule: "Choose rotation and column before a straight vertical hard drop; no sideways movement after dropping."},
+    state: {game: "MLX Direct Decider Blocks", width: WIDTH, height: HEIGHT, coordinates: "origin top-left; x right; y down; '.' empty", board_rows: boardRows(), current_piece: game.current, next_pieces: game.queue.slice(0, 3), lines: game.lines, pieces: game.pieces, current_metrics: boardMetrics(game.board), move_rule: "Choose rotation and column before a straight vertical hard drop; no sideways movement after dropping."},
     candidates: moves.map((p) => ({id: p.id, description: `Drop ${p.type}, orientation ${p.rotation}, leftmost column ${p.x + 1}: clears ${p.lines} rows; resulting holes ${p.holes}, max height ${p.maxHeight}, total column heights ${p.aggregateHeight}, surface roughness ${p.roughness}.`, value: {rotation: p.rotation, x: p.x}})),
   };
 }
@@ -255,7 +255,7 @@ $("reset").addEventListener("click", () => reset());
 $("manual-mode").addEventListener("click", () => manual("enter"));
 $("download").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify({session: window.blocksSession, model: modelIdentity, state: JSON.parse(window.render_game_to_text()), events: transcript}, null, 2)], {type: "application/json"});
-  const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `mlxj-blocks-seed-${game.seed}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `mlx-direct-decider-blocks-seed-${game.seed}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 });
 document.addEventListener("keydown", (event) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName) || event.ctrlKey || event.metaKey || event.altKey) return;

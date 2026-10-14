@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "scope": "Fresh real-model branding capture; illustrative development run, not a frozen game benchmark.",
+  "recorded_utc": "2026-10-14T12:34:39.691057+00:00",
+  "source_export": {
+    "base_revision": "c3842af893069b78d71f9220a12269f4798de993",
+    "scope": "Clean committed source plus the listed demo branding changes. Unrelated working-tree changes are excluded.",
+    "branding_files": {
+      "docs/demo/index.html": "6e3a1a6e98205d2de446249d1ea76e9996c21b8edf14a275a0fd11133c8df57c",
+      "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+      "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698"
+    },
+    "patch_sha256": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06"
+  },
+  "summary": {
+    "attempts": 20,
+    "executed": 20,
+    "stop_reason": "piece_limit",
+    "lines": 6,
+    "score": 600,
+    "decision_p50_ms": 6640.651687499485,
+    "decision_p95_ms": 9061.67346309958,
+    "duration_seconds": 152.24,
+    "browser_errors": [],
+    "recording_errors": []
+  },
+  "recording": {
+    "original": "unaltered browser WebM",
+    "mp4_speed": 1,
+    "gif_speed": 4,
+    "embedded_speed_label": true,
+    "cuts": false,
+    "inference_waits_removed": false,
+    "gif_fps": 8,
+    "gif_width": 880,
+    "gif_max_palette_colors": 96
+  },
+  "media": {
+    "original.webm": {
+      "duration": "152.240000",
+      "size": "11890159"
+    },
+    "full-run.mp4": {
+      "duration": "152.240000",
+      "size": "4080243"
+    },
+    "preview.gif": {
+      "duration": "38.010000",
+      "size": "6805950"
+    }
+  },
+  "artifact_sha256": {
+    "final.png": "d128468e653a77e53909378ced4b6a33ae4b8520addbe7bb89ebc34745d4a978",
+    "full-run.mp4": "87f98efb5e1117d91ea78d3d87042ea2456d473be5d1e3d667a282d0ac920a2a",
+    "initial.png": "21f5448f9d4ec618eb9e9324e9612ce2433ba5205b4124d442f69fabec5575ae",
+    "original.webm": "5d54da36510833a65f583d1549d7ab111bb9689ea9cdbdabe46688e23e027e70",
+    "preview.gif": "a27da3d3679d8bee0e4ed3bedb07caccff8aeabd7f2432abdeb927444a352644",
+    "source.json": "1051a09f4942e90003de8c75211d78e0ca3c264bc16646d805481a7c9e863168",
+    "source.patch": "b02ad27beedd36faf16c276cecd01ced71c31cea82609594c2757faf452d8b06",
+    "transcript.json": "6fc9d8f6a7b96f95384cd50573949f7e243d62d1b84651e307507e0ba60c1991"
+  },
+  "encoding_commands": [
+    [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-i",
+      "<project>/docs/assets/blocks-direct/original.webm",
+      "-an",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "22",
+      "-pix_fmt",
+      "yuv420p",
+      "-threads",
+      "2",
+      "-movflags",
+      "+faststart",
+      "<project>/docs/assets/blocks-direct/full-run.mp4"
+    ],
+    [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-i",
+      "<project>/docs/assets/blocks-direct/original.webm",
+      "-filter_complex_threads",
+      "2",
+      "-filter_complex",
+      "[0:v]setpts=PTS/4,fps=8,scale=880:-1:flags=lanczos,drawtext=fontfile=/System/Library/Fonts/Helvetica.ttc:text='4x playback | full 20-move development run':fontcolor=white:fontsize=15:box=1:boxcolor=black@0.8:boxborderw=6:x=(w-text_w)/2:y=18,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none",
+      "-an",
+      "-loop",
+      "0",
+      "<project>/docs/assets/blocks-direct/preview.gif"
+    ]
+  ]
+}

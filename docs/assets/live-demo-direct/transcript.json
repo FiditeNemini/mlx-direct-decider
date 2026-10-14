@@ -1,0 +1,5697 @@
+{
+  "schema_version": 1,
+  "project": "MLX Direct Decider",
+  "scope": "illustrative live-model recording, not benchmark",
+  "capture_started_utc": "2026-10-14T12:33:10.738980+00:00",
+  "video": "original.webm",
+  "video_saved": true,
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "timing": {
+    "unit": "milliseconds",
+    "origin": "perf_counter immediately before creating the recorded browser page",
+    "alignment": "Approximate video alignment; Playwright exposes no first-frame clock.",
+    "continuous_original_video": true,
+    "playback_speed": 1,
+    "inference_waits_removed": false,
+    "typing_delay_ms_per_character": 40,
+    "before_and_after_typing_pause_ms": 1200,
+    "after_result_pause_ms": 1500,
+    "backend_latency": "Original result.timing; typing and presentation pauses excluded."
+  },
+  "plan": [
+    {
+      "name": "close-empty-desktop-before",
+      "setup": "desktop",
+      "caption": "Nothing is open. Ask the local model: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "desktop"
+    },
+    {
+      "name": "close-notes",
+      "setup": "notes",
+      "caption": "Field Notes is open. The same words: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.notes"
+      ],
+      "expected_view": "desktop"
+    },
+    {
+      "name": "first-filtered-reversed",
+      "setup": "science_reversed",
+      "caption": "Science courses, Z–A. Ask for the first visible item.",
+      "utterance": "First one",
+      "expected_ids": [
+        "play.orbit"
+      ],
+      "expected_view": "player",
+      "expected_course": "Orbit Field Notes"
+    },
+    {
+      "name": "pause-ready-player",
+      "setup": "playing",
+      "caption": "The player is ready. Ask the local model to pause it.",
+      "utterance": "Pause it",
+      "expected_ids": [
+        "player.pause"
+      ],
+      "expected_view": "player",
+      "expected_player": "paused"
+    },
+    {
+      "name": "question-is-not-an-action",
+      "setup": "paused",
+      "caption": "A question about an action, while the player stays open.",
+      "utterance": "Did you just close it?",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "player",
+      "expected_player": "paused"
+    },
+    {
+      "name": "close-player",
+      "setup": "ready_player",
+      "caption": "The player is open. Ask again: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.player"
+      ],
+      "expected_view": "library"
+    },
+    {
+      "name": "close-library",
+      "setup": "library",
+      "caption": "Now the library is open. The same words: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.library"
+      ],
+      "expected_view": "desktop"
+    },
+    {
+      "name": "close-empty-desktop-after",
+      "setup": "desktop",
+      "caption": "Back to an empty desktop. One last: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "desktop"
+    }
+  ],
+  "evaluation_note": "Fixed illustrative sequence, not held-out quality evaluation. Decline scenes accept either no_match or abstain; strict label accuracy is not claimed. Assertions never alter a request, output, or execution. No inference retries.",
+  "setup_note": "All setup is via labeled manual DOM clicks, including recovery after a failed earlier choice. Setup success is not credited to the model. Player readiness uses the application's normal simulated loading event.",
+  "recorder_environment": {
+    "python": "3.13.2",
+    "system": "Darwin",
+    "release": "25.6.0",
+    "machine": "arm64",
+    "dependencies": {
+      "playwright": "1.63.0",
+      "mlx-direct-decider": null,
+      "mlx": "0.31.2",
+      "mlx-lm": "0.31.3",
+      "transformers": "5.9.0",
+      "tokenizers": "0.22.2"
+    },
+    "note": "Recorder environment; backend dependency identity is in each result.model."
+  },
+  "source": {
+    "revision": null,
+    "dirty": null
+  },
+  "source_files": {
+    "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698",
+    "pyproject.toml": "f700ea4bcbf8d0e6ce524310edcbb6838707b6704ea0395f3da5a50faf49e380",
+    "src/jev_mlx/__init__.py": "a32a2474d96360eb6a083962be5d075d0c018edd79fcb46c98193eb7283a9d10",
+    "src/jev_mlx/backends/__init__.py": "3262ab71b23c6b43d5d4ad4fbec4ec8f62ba43547cdbdad717493a595a5e6220",
+    "src/jev_mlx/backends/mlx_lm.py": "5451a2ebdcc71defad8aca0564190b1eb5e14ef869157f032068f3ef93052430",
+    "src/jev_mlx/backends/mlx_vlm.py": "5e149a24dcee6794af309bb8cf884da620568cab76462aabdd4ecebe1d6d5f46",
+    "src/jev_mlx/backends/vlm_loaders.py": "1f5d59696761622e4947fc19a24afbc8b6e873c3745670d92067173c1a3778fe",
+    "src/jev_mlx/cli.py": "3529f9ce15c52e4721e592f0f44b8359e0938b5b46cefaeab625bb2607eb4875",
+    "src/jev_mlx/demo.py": "cbf21b0375eb9b027ba904d4f739f977627c8777d2a5113f5d2321ebffd8d8bf",
+    "src/jev_mlx/engine.py": "10aebdb027d54fbc42f49f7a249abc2f4149b613de6d063c5e91fe300ba15baa",
+    "src/jev_mlx/prompt.py": "e6ffa2df07b26c4ab1360d8d2652676706de5571bf59a32cee901aaf3c1beaa1",
+    "src/jev_mlx/server.py": "8e3a795abc4a8d0af56d858228269ff1c518a4f7a44fa04cb827e6818f3ae10b",
+    "src/jev_mlx/session.py": "25e05c1866d9fd30360c4dc5d97cee7b7c7086570b9454434c5332ce10d06436",
+    "src/jev_mlx/static/app.js": "da43b835df6a76b74382cd0dd66be3aa38f6a989324cadb6a4c22ff48575679f",
+    "src/jev_mlx/static/blocks-engine.js": "a7e74e0cfa0863155f63fb0daf4d8f0196ad7a50590ee9cbbb731e34d6520f03",
+    "src/jev_mlx/static/blocks.css": "128c4c385019694d7be205fc97cdba80030cd37c76523c85515d20b65a14d0c5",
+    "src/jev_mlx/static/blocks.html": "eefe530332bef1c9f7c64171c3b6db417e5b611ca2e97b961657e5dfb85fc8a5",
+    "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+    "src/jev_mlx/static/index.html": "28b7213713ed83d231473883438068799dd5ea5479ddf190c10c0a0135202677",
+    "src/jev_mlx/static/style.css": "376b3e0ca720b04d9972ced1f4fb22cec0a929562a35821f1e9dd0b55d248b98",
+    "src/jev_mlx/token_codes.py": "02e30d3cdb7cd54ca8fd471d144bc109c9c35b99e9b46cddcc3417f8ad3b833b",
+    "src/jev_mlx/types.py": "f58e3d27a2fd2ea3ace839cdef75b50aa3fe793c8a47a56ce043e21f1b4c5c94",
+    "src/jev_mlx/vlm.py": "6379433e596236e4b6096f1d22a862f07831380194611f9ada533640a4581084"
+  },
+  "cases": [
+    {
+      "name": "close-empty-desktop-before",
+      "setup": "desktop",
+      "caption": "Nothing is open. Ask the local model: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "desktop",
+      "index": 0,
+      "started_ms": 352.833,
+      "submitted": true,
+      "result": {
+        "candidate_id": null,
+        "status": "no_match",
+        "raw_selected_id": "__no_match__",
+        "raw_scores": {
+          "open.library": 20.125,
+          "open.notes": 17.625,
+          "__no_match__": 24.25,
+          "__abstain__": 20.875
+        },
+        "scores": {
+          "open.library": 0.015368798699965278,
+          "open.notes": 0.0012615478201376275,
+          "__no_match__": 0.9508339063767538,
+          "__abstain__": 0.032535747103143345
+        },
+        "margin": 3.375,
+        "state_version": 18,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 2445.4144169867504,
+          "inference_ms": 2445.414041983895,
+          "queue_ms": 0.00037500285543501377,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7096934430,
+          "active_memory_bytes": 6594839066,
+          "decision_ms": 2445.62045802013
+        },
+        "cache": {
+          "hit": true,
+          "scope": "state",
+          "prompt_tokens": 509,
+          "reused_tokens": 496,
+          "prefill_tokens": 13,
+          "system_tokens": 300,
+          "state_tokens": 496,
+          "bytes": 482344960,
+          "entries": 7
+        },
+        "request_id": "993a1691087749969eba7d6b98cb740b",
+        "selected_value": null
+      },
+      "execution_receipt": null,
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "typing_started_ms": 4164.327,
+      "typing_finished_ms": 4515.387,
+      "submitted_ms": 5719.196,
+      "response_received_ms": 8193.129,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "open.library": 20.125,
+            "open.notes": 17.625,
+            "__no_match__": 24.25,
+            "__abstain__": 20.875
+          },
+          "scores": {
+            "open.library": 0.015368798699965278,
+            "open.notes": 0.0012615478201376275,
+            "__no_match__": 0.9508339063767538,
+            "__abstain__": 0.032535747103143345
+          },
+          "margin": 3.375,
+          "state_version": 18,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2445.4144169867504,
+            "inference_ms": 2445.414041983895,
+            "queue_ms": 0.00037500285543501377,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7096934430,
+            "active_memory_bytes": 6594839066,
+            "decision_ms": 2445.62045802013
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 509,
+            "reused_tokens": 496,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 496,
+            "bytes": 482344960,
+            "entries": 7
+          },
+          "request_id": "993a1691087749969eba7d6b98cb740b",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": null,
+      "receipt_events": [],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "observed_version": 18,
+      "receipt_display": "No action applied.\nThe model declined to select a browser action.",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 9711.275
+    },
+    {
+      "name": "close-notes",
+      "setup": "notes",
+      "caption": "Field Notes is open. The same words: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.notes"
+      ],
+      "expected_view": "desktop",
+      "index": 1,
+      "started_ms": 9713.337,
+      "submitted": true,
+      "result": {
+        "candidate_id": "close.notes",
+        "status": "selected",
+        "raw_selected_id": "close.notes",
+        "raw_scores": {
+          "close.notes": 23.25,
+          "__no_match__": 20.125,
+          "__abstain__": 17.875
+        },
+        "scores": {
+          "close.notes": 0.9536817267020239,
+          "__no_match__": 0.0419018507239634,
+          "__abstain__": 0.0044164225740127355
+        },
+        "margin": 3.125,
+        "state_version": 19,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 443.39974998729303,
+          "inference_ms": 443.3990840043407,
+          "queue_ms": 0.0006659829523414373,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7096934430,
+          "active_memory_bytes": 6594839066,
+          "decision_ms": 443.57641600072384
+        },
+        "cache": {
+          "hit": true,
+          "scope": "state",
+          "prompt_tokens": 492,
+          "reused_tokens": 479,
+          "prefill_tokens": 13,
+          "system_tokens": 300,
+          "state_tokens": 479,
+          "bytes": 482344960,
+          "entries": 7
+        },
+        "request_id": "75b3bdc5722844b3864d0b54aae6798e",
+        "selected_value": null
+      },
+      "execution_receipt": {
+        "executed": true,
+        "action_id": "close.notes",
+        "source": "model",
+        "from_version": 19,
+        "to_version": 20,
+        "decision_id": "75b3bdc5722844b3864d0b54aae6798e",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.notes\"]",
+        "observed_view": "desktop",
+        "observed_state_version": 20
+      },
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 19,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "notes",
+        "focused_object": "field notes",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "typing_started_ms": 13403.951,
+      "typing_finished_ms": 13744.499,
+      "submitted_ms": 14946.629,
+      "response_received_ms": 15406.088,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": "close.notes",
+          "status": "selected",
+          "raw_selected_id": "close.notes",
+          "raw_scores": {
+            "close.notes": 23.25,
+            "__no_match__": 20.125,
+            "__abstain__": 17.875
+          },
+          "scores": {
+            "close.notes": 0.9536817267020239,
+            "__no_match__": 0.0419018507239634,
+            "__abstain__": 0.0044164225740127355
+          },
+          "margin": 3.125,
+          "state_version": 19,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 443.39974998729303,
+            "inference_ms": 443.3990840043407,
+            "queue_ms": 0.0006659829523414373,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7096934430,
+            "active_memory_bytes": 6594839066,
+            "decision_ms": 443.57641600072384
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 492,
+            "reused_tokens": 479,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 479,
+            "bytes": 482344960,
+            "entries": 7
+          },
+          "request_id": "75b3bdc5722844b3864d0b54aae6798e",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.notes",
+          "selector": "[data-action=\"close.notes\"]",
+          "ticket": "75b3bdc5722844b3864d0b54aae6798e",
+          "state_version": 19
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 19,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": {
+        "type": "click",
+        "action_id": "close.notes",
+        "selector": "[data-action=\"close.notes\"]",
+        "ticket": "75b3bdc5722844b3864d0b54aae6798e",
+        "state_version": 19
+      },
+      "receipt_events": [
+        {
+          "browser_performance_ms": 15251.5,
+          "receipt": {
+            "executed": true,
+            "action_id": "close.notes",
+            "source": "model",
+            "from_version": 19,
+            "to_version": 20,
+            "decision_id": "75b3bdc5722844b3864d0b54aae6798e",
+            "browser_event": "DOM button click",
+            "element": "[data-action=\"close.notes\"]",
+            "observed_view": "desktop",
+            "observed_state_version": 20
+          }
+        }
+      ],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 20,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "observed_version": 20,
+      "receipt_display": "close.notes\nModel-selected DOM button click\nState 19 → 20 · desktop",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 16920.756
+    },
+    {
+      "name": "first-filtered-reversed",
+      "setup": "science_reversed",
+      "caption": "Science courses, Z–A. Ask for the first visible item.",
+      "utterance": "First one",
+      "expected_ids": [
+        "play.orbit"
+      ],
+      "expected_view": "player",
+      "expected_course": "Orbit Field Notes",
+      "index": 2,
+      "started_ms": 16924.14,
+      "submitted": true,
+      "result": {
+        "candidate_id": "play.orbit",
+        "status": "selected",
+        "raw_selected_id": "play.orbit",
+        "raw_scores": {
+          "close.library": 20.625,
+          "filter.all": 17.75,
+          "filter.design": 17.5,
+          "filter.music": 16.5,
+          "sort.featured": 17.625,
+          "sort.az": 17.375,
+          "play.orbit": 23.875,
+          "play.lunar": 20.75,
+          "__no_match__": 19.75,
+          "__abstain__": 18.5
+        },
+        "scores": {
+          "close.library": 0.03488591809145199,
+          "filter.all": 0.0019681288217647053,
+          "filter.design": 0.0015327802675757537,
+          "filter.music": 0.0005638783482743822,
+          "sort.featured": 0.0017368675890948215,
+          "sort.az": 0.00135267383847839,
+          "play.orbit": 0.8997196859019018,
+          "play.lunar": 0.03953092411914483,
+          "__no_match__": 0.01454261427394169,
+          "__abstain__": 0.004166528748371765
+        },
+        "margin": 3.125,
+        "state_version": 21,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 2471.3708329945803,
+          "inference_ms": 2471.3704580208287,
+          "queue_ms": 0.00037497375160455704,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6613287482,
+          "decision_ms": 2471.5773339848965
+        },
+        "cache": {
+          "hit": true,
+          "scope": "prefix",
+          "prompt_tokens": 704,
+          "reused_tokens": 300,
+          "prefill_tokens": 404,
+          "system_tokens": 300,
+          "state_tokens": 691,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "f641dc5152af4b11b243e32d7d5dd132",
+        "selected_value": null
+      },
+      "execution_receipt": {
+        "executed": true,
+        "action_id": "play.orbit",
+        "source": "model",
+        "from_version": 21,
+        "to_version": 22,
+        "decision_id": "f641dc5152af4b11b243e32d7d5dd132",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"play.orbit\"]",
+        "observed_view": "player",
+        "observed_state_version": 22
+      },
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 21,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "library",
+        "focused_object": "course library",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": [
+            {
+              "position": 1,
+              "id": "orbit",
+              "title": "Orbit Field Notes",
+              "category": "Science"
+            },
+            {
+              "position": 2,
+              "id": "lunar",
+              "title": "Lunar Gardening",
+              "category": "Science"
+            }
+          ]
+        },
+        "player": null
+      },
+      "typing_started_ms": 20635.147,
+      "typing_finished_ms": 21014.544,
+      "submitted_ms": 22220.69,
+      "response_received_ms": 24717.488,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": "play.orbit",
+          "status": "selected",
+          "raw_selected_id": "play.orbit",
+          "raw_scores": {
+            "close.library": 20.625,
+            "filter.all": 17.75,
+            "filter.design": 17.5,
+            "filter.music": 16.5,
+            "sort.featured": 17.625,
+            "sort.az": 17.375,
+            "play.orbit": 23.875,
+            "play.lunar": 20.75,
+            "__no_match__": 19.75,
+            "__abstain__": 18.5
+          },
+          "scores": {
+            "close.library": 0.03488591809145199,
+            "filter.all": 0.0019681288217647053,
+            "filter.design": 0.0015327802675757537,
+            "filter.music": 0.0005638783482743822,
+            "sort.featured": 0.0017368675890948215,
+            "sort.az": 0.00135267383847839,
+            "play.orbit": 0.8997196859019018,
+            "play.lunar": 0.03953092411914483,
+            "__no_match__": 0.01454261427394169,
+            "__abstain__": 0.004166528748371765
+          },
+          "margin": 3.125,
+          "state_version": 21,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2471.3708329945803,
+            "inference_ms": 2471.3704580208287,
+            "queue_ms": 0.00037497375160455704,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6613287482,
+            "decision_ms": 2471.5773339848965
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 704,
+            "reused_tokens": 300,
+            "prefill_tokens": 404,
+            "system_tokens": 300,
+            "state_tokens": 691,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "f641dc5152af4b11b243e32d7d5dd132",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "play.orbit",
+          "selector": "[data-action=\"play.orbit\"]",
+          "ticket": "f641dc5152af4b11b243e32d7d5dd132",
+          "state_version": 21
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 21,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": {
+        "type": "click",
+        "action_id": "play.orbit",
+        "selector": "[data-action=\"play.orbit\"]",
+        "ticket": "f641dc5152af4b11b243e32d7d5dd132",
+        "state_version": 21
+      },
+      "receipt_events": [
+        {
+          "browser_performance_ms": 24562.5,
+          "receipt": {
+            "executed": true,
+            "action_id": "play.orbit",
+            "source": "model",
+            "from_version": 21,
+            "to_version": 22,
+            "decision_id": "f641dc5152af4b11b243e32d7d5dd132",
+            "browser_event": "DOM button click",
+            "element": "[data-action=\"play.orbit\"]",
+            "observed_view": "player",
+            "observed_state_version": 22
+          }
+        }
+      ],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "loading",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 22,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "loading",
+          "position_seconds": 60
+        }
+      },
+      "observed_version": 22,
+      "receipt_display": "play.orbit\nModel-selected DOM button click\nState 21 → 22 · player",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 26236.766
+    },
+    {
+      "name": "pause-ready-player",
+      "setup": "playing",
+      "caption": "The player is ready. Ask the local model to pause it.",
+      "utterance": "Pause it",
+      "expected_ids": [
+        "player.pause"
+      ],
+      "expected_view": "player",
+      "expected_player": "paused",
+      "index": 3,
+      "started_ms": 26242.378,
+      "submitted": true,
+      "result": {
+        "candidate_id": "player.pause",
+        "status": "selected",
+        "raw_selected_id": "player.pause",
+        "raw_scores": {
+          "close.player": 19.125,
+          "player.pause": 24.0,
+          "player.rewind": 18.0,
+          "__no_match__": 16.375,
+          "__abstain__": 15.875
+        },
+        "scores": {
+          "close.player": 0.007552784080897535,
+          "player.pause": 0.9892194993797055,
+          "player.rewind": 0.002452029987288251,
+          "__no_match__": 0.00048283333244784806,
+          "__abstain__": 0.00029285321966084256
+        },
+        "margin": 4.875,
+        "state_version": 23,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 1525.1803339924663,
+          "inference_ms": 1525.1797919918317,
+          "queue_ms": 0.0005420006345957518,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6604800542,
+          "decision_ms": 1525.3502090054099
+        },
+        "cache": {
+          "hit": true,
+          "scope": "prefix",
+          "prompt_tokens": 548,
+          "reused_tokens": 300,
+          "prefill_tokens": 248,
+          "system_tokens": 300,
+          "state_tokens": 535,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "843085585f114e1ebb99b44f49a8fc16",
+        "selected_value": null
+      },
+      "execution_receipt": {
+        "executed": true,
+        "action_id": "player.pause",
+        "source": "model",
+        "from_version": 23,
+        "to_version": 24,
+        "decision_id": "843085585f114e1ebb99b44f49a8fc16",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"player.pause\"]",
+        "observed_view": "player",
+        "observed_state_version": 24
+      },
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "playing",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 23,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.pause",
+            "description": "Pause the currently playing course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "playing",
+          "position_seconds": 60
+        }
+      },
+      "typing_started_ms": 27569.066,
+      "typing_finished_ms": 27907.466,
+      "submitted_ms": 29110.23,
+      "response_received_ms": 30651.397,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": "player.pause",
+          "status": "selected",
+          "raw_selected_id": "player.pause",
+          "raw_scores": {
+            "close.player": 19.125,
+            "player.pause": 24.0,
+            "player.rewind": 18.0,
+            "__no_match__": 16.375,
+            "__abstain__": 15.875
+          },
+          "scores": {
+            "close.player": 0.007552784080897535,
+            "player.pause": 0.9892194993797055,
+            "player.rewind": 0.002452029987288251,
+            "__no_match__": 0.00048283333244784806,
+            "__abstain__": 0.00029285321966084256
+          },
+          "margin": 4.875,
+          "state_version": 23,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 1525.1803339924663,
+            "inference_ms": 1525.1797919918317,
+            "queue_ms": 0.0005420006345957518,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 1525.3502090054099
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 548,
+            "reused_tokens": 300,
+            "prefill_tokens": 248,
+            "system_tokens": 300,
+            "state_tokens": 535,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "843085585f114e1ebb99b44f49a8fc16",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "player.pause",
+          "selector": "[data-action=\"player.pause\"]",
+          "ticket": "843085585f114e1ebb99b44f49a8fc16",
+          "state_version": 23
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "playing",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 23,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.pause",
+            "description": "Pause the currently playing course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": {
+        "type": "click",
+        "action_id": "player.pause",
+        "selector": "[data-action=\"player.pause\"]",
+        "ticket": "843085585f114e1ebb99b44f49a8fc16",
+        "state_version": 23
+      },
+      "receipt_events": [
+        {
+          "browser_performance_ms": 30496,
+          "receipt": {
+            "executed": true,
+            "action_id": "player.pause",
+            "source": "model",
+            "from_version": 23,
+            "to_version": 24,
+            "decision_id": "843085585f114e1ebb99b44f49a8fc16",
+            "browser_event": "DOM button click",
+            "element": "[data-action=\"player.pause\"]",
+            "observed_view": "player",
+            "observed_state_version": 24
+          }
+        }
+      ],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "paused",
+          "position_seconds": 60
+        }
+      },
+      "observed_version": 24,
+      "receipt_display": "player.pause\nModel-selected DOM button click\nState 23 → 24 · player",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 32170.807
+    },
+    {
+      "name": "question-is-not-an-action",
+      "setup": "paused",
+      "caption": "A question about an action, while the player stays open.",
+      "utterance": "Did you just close it?",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "player",
+      "expected_player": "paused",
+      "index": 4,
+      "started_ms": 32177.794,
+      "submitted": true,
+      "result": {
+        "candidate_id": null,
+        "status": "no_match",
+        "raw_selected_id": "__no_match__",
+        "raw_scores": {
+          "close.player": 19.75,
+          "player.resume": 17.25,
+          "player.rewind": 17.875,
+          "__no_match__": 23.625,
+          "__abstain__": 22.0
+        },
+        "scores": {
+          "close.player": 0.016976235653891895,
+          "player.resume": 0.0013934942802886977,
+          "player.rewind": 0.0026033900558542836,
+          "__no_match__": 0.8179608406300678,
+          "__abstain__": 0.16106603937989744
+        },
+        "margin": 1.625,
+        "state_version": 24,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 2533.472790993983,
+          "inference_ms": 2533.4713329793885,
+          "queue_ms": 0.0014580145943909883,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6604800542,
+          "decision_ms": 2533.6407919821795
+        },
+        "cache": {
+          "hit": true,
+          "scope": "prefix",
+          "prompt_tokens": 550,
+          "reused_tokens": 300,
+          "prefill_tokens": 250,
+          "system_tokens": 300,
+          "state_tokens": 534,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "0f253ab18e0e4aaba681fd4babc24b83",
+        "selected_value": null
+      },
+      "execution_receipt": null,
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "paused",
+          "position_seconds": 60
+        }
+      },
+      "typing_started_ms": 33422.547,
+      "typing_finished_ms": 34346.161,
+      "submitted_ms": 35547.975,
+      "response_received_ms": 38091.941,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "close.player": 19.75,
+            "player.resume": 17.25,
+            "player.rewind": 17.875,
+            "__no_match__": 23.625,
+            "__abstain__": 22.0
+          },
+          "scores": {
+            "close.player": 0.016976235653891895,
+            "player.resume": 0.0013934942802886977,
+            "player.rewind": 0.0026033900558542836,
+            "__no_match__": 0.8179608406300678,
+            "__abstain__": 0.16106603937989744
+          },
+          "margin": 1.625,
+          "state_version": 24,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2533.472790993983,
+            "inference_ms": 2533.4713329793885,
+            "queue_ms": 0.0014580145943909883,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 2533.6407919821795
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 550,
+            "reused_tokens": 300,
+            "prefill_tokens": 250,
+            "system_tokens": 300,
+            "state_tokens": 534,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "0f253ab18e0e4aaba681fd4babc24b83",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": null,
+      "receipt_events": [],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "paused",
+          "position_seconds": 60
+        }
+      },
+      "observed_version": 24,
+      "receipt_display": "No action applied.\nThe model declined to select a browser action.",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 39610.816
+    },
+    {
+      "name": "close-player",
+      "setup": "ready_player",
+      "caption": "The player is open. Ask again: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.player"
+      ],
+      "expected_view": "library",
+      "index": 5,
+      "started_ms": 39620.886,
+      "submitted": true,
+      "result": {
+        "candidate_id": "close.player",
+        "status": "selected",
+        "raw_selected_id": "close.player",
+        "raw_scores": {
+          "close.player": 23.0,
+          "player.resume": 19.75,
+          "player.rewind": 18.625,
+          "__no_match__": 21.0,
+          "__abstain__": 17.875
+        },
+        "scores": {
+          "close.player": 0.8384732788757822,
+          "player.resume": 0.03251113717647498,
+          "player.rewind": 0.010554820900968376,
+          "__no_match__": 0.11347501868298532,
+          "__abstain__": 0.004985744363789242
+        },
+        "margin": 2.0,
+        "state_version": 24,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 553.6400830023922,
+          "inference_ms": 553.639582998585,
+          "queue_ms": 0.000500003807246685,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6604800542,
+          "decision_ms": 553.841208020458
+        },
+        "cache": {
+          "hit": true,
+          "scope": "state",
+          "prompt_tokens": 547,
+          "reused_tokens": 534,
+          "prefill_tokens": 13,
+          "system_tokens": 300,
+          "state_tokens": 534,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+        "selected_value": null
+      },
+      "execution_receipt": {
+        "executed": true,
+        "action_id": "close.player",
+        "source": "model",
+        "from_version": 24,
+        "to_version": 25,
+        "decision_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.player\"]",
+        "observed_view": "library",
+        "observed_state_version": 25
+      },
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "player",
+        "focused_object": "course player",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": {
+          "course": "Orbit Field Notes",
+          "status": "paused",
+          "position_seconds": 60
+        }
+      },
+      "typing_started_ms": 40863.236,
+      "typing_finished_ms": 41200.321,
+      "submitted_ms": 42403.013,
+      "response_received_ms": 42979.89,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": "close.player",
+          "status": "selected",
+          "raw_selected_id": "close.player",
+          "raw_scores": {
+            "close.player": 23.0,
+            "player.resume": 19.75,
+            "player.rewind": 18.625,
+            "__no_match__": 21.0,
+            "__abstain__": 17.875
+          },
+          "scores": {
+            "close.player": 0.8384732788757822,
+            "player.resume": 0.03251113717647498,
+            "player.rewind": 0.010554820900968376,
+            "__no_match__": 0.11347501868298532,
+            "__abstain__": 0.004985744363789242
+          },
+          "margin": 2.0,
+          "state_version": 24,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 553.6400830023922,
+            "inference_ms": 553.639582998585,
+            "queue_ms": 0.000500003807246685,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 553.841208020458
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 547,
+            "reused_tokens": 534,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 534,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.player",
+          "selector": "[data-action=\"close.player\"]",
+          "ticket": "e9fab4d0690a47d7b6eb6b75877c6630",
+          "state_version": 24
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": {
+        "type": "click",
+        "action_id": "close.player",
+        "selector": "[data-action=\"close.player\"]",
+        "ticket": "e9fab4d0690a47d7b6eb6b75877c6630",
+        "state_version": 24
+      },
+      "receipt_events": [
+        {
+          "browser_performance_ms": 42826.19999998808,
+          "receipt": {
+            "executed": true,
+            "action_id": "close.player",
+            "source": "model",
+            "from_version": 24,
+            "to_version": 25,
+            "decision_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+            "browser_event": "DOM button click",
+            "element": "[data-action=\"close.player\"]",
+            "observed_view": "library",
+            "observed_state_version": 25
+          }
+        }
+      ],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 25,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "library",
+        "focused_object": "course library",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": [
+            {
+              "position": 1,
+              "id": "orbit",
+              "title": "Orbit Field Notes",
+              "category": "Science"
+            },
+            {
+              "position": 2,
+              "id": "lunar",
+              "title": "Lunar Gardening",
+              "category": "Science"
+            }
+          ]
+        },
+        "player": null
+      },
+      "observed_version": 25,
+      "receipt_display": "close.player\nModel-selected DOM button click\nState 24 → 25 · library",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 44508.725
+    },
+    {
+      "name": "close-library",
+      "setup": "library",
+      "caption": "Now the library is open. The same words: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "close.library"
+      ],
+      "expected_view": "desktop",
+      "index": 6,
+      "started_ms": 44518.534,
+      "submitted": true,
+      "result": {
+        "candidate_id": "close.library",
+        "status": "selected",
+        "raw_selected_id": "close.library",
+        "raw_scores": {
+          "close.library": 23.25,
+          "filter.all": 18.25,
+          "filter.design": 17.0,
+          "filter.music": 15.5,
+          "sort.featured": 16.125,
+          "sort.az": 15.625,
+          "play.orbit": 16.875,
+          "play.lunar": 15.125,
+          "__no_match__": 21.75,
+          "__abstain__": 16.75
+        },
+        "scores": {
+          "close.library": 0.8083909455217145,
+          "filter.all": 0.0054468953454659,
+          "filter.design": 0.0015605616444714226,
+          "filter.music": 0.00034820836965240555,
+          "sort.featured": 0.0006505388789471715,
+          "sort.az": 0.00039457177541654497,
+          "play.orbit": 0.0013771908175383531,
+          "play.lunar": 0.00023931987924738206,
+          "__no_match__": 0.18037640113680076,
+          "__abstain__": 0.001215366630745543
+        },
+        "margin": 1.5,
+        "state_version": 25,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 462.8804999811109,
+          "inference_ms": 462.87991598364897,
+          "queue_ms": 0.0005839974619448185,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6613189178,
+          "decision_ms": 463.0953750165645
+        },
+        "cache": {
+          "hit": true,
+          "scope": "state",
+          "prompt_tokens": 704,
+          "reused_tokens": 691,
+          "prefill_tokens": 13,
+          "system_tokens": 300,
+          "state_tokens": 691,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "07d502294c10454a8ac6a41f52b38055",
+        "selected_value": null
+      },
+      "execution_receipt": {
+        "executed": true,
+        "action_id": "close.library",
+        "source": "model",
+        "from_version": 25,
+        "to_version": 26,
+        "decision_id": "07d502294c10454a8ac6a41f52b38055",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.library\"]",
+        "observed_view": "desktop",
+        "observed_state_version": 26
+      },
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 25,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "library",
+        "focused_object": "course library",
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": [
+            {
+              "position": 1,
+              "id": "orbit",
+              "title": "Orbit Field Notes",
+              "category": "Science"
+            },
+            {
+              "position": 2,
+              "id": "lunar",
+              "title": "Lunar Gardening",
+              "category": "Science"
+            }
+          ]
+        },
+        "player": null
+      },
+      "typing_started_ms": 45750.794,
+      "typing_finished_ms": 46087.835,
+      "submitted_ms": 47289.898,
+      "response_received_ms": 47772.589,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": "close.library",
+          "status": "selected",
+          "raw_selected_id": "close.library",
+          "raw_scores": {
+            "close.library": 23.25,
+            "filter.all": 18.25,
+            "filter.design": 17.0,
+            "filter.music": 15.5,
+            "sort.featured": 16.125,
+            "sort.az": 15.625,
+            "play.orbit": 16.875,
+            "play.lunar": 15.125,
+            "__no_match__": 21.75,
+            "__abstain__": 16.75
+          },
+          "scores": {
+            "close.library": 0.8083909455217145,
+            "filter.all": 0.0054468953454659,
+            "filter.design": 0.0015605616444714226,
+            "filter.music": 0.00034820836965240555,
+            "sort.featured": 0.0006505388789471715,
+            "sort.az": 0.00039457177541654497,
+            "play.orbit": 0.0013771908175383531,
+            "play.lunar": 0.00023931987924738206,
+            "__no_match__": 0.18037640113680076,
+            "__abstain__": 0.001215366630745543
+          },
+          "margin": 1.5,
+          "state_version": 25,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 462.8804999811109,
+            "inference_ms": 462.87991598364897,
+            "queue_ms": 0.0005839974619448185,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6613189178,
+            "decision_ms": 463.0953750165645
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 704,
+            "reused_tokens": 691,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 691,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "07d502294c10454a8ac6a41f52b38055",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.library",
+          "selector": "[data-action=\"close.library\"]",
+          "ticket": "07d502294c10454a8ac6a41f52b38055",
+          "state_version": 25
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 25,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": {
+        "type": "click",
+        "action_id": "close.library",
+        "selector": "[data-action=\"close.library\"]",
+        "ticket": "07d502294c10454a8ac6a41f52b38055",
+        "state_version": 25
+      },
+      "receipt_events": [
+        {
+          "browser_performance_ms": 47617.90000000596,
+          "receipt": {
+            "executed": true,
+            "action_id": "close.library",
+            "source": "model",
+            "from_version": 25,
+            "to_version": 26,
+            "decision_id": "07d502294c10454a8ac6a41f52b38055",
+            "browser_event": "DOM button click",
+            "element": "[data-action=\"close.library\"]",
+            "observed_view": "desktop",
+            "observed_state_version": 26
+          }
+        }
+      ],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "observed_version": 26,
+      "receipt_display": "close.library\nModel-selected DOM button click\nState 25 → 26 · desktop",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 49295.521
+    },
+    {
+      "name": "close-empty-desktop-after",
+      "setup": "desktop",
+      "caption": "Back to an empty desktop. One last: Close it.",
+      "utterance": "Close it",
+      "expected_ids": [
+        "__no_match__",
+        "__abstain__"
+      ],
+      "expected_view": "desktop",
+      "index": 7,
+      "started_ms": 49305.635,
+      "submitted": true,
+      "result": {
+        "candidate_id": null,
+        "status": "no_match",
+        "raw_selected_id": "__no_match__",
+        "raw_scores": {
+          "open.library": 20.125,
+          "open.notes": 17.625,
+          "__no_match__": 24.25,
+          "__abstain__": 20.875
+        },
+        "scores": {
+          "open.library": 0.015368798699965278,
+          "open.notes": 0.0012615478201376275,
+          "__no_match__": 0.9508339063767538,
+          "__abstain__": 0.032535747103143345
+        },
+        "margin": 3.375,
+        "state_version": 26,
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        },
+        "timing": {
+          "total_ms": 546.60904101911,
+          "inference_ms": 546.6087500099093,
+          "queue_ms": 0.0002910092007368803,
+          "load_ms": 6851.01741598919,
+          "peak_memory_bytes": 7185162398,
+          "active_memory_bytes": 6603227674,
+          "decision_ms": 546.7699999862816
+        },
+        "cache": {
+          "hit": true,
+          "scope": "state",
+          "prompt_tokens": 509,
+          "reused_tokens": 496,
+          "prefill_tokens": 13,
+          "system_tokens": 300,
+          "state_tokens": 496,
+          "bytes": 490733568,
+          "entries": 7
+        },
+        "request_id": "0214d07593c24fb493b1b4430ad67262",
+        "selected_value": null
+      },
+      "execution_receipt": null,
+      "model_correct": true,
+      "execution_correct": true,
+      "passed": true,
+      "errors": [],
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "before_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "typing_started_ms": 50538.009,
+      "typing_finished_ms": 50875.21,
+      "submitted_ms": 52076.524,
+      "response_received_ms": 52637.547,
+      "response_status": 200,
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "open.library": 20.125,
+            "open.notes": 17.625,
+            "__no_match__": 24.25,
+            "__abstain__": 20.875
+          },
+          "scores": {
+            "open.library": 0.015368798699965278,
+            "open.notes": 0.0012615478201376275,
+            "__no_match__": 0.9508339063767538,
+            "__abstain__": 0.032535747103143345
+          },
+          "margin": 3.375,
+          "state_version": 26,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 546.60904101911,
+            "inference_ms": 546.6087500099093,
+            "queue_ms": 0.0002910092007368803,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6603227674,
+            "decision_ms": 546.7699999862816
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 509,
+            "reused_tokens": 496,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 496,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "0214d07593c24fb493b1b4430ad67262",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      },
+      "browser_operation": null,
+      "receipt_events": [],
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "observed_state": {
+        "application": "Morrow Studio (fictional local demo)",
+        "view": "desktop",
+        "focused_object": null,
+        "library": {
+          "filter": "Science",
+          "sort": "za",
+          "visible_courses": []
+        },
+        "player": null
+      },
+      "observed_version": 26,
+      "receipt_display": "No action applied.\nThe model declined to select a browser action.",
+      "notice_display": "",
+      "raw_choice_correct": true,
+      "finished_ms": 54164.858
+    }
+  ],
+  "setup_clicks": [
+    {
+      "case_index": 0,
+      "action_id": "close.notes",
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 17,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ]
+      },
+      "started_ms": 1577.265,
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "finished_ms": 2927.666
+    },
+    {
+      "case_index": 1,
+      "action_id": "open.notes",
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "started_ms": 10932.535,
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 19,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ]
+      },
+      "finished_ms": 12178.386
+    },
+    {
+      "case_index": 2,
+      "action_id": "open.library",
+      "before": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 20,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ]
+      },
+      "started_ms": 18146.635,
+      "after": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 21,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ]
+      },
+      "finished_ms": 19400.364
+    }
+  ],
+  "network_events": [
+    {
+      "request_started_ms": 1668.691,
+      "case_index": 0,
+      "response_received_ms": 1698.646,
+      "path": "/api/demo/action",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "action_id": "close.notes",
+        "state_version": 17
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "close.notes",
+          "source": "manual",
+          "from_version": 17,
+          "to_version": 18
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 5743.092,
+      "case_index": 0,
+      "response_received_ms": 8189.068,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Close it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "open.library": 20.125,
+            "open.notes": 17.625,
+            "__no_match__": 24.25,
+            "__abstain__": 20.875
+          },
+          "scores": {
+            "open.library": 0.015368798699965278,
+            "open.notes": 0.0012615478201376275,
+            "__no_match__": 0.9508339063767538,
+            "__abstain__": 0.032535747103143345
+          },
+          "margin": 3.375,
+          "state_version": 18,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2445.4144169867504,
+            "inference_ms": 2445.414041983895,
+            "queue_ms": 0.00037500285543501377,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7096934430,
+            "active_memory_bytes": 6594839066,
+            "decision_ms": 2445.62045802013
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 509,
+            "reused_tokens": 496,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 496,
+            "bytes": 482344960,
+            "entries": 7
+          },
+          "request_id": "993a1691087749969eba7d6b98cb740b",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 18,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 10941.32,
+      "case_index": 1,
+      "response_received_ms": 10956.076,
+      "path": "/api/demo/action",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "action_id": "open.notes",
+        "state_version": 18
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "open.notes",
+          "source": "manual",
+          "from_version": 18,
+          "to_version": 19
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 19,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 14956.257,
+      "case_index": 1,
+      "response_received_ms": 15401.666,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Close it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": "close.notes",
+          "status": "selected",
+          "raw_selected_id": "close.notes",
+          "raw_scores": {
+            "close.notes": 23.25,
+            "__no_match__": 20.125,
+            "__abstain__": 17.875
+          },
+          "scores": {
+            "close.notes": 0.9536817267020239,
+            "__no_match__": 0.0419018507239634,
+            "__abstain__": 0.0044164225740127355
+          },
+          "margin": 3.125,
+          "state_version": 19,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 443.39974998729303,
+            "inference_ms": 443.3990840043407,
+            "queue_ms": 0.0006659829523414373,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7096934430,
+            "active_memory_bytes": 6594839066,
+            "decision_ms": 443.57641600072384
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 492,
+            "reused_tokens": 479,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 479,
+            "bytes": 482344960,
+            "entries": 7
+          },
+          "request_id": "75b3bdc5722844b3864d0b54aae6798e",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.notes",
+          "selector": "[data-action=\"close.notes\"]",
+          "ticket": "75b3bdc5722844b3864d0b54aae6798e",
+          "state_version": 19
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "notes",
+          "focused_object": "field notes",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 19,
+        "candidates": [
+          {
+            "id": "close.notes",
+            "description": "Close the currently open Field Notes window and return to the desktop."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 15402.437,
+      "case_index": 1,
+      "response_received_ms": 15406.211,
+      "path": "/api/demo/execute",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "ticket": "75b3bdc5722844b3864d0b54aae6798e",
+        "action_id": "close.notes"
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "close.notes",
+          "source": "model",
+          "from_version": 19,
+          "to_version": 20,
+          "decision_id": "75b3bdc5722844b3864d0b54aae6798e"
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 20,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 18155.912,
+      "case_index": 2,
+      "response_received_ms": 18171.695,
+      "path": "/api/demo/action",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "action_id": "open.library",
+        "state_version": 20
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "open.library",
+          "source": "manual",
+          "from_version": 20,
+          "to_version": 21
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 21,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 22240.134,
+      "case_index": 2,
+      "response_received_ms": 24713.448,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "First one"
+      },
+      "response": {
+        "result": {
+          "candidate_id": "play.orbit",
+          "status": "selected",
+          "raw_selected_id": "play.orbit",
+          "raw_scores": {
+            "close.library": 20.625,
+            "filter.all": 17.75,
+            "filter.design": 17.5,
+            "filter.music": 16.5,
+            "sort.featured": 17.625,
+            "sort.az": 17.375,
+            "play.orbit": 23.875,
+            "play.lunar": 20.75,
+            "__no_match__": 19.75,
+            "__abstain__": 18.5
+          },
+          "scores": {
+            "close.library": 0.03488591809145199,
+            "filter.all": 0.0019681288217647053,
+            "filter.design": 0.0015327802675757537,
+            "filter.music": 0.0005638783482743822,
+            "sort.featured": 0.0017368675890948215,
+            "sort.az": 0.00135267383847839,
+            "play.orbit": 0.8997196859019018,
+            "play.lunar": 0.03953092411914483,
+            "__no_match__": 0.01454261427394169,
+            "__abstain__": 0.004166528748371765
+          },
+          "margin": 3.125,
+          "state_version": 21,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2471.3708329945803,
+            "inference_ms": 2471.3704580208287,
+            "queue_ms": 0.00037497375160455704,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6613287482,
+            "decision_ms": 2471.5773339848965
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 704,
+            "reused_tokens": 300,
+            "prefill_tokens": 404,
+            "system_tokens": 300,
+            "state_tokens": 691,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "f641dc5152af4b11b243e32d7d5dd132",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "play.orbit",
+          "selector": "[data-action=\"play.orbit\"]",
+          "ticket": "f641dc5152af4b11b243e32d7d5dd132",
+          "state_version": 21
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 21,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 24715.074,
+      "case_index": 2,
+      "response_received_ms": 24717.83,
+      "path": "/api/demo/execute",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "ticket": "f641dc5152af4b11b243e32d7d5dd132",
+        "action_id": "play.orbit"
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "play.orbit",
+          "source": "model",
+          "from_version": 21,
+          "to_version": 22,
+          "decision_id": "f641dc5152af4b11b243e32d7d5dd132"
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "loading",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 22,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 26320.312,
+      "case_index": 3,
+      "response_received_ms": 26322.195,
+      "path": "/api/demo/player-ready",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "state_version": 22
+      },
+      "response": {
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "playing",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 23,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.pause",
+            "description": "Pause the currently playing course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 29122.079,
+      "case_index": 3,
+      "response_received_ms": 30648.614,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Pause it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": "player.pause",
+          "status": "selected",
+          "raw_selected_id": "player.pause",
+          "raw_scores": {
+            "close.player": 19.125,
+            "player.pause": 24.0,
+            "player.rewind": 18.0,
+            "__no_match__": 16.375,
+            "__abstain__": 15.875
+          },
+          "scores": {
+            "close.player": 0.007552784080897535,
+            "player.pause": 0.9892194993797055,
+            "player.rewind": 0.002452029987288251,
+            "__no_match__": 0.00048283333244784806,
+            "__abstain__": 0.00029285321966084256
+          },
+          "margin": 4.875,
+          "state_version": 23,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 1525.1803339924663,
+            "inference_ms": 1525.1797919918317,
+            "queue_ms": 0.0005420006345957518,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 1525.3502090054099
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 548,
+            "reused_tokens": 300,
+            "prefill_tokens": 248,
+            "system_tokens": 300,
+            "state_tokens": 535,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "843085585f114e1ebb99b44f49a8fc16",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "player.pause",
+          "selector": "[data-action=\"player.pause\"]",
+          "ticket": "843085585f114e1ebb99b44f49a8fc16",
+          "state_version": 23
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "playing",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 23,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.pause",
+            "description": "Pause the currently playing course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 30649.324,
+      "case_index": 3,
+      "response_received_ms": 30651.792,
+      "path": "/api/demo/execute",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "ticket": "843085585f114e1ebb99b44f49a8fc16",
+        "action_id": "player.pause"
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "player.pause",
+          "source": "model",
+          "from_version": 23,
+          "to_version": 24,
+          "decision_id": "843085585f114e1ebb99b44f49a8fc16"
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 35555.346,
+      "case_index": 4,
+      "response_received_ms": 38090.338,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Did you just close it?"
+      },
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "close.player": 19.75,
+            "player.resume": 17.25,
+            "player.rewind": 17.875,
+            "__no_match__": 23.625,
+            "__abstain__": 22.0
+          },
+          "scores": {
+            "close.player": 0.016976235653891895,
+            "player.resume": 0.0013934942802886977,
+            "player.rewind": 0.0026033900558542836,
+            "__no_match__": 0.8179608406300678,
+            "__abstain__": 0.16106603937989744
+          },
+          "margin": 1.625,
+          "state_version": 24,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 2533.472790993983,
+            "inference_ms": 2533.4713329793885,
+            "queue_ms": 0.0014580145943909883,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 2533.6407919821795
+          },
+          "cache": {
+            "hit": true,
+            "scope": "prefix",
+            "prompt_tokens": 550,
+            "reused_tokens": 300,
+            "prefill_tokens": 250,
+            "system_tokens": 300,
+            "state_tokens": 534,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "0f253ab18e0e4aaba681fd4babc24b83",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 42422.049,
+      "case_index": 5,
+      "response_received_ms": 42978.055,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Close it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": "close.player",
+          "status": "selected",
+          "raw_selected_id": "close.player",
+          "raw_scores": {
+            "close.player": 23.0,
+            "player.resume": 19.75,
+            "player.rewind": 18.625,
+            "__no_match__": 21.0,
+            "__abstain__": 17.875
+          },
+          "scores": {
+            "close.player": 0.8384732788757822,
+            "player.resume": 0.03251113717647498,
+            "player.rewind": 0.010554820900968376,
+            "__no_match__": 0.11347501868298532,
+            "__abstain__": 0.004985744363789242
+          },
+          "margin": 2.0,
+          "state_version": 24,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 553.6400830023922,
+            "inference_ms": 553.639582998585,
+            "queue_ms": 0.000500003807246685,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6604800542,
+            "decision_ms": 553.841208020458
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 547,
+            "reused_tokens": 534,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 534,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.player",
+          "selector": "[data-action=\"close.player\"]",
+          "ticket": "e9fab4d0690a47d7b6eb6b75877c6630",
+          "state_version": 24
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "player",
+          "focused_object": "course player",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": {
+            "course": "Orbit Field Notes",
+            "status": "paused",
+            "position_seconds": 60
+          }
+        },
+        "state_version": 24,
+        "candidates": [
+          {
+            "id": "close.player",
+            "description": "Close the current course player and return to the course library."
+          },
+          {
+            "id": "player.resume",
+            "description": "Resume the paused course video."
+          },
+          {
+            "id": "player.rewind",
+            "description": "Rewind the current course video by ten seconds."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 42978.976,
+      "case_index": 5,
+      "response_received_ms": 42980.228,
+      "path": "/api/demo/execute",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "ticket": "e9fab4d0690a47d7b6eb6b75877c6630",
+        "action_id": "close.player"
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "close.player",
+          "source": "model",
+          "from_version": 24,
+          "to_version": 25,
+          "decision_id": "e9fab4d0690a47d7b6eb6b75877c6630"
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 25,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 47304.647,
+      "case_index": 6,
+      "response_received_ms": 47770.322,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Close it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": "close.library",
+          "status": "selected",
+          "raw_selected_id": "close.library",
+          "raw_scores": {
+            "close.library": 23.25,
+            "filter.all": 18.25,
+            "filter.design": 17.0,
+            "filter.music": 15.5,
+            "sort.featured": 16.125,
+            "sort.az": 15.625,
+            "play.orbit": 16.875,
+            "play.lunar": 15.125,
+            "__no_match__": 21.75,
+            "__abstain__": 16.75
+          },
+          "scores": {
+            "close.library": 0.8083909455217145,
+            "filter.all": 0.0054468953454659,
+            "filter.design": 0.0015605616444714226,
+            "filter.music": 0.00034820836965240555,
+            "sort.featured": 0.0006505388789471715,
+            "sort.az": 0.00039457177541654497,
+            "play.orbit": 0.0013771908175383531,
+            "play.lunar": 0.00023931987924738206,
+            "__no_match__": 0.18037640113680076,
+            "__abstain__": 0.001215366630745543
+          },
+          "margin": 1.5,
+          "state_version": 25,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 462.8804999811109,
+            "inference_ms": 462.87991598364897,
+            "queue_ms": 0.0005839974619448185,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6613189178,
+            "decision_ms": 463.0953750165645
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 704,
+            "reused_tokens": 691,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 691,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "07d502294c10454a8ac6a41f52b38055",
+          "selected_value": null
+        },
+        "browser_operation": {
+          "type": "click",
+          "action_id": "close.library",
+          "selector": "[data-action=\"close.library\"]",
+          "ticket": "07d502294c10454a8ac6a41f52b38055",
+          "state_version": 25
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "library",
+          "focused_object": "course library",
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": [
+              {
+                "position": 1,
+                "id": "orbit",
+                "title": "Orbit Field Notes",
+                "category": "Science"
+              },
+              {
+                "position": 2,
+                "id": "lunar",
+                "title": "Lunar Gardening",
+                "category": "Science"
+              }
+            ]
+          },
+          "player": null
+        },
+        "state_version": 25,
+        "candidates": [
+          {
+            "id": "close.library",
+            "description": "Close the course library and return to the desktop."
+          },
+          {
+            "id": "filter.all",
+            "description": "Show all course categories; clear the category filter."
+          },
+          {
+            "id": "filter.design",
+            "description": "Filter the visible course list to Design courses."
+          },
+          {
+            "id": "filter.music",
+            "description": "Filter the visible course list to Music courses."
+          },
+          {
+            "id": "sort.featured",
+            "description": "Sort courses in their original featured order."
+          },
+          {
+            "id": "sort.az",
+            "description": "Sort visible courses alphabetically by title, A to Z."
+          },
+          {
+            "id": "play.orbit",
+            "description": "Play visible course number 1: Orbit Field Notes (Science). Open its video in the player."
+          },
+          {
+            "id": "play.lunar",
+            "description": "Play visible course number 2: Lunar Gardening (Science). Open its video in the player."
+          }
+        ],
+        "courses": [
+          {
+            "id": "orbit",
+            "title": "Orbit Field Notes",
+            "category": "Science",
+            "minutes": 21,
+            "symbol": "◎",
+            "color": "butter"
+          },
+          {
+            "id": "lunar",
+            "title": "Lunar Gardening",
+            "category": "Science",
+            "minutes": 32,
+            "symbol": "☽",
+            "color": "sage"
+          }
+        ],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 47771.186,
+      "case_index": 6,
+      "response_received_ms": 47772.869,
+      "path": "/api/demo/execute",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "ticket": "07d502294c10454a8ac6a41f52b38055",
+        "action_id": "close.library"
+      },
+      "response": {
+        "receipt": {
+          "executed": true,
+          "action_id": "close.library",
+          "source": "model",
+          "from_version": 25,
+          "to_version": 26,
+          "decision_id": "07d502294c10454a8ac6a41f52b38055"
+        },
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    },
+    {
+      "request_started_ms": 52087.824,
+      "case_index": 7,
+      "response_received_ms": 52635.944,
+      "path": "/api/demo/decide",
+      "method": "POST",
+      "http_status": 200,
+      "request": {
+        "utterance": "Close it"
+      },
+      "response": {
+        "result": {
+          "candidate_id": null,
+          "status": "no_match",
+          "raw_selected_id": "__no_match__",
+          "raw_scores": {
+            "open.library": 20.125,
+            "open.notes": 17.625,
+            "__no_match__": 24.25,
+            "__abstain__": 20.875
+          },
+          "scores": {
+            "open.library": 0.015368798699965278,
+            "open.notes": 0.0012615478201376275,
+            "__no_match__": 0.9508339063767538,
+            "__abstain__": 0.032535747103143345
+          },
+          "margin": 3.375,
+          "state_version": 26,
+          "model": {
+            "name": "Qwen3.5-9B-OptiQ-4bit",
+            "model_type": "qwen3_5",
+            "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+            "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+            "quantization": {
+              "default_bits": 4,
+              "group_size": 64,
+              "mode": "affine",
+              "layer_bits_counts": {
+                "8": 93,
+                "4": 157
+              },
+              "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+            },
+            "dependencies": {
+              "mlx": "0.31.2",
+              "mlx-lm": "0.31.3",
+              "transformers": "5.9.0",
+              "tokenizers": "0.22.2"
+            },
+            "cache_types": [
+              "ArraysCache",
+              "KVCache"
+            ]
+          },
+          "timing": {
+            "total_ms": 546.60904101911,
+            "inference_ms": 546.6087500099093,
+            "queue_ms": 0.0002910092007368803,
+            "load_ms": 6851.01741598919,
+            "peak_memory_bytes": 7185162398,
+            "active_memory_bytes": 6603227674,
+            "decision_ms": 546.7699999862816
+          },
+          "cache": {
+            "hit": true,
+            "scope": "state",
+            "prompt_tokens": 509,
+            "reused_tokens": 496,
+            "prefill_tokens": 13,
+            "system_tokens": 300,
+            "state_tokens": 496,
+            "bytes": 490733568,
+            "entries": 7
+          },
+          "request_id": "0214d07593c24fb493b1b4430ad67262",
+          "selected_value": null
+        },
+        "browser_operation": null,
+        "state": {
+          "application": "Morrow Studio (fictional local demo)",
+          "view": "desktop",
+          "focused_object": null,
+          "library": {
+            "filter": "Science",
+            "sort": "za",
+            "visible_courses": []
+          },
+          "player": null
+        },
+        "state_version": 26,
+        "candidates": [
+          {
+            "id": "open.library",
+            "description": "Open the course library feature. This does not play any course."
+          },
+          {
+            "id": "open.notes",
+            "description": "Open the Field Notes window."
+          }
+        ],
+        "courses": [],
+        "model": {
+          "name": "Qwen3.5-9B-OptiQ-4bit",
+          "model_type": "qwen3_5",
+          "config_sha256": "0362df988d40561f6b41a54635b943f3268f7db190f535373b7573bed8354925",
+          "tokenizer_sha256": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+          "quantization": {
+            "default_bits": 4,
+            "group_size": 64,
+            "mode": "affine",
+            "layer_bits_counts": {
+              "8": 93,
+              "4": 157
+            },
+            "sha256": "d718236e19f73d69e684b2e92ddbc5cfbadbb566f1c88295316029ddbba5745d"
+          },
+          "dependencies": {
+            "mlx": "0.31.2",
+            "mlx-lm": "0.31.3",
+            "transformers": "5.9.0",
+            "tokenizers": "0.22.2"
+          },
+          "cache_types": [
+            "ArraysCache",
+            "KVCache"
+          ]
+        }
+      }
+    }
+  ],
+  "browser_errors": [],
+  "recording_errors": [],
+  "timeline": [
+    {
+      "at_ms": 151.59,
+      "event": "recorded_page_created",
+      "case_index": null
+    },
+    {
+      "at_ms": 352.839,
+      "event": "case_started",
+      "case_index": 0,
+      "name": "close-empty-desktop-before"
+    },
+    {
+      "at_ms": 370.415,
+      "event": "caption",
+      "case_index": 0,
+      "text": "Manual setup: click close.notes.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 2939.764,
+      "event": "caption",
+      "case_index": 0,
+      "text": "Nothing is open. Ask the local model: Close it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 5743.335,
+      "event": "model_request_submitted",
+      "case_index": 0,
+      "utterance": "Close it"
+    },
+    {
+      "at_ms": 9711.285,
+      "event": "case_finished",
+      "case_index": 0,
+      "name": "close-empty-desktop-before",
+      "passed": true
+    },
+    {
+      "at_ms": 9713.342,
+      "event": "case_started",
+      "case_index": 1,
+      "name": "close-notes"
+    },
+    {
+      "at_ms": 9725.843,
+      "event": "caption",
+      "case_index": 1,
+      "text": "Manual setup: click open.notes.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 12187.1,
+      "event": "caption",
+      "case_index": 1,
+      "text": "Field Notes is open. The same words: Close it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 14956.608,
+      "event": "model_request_submitted",
+      "case_index": 1,
+      "utterance": "Close it"
+    },
+    {
+      "at_ms": 16920.762,
+      "event": "case_finished",
+      "case_index": 1,
+      "name": "close-notes",
+      "passed": true
+    },
+    {
+      "at_ms": 16924.147,
+      "event": "case_started",
+      "case_index": 2,
+      "name": "first-filtered-reversed"
+    },
+    {
+      "at_ms": 16941.253,
+      "event": "caption",
+      "case_index": 2,
+      "text": "Manual setup: click open.library.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 19419.913,
+      "event": "caption",
+      "case_index": 2,
+      "text": "Science courses, Z–A. Ask for the first visible item.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 22240.56,
+      "event": "model_request_submitted",
+      "case_index": 2,
+      "utterance": "First one"
+    },
+    {
+      "at_ms": 26236.772,
+      "event": "case_finished",
+      "case_index": 2,
+      "name": "first-filtered-reversed",
+      "passed": true
+    },
+    {
+      "at_ms": 26242.384,
+      "event": "case_started",
+      "case_index": 3,
+      "name": "pause-ready-player"
+    },
+    {
+      "at_ms": 26259.408,
+      "event": "caption",
+      "case_index": 3,
+      "text": "Scene setup: wait for the player's normal ready event.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 26353.805,
+      "event": "caption",
+      "case_index": 3,
+      "text": "The player is ready. Ask the local model to pause it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 29122.296,
+      "event": "model_request_submitted",
+      "case_index": 3,
+      "utterance": "Pause it"
+    },
+    {
+      "at_ms": 32170.813,
+      "event": "case_finished",
+      "case_index": 3,
+      "name": "pause-ready-player",
+      "passed": true
+    },
+    {
+      "at_ms": 32177.801,
+      "event": "case_started",
+      "case_index": 4,
+      "name": "question-is-not-an-action"
+    },
+    {
+      "at_ms": 32193.608,
+      "event": "caption",
+      "case_index": 4,
+      "text": "Scene setup: wait for the player's normal ready event.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 32208.16,
+      "event": "caption",
+      "case_index": 4,
+      "text": "A question about an action, while the player stays open.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 35555.525,
+      "event": "model_request_submitted",
+      "case_index": 4,
+      "utterance": "Did you just close it?"
+    },
+    {
+      "at_ms": 39610.821,
+      "event": "case_finished",
+      "case_index": 4,
+      "name": "question-is-not-an-action",
+      "passed": true
+    },
+    {
+      "at_ms": 39620.893,
+      "event": "case_started",
+      "case_index": 5,
+      "name": "close-player"
+    },
+    {
+      "at_ms": 39640.231,
+      "event": "caption",
+      "case_index": 5,
+      "text": "Scene setup: wait for the player's normal ready event.",
+      "manual_setup": true
+    },
+    {
+      "at_ms": 39649.892,
+      "event": "caption",
+      "case_index": 5,
+      "text": "The player is open. Ask again: Close it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 42422.378,
+      "event": "model_request_submitted",
+      "case_index": 5,
+      "utterance": "Close it"
+    },
+    {
+      "at_ms": 44508.73,
+      "event": "case_finished",
+      "case_index": 5,
+      "name": "close-player",
+      "passed": true
+    },
+    {
+      "at_ms": 44518.54,
+      "event": "case_started",
+      "case_index": 6,
+      "name": "close-library"
+    },
+    {
+      "at_ms": 44537.315,
+      "event": "caption",
+      "case_index": 6,
+      "text": "Now the library is open. The same words: Close it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 47304.826,
+      "event": "model_request_submitted",
+      "case_index": 6,
+      "utterance": "Close it"
+    },
+    {
+      "at_ms": 49295.527,
+      "event": "case_finished",
+      "case_index": 6,
+      "name": "close-library",
+      "passed": true
+    },
+    {
+      "at_ms": 49305.647,
+      "event": "case_started",
+      "case_index": 7,
+      "name": "close-empty-desktop-after"
+    },
+    {
+      "at_ms": 49324.577,
+      "event": "caption",
+      "case_index": 7,
+      "text": "Back to an empty desktop. One last: Close it.",
+      "manual_setup": false
+    },
+    {
+      "at_ms": 52087.999,
+      "event": "model_request_submitted",
+      "case_index": 7,
+      "utterance": "Close it"
+    },
+    {
+      "at_ms": 54164.863,
+      "event": "case_finished",
+      "case_index": 7,
+      "name": "close-empty-desktop-after",
+      "passed": true
+    },
+    {
+      "at_ms": 54185.048,
+      "event": "caption",
+      "case_index": null,
+      "text": "8 submitted · 8 model responses. Checks: 8 passed / 0 failed. Not submitted: 0. No model response: 0.",
+      "manual_setup": false
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "initial.png",
+      "at_ms": 351.693
+    },
+    {
+      "path": "final.png",
+      "at_ms": 55747.272
+    }
+  ],
+  "summary": {
+    "planned": 8,
+    "recorded": 8,
+    "submitted": 8,
+    "responses": 8,
+    "model_correct": 8,
+    "execution_correct": 8,
+    "passed": 8,
+    "browser_errors": 0,
+    "recording_errors": 0
+  },
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12"
+  },
+  "page_visible_ms": 302.236,
+  "initial_snapshot": {
+    "state": {
+      "application": "Morrow Studio (fictional local demo)",
+      "view": "notes",
+      "focused_object": "field notes",
+      "library": {
+        "filter": "Science",
+        "sort": "za",
+        "visible_courses": []
+      },
+      "player": null
+    },
+    "state_version": 17,
+    "candidates": [
+      {
+        "id": "close.notes",
+        "description": "Close the currently open Field Notes window and return to the desktop."
+      }
+    ]
+  },
+  "initial_model_display": "Qwen3.5-9B-OptiQ-4bit",
+  "final_snapshot": {
+    "state": {
+      "application": "Morrow Studio (fictional local demo)",
+      "view": "desktop",
+      "focused_object": null,
+      "library": {
+        "filter": "Science",
+        "sort": "za",
+        "visible_courses": []
+      },
+      "player": null
+    },
+    "state_version": 26,
+    "candidates": [
+      {
+        "id": "open.library",
+        "description": "Open the course library feature. This does not play any course."
+      },
+      {
+        "id": "open.notes",
+        "description": "Open the Field Notes window."
+      }
+    ]
+  },
+  "all_receipt_events": [
+    {
+      "browser_performance_ms": 1545.4000000059605,
+      "receipt": {
+        "executed": true,
+        "action_id": "close.notes",
+        "source": "manual",
+        "from_version": 17,
+        "to_version": 18,
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.notes\"]",
+        "observed_view": "desktop",
+        "observed_state_version": 18
+      }
+    },
+    {
+      "browser_performance_ms": 10801,
+      "receipt": {
+        "executed": true,
+        "action_id": "open.notes",
+        "source": "manual",
+        "from_version": 18,
+        "to_version": 19,
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"open.notes\"]",
+        "observed_view": "notes",
+        "observed_state_version": 19
+      }
+    },
+    {
+      "browser_performance_ms": 15251.5,
+      "receipt": {
+        "executed": true,
+        "action_id": "close.notes",
+        "source": "model",
+        "from_version": 19,
+        "to_version": 20,
+        "decision_id": "75b3bdc5722844b3864d0b54aae6798e",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.notes\"]",
+        "observed_view": "desktop",
+        "observed_state_version": 20
+      }
+    },
+    {
+      "browser_performance_ms": 18017.5,
+      "receipt": {
+        "executed": true,
+        "action_id": "open.library",
+        "source": "manual",
+        "from_version": 20,
+        "to_version": 21,
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"open.library\"]",
+        "observed_view": "library",
+        "observed_state_version": 21
+      }
+    },
+    {
+      "browser_performance_ms": 24562.5,
+      "receipt": {
+        "executed": true,
+        "action_id": "play.orbit",
+        "source": "model",
+        "from_version": 21,
+        "to_version": 22,
+        "decision_id": "f641dc5152af4b11b243e32d7d5dd132",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"play.orbit\"]",
+        "observed_view": "player",
+        "observed_state_version": 22
+      }
+    },
+    {
+      "browser_performance_ms": 30496,
+      "receipt": {
+        "executed": true,
+        "action_id": "player.pause",
+        "source": "model",
+        "from_version": 23,
+        "to_version": 24,
+        "decision_id": "843085585f114e1ebb99b44f49a8fc16",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"player.pause\"]",
+        "observed_view": "player",
+        "observed_state_version": 24
+      }
+    },
+    {
+      "browser_performance_ms": 42826.19999998808,
+      "receipt": {
+        "executed": true,
+        "action_id": "close.player",
+        "source": "model",
+        "from_version": 24,
+        "to_version": 25,
+        "decision_id": "e9fab4d0690a47d7b6eb6b75877c6630",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.player\"]",
+        "observed_view": "library",
+        "observed_state_version": 25
+      }
+    },
+    {
+      "browser_performance_ms": 47617.90000000596,
+      "receipt": {
+        "executed": true,
+        "action_id": "close.library",
+        "source": "model",
+        "from_version": 25,
+        "to_version": 26,
+        "decision_id": "07d502294c10454a8ac6a41f52b38055",
+        "browser_event": "DOM button click",
+        "element": "[data-action=\"close.library\"]",
+        "observed_view": "desktop",
+        "observed_state_version": 26
+      }
+    }
+  ],
+  "capture_finished_ms": 55752.385,
+  "source_files_after": {
+    "examples/record_showcase.py": "50ed3cc8bc8e83be6b3b9d6638fb63dc4c0d783a4b616b1eb6aee98cdbbaf698",
+    "pyproject.toml": "f700ea4bcbf8d0e6ce524310edcbb6838707b6704ea0395f3da5a50faf49e380",
+    "src/jev_mlx/__init__.py": "a32a2474d96360eb6a083962be5d075d0c018edd79fcb46c98193eb7283a9d10",
+    "src/jev_mlx/backends/__init__.py": "3262ab71b23c6b43d5d4ad4fbec4ec8f62ba43547cdbdad717493a595a5e6220",
+    "src/jev_mlx/backends/mlx_lm.py": "5451a2ebdcc71defad8aca0564190b1eb5e14ef869157f032068f3ef93052430",
+    "src/jev_mlx/backends/mlx_vlm.py": "5e149a24dcee6794af309bb8cf884da620568cab76462aabdd4ecebe1d6d5f46",
+    "src/jev_mlx/backends/vlm_loaders.py": "1f5d59696761622e4947fc19a24afbc8b6e873c3745670d92067173c1a3778fe",
+    "src/jev_mlx/cli.py": "3529f9ce15c52e4721e592f0f44b8359e0938b5b46cefaeab625bb2607eb4875",
+    "src/jev_mlx/demo.py": "cbf21b0375eb9b027ba904d4f739f977627c8777d2a5113f5d2321ebffd8d8bf",
+    "src/jev_mlx/engine.py": "10aebdb027d54fbc42f49f7a249abc2f4149b613de6d063c5e91fe300ba15baa",
+    "src/jev_mlx/prompt.py": "e6ffa2df07b26c4ab1360d8d2652676706de5571bf59a32cee901aaf3c1beaa1",
+    "src/jev_mlx/server.py": "8e3a795abc4a8d0af56d858228269ff1c518a4f7a44fa04cb827e6818f3ae10b",
+    "src/jev_mlx/session.py": "25e05c1866d9fd30360c4dc5d97cee7b7c7086570b9454434c5332ce10d06436",
+    "src/jev_mlx/static/app.js": "da43b835df6a76b74382cd0dd66be3aa38f6a989324cadb6a4c22ff48575679f",
+    "src/jev_mlx/static/blocks-engine.js": "a7e74e0cfa0863155f63fb0daf4d8f0196ad7a50590ee9cbbb731e34d6520f03",
+    "src/jev_mlx/static/blocks.css": "128c4c385019694d7be205fc97cdba80030cd37c76523c85515d20b65a14d0c5",
+    "src/jev_mlx/static/blocks.html": "eefe530332bef1c9f7c64171c3b6db417e5b611ca2e97b961657e5dfb85fc8a5",
+    "src/jev_mlx/static/blocks.js": "e15edcade6d16880f1d7dad20a7b026a8ebc26e39f0d07730d9be9b4692169d6",
+    "src/jev_mlx/static/index.html": "28b7213713ed83d231473883438068799dd5ea5479ddf190c10c0a0135202677",
+    "src/jev_mlx/static/style.css": "376b3e0ca720b04d9972ced1f4fb22cec0a929562a35821f1e9dd0b55d248b98",
+    "src/jev_mlx/token_codes.py": "02e30d3cdb7cd54ca8fd471d144bc109c9c35b99e9b46cddcc3417f8ad3b833b",
+    "src/jev_mlx/types.py": "f58e3d27a2fd2ea3ace839cdef75b50aa3fe793c8a47a56ce043e21f1b4c5c94",
+    "src/jev_mlx/vlm.py": "6379433e596236e4b6096f1d22a862f07831380194611f9ada533640a4581084"
+  },
+  "source_unchanged_during_capture": true,
+  "video_sha256": "215b3b3d2869b448560ad525560a3d54d118d7de3d39079daf41b395fa0d9b8c",
+  "path_redactions": {},
+  "redaction_note": "Only local paths are redacted; model choices and timings remain."
+}

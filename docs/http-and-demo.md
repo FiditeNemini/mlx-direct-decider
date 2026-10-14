@@ -111,7 +111,7 @@ retain the complete timeline at **1× speed**, without temporal cuts or image
 cropping. The GIF reduces frame rate, dimensions, and palette size for distribution;
 it does not replace model outputs or generate missing frames. This is an
 illustrative browser recording, **not a benchmark or an independent accuracy
-sample**. See the [recording and media provenance](assets/live-demo/README.md) for
+sample**. See the [recording and media provenance](assets/live-demo-direct/README.md) for
 the actual captured run and its limitations.
 
 ## Interactive checks
