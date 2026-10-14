@@ -1,4 +1,4 @@
-# Contributing to MLX ZeroEffort Decider
+# Contributing to MLX Direct Decider
 
 [Back to home](README.md)
 
@@ -18,7 +18,7 @@ python -m build
 ```
 
 On Apple Silicon, install `'.[mlx,dev]'` for real inference. Run one checkpoint
-at a time and explicitly set `MLX_ZEROEFFORT_TEST_MODEL` for `tests/test_model.py`. Core
+at a time and explicitly set `MLX_DIRECT_TEST_MODEL` for `tests/test_model.py`. Core
 tests use injected backends; they do not prove model quality, Metal execution,
 or real-checkpoint cache correctness.
 

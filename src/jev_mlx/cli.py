@@ -11,7 +11,7 @@ from pathlib import Path
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="mlx-zeroeffort-decider",
+        prog="mlx-direct-decider",
         description="Typed decisions from existing MLX models. No fine-tuning required.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
@@ -34,12 +34,16 @@ def main(argv: list[str] | None = None) -> int:
     for command in (decide, web):
         command.add_argument(
             "--model",
-            default=os.environ.get("MLX_ZEROEFFORT_MODEL") or os.environ.get("JEV_MLX_MODEL"),
-            help="Local MLX model directory, or MLX_ZEROEFFORT_MODEL (JEV_MLX_MODEL also works).",
+            default=(
+                os.environ.get("MLX_DIRECT_MODEL")
+                or os.environ.get("MLX_ZEROEFFORT_MODEL")
+                or os.environ.get("JEV_MLX_MODEL")
+            ),
+            help="Local MLX model directory, or MLX_DIRECT_MODEL (legacy model variables also work).",
         )
     args = parser.parse_args(argv)
     if not args.model:
-        parser.error("provide --model or set MLX_ZEROEFFORT_MODEL to a local model directory")
+        parser.error("provide --model or set MLX_DIRECT_MODEL to a local model directory")
     if args.command == "decide" and args.image and args.backend != "mlx-vlm":
         parser.error("--image requires --backend mlx-vlm")
     try:
@@ -63,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
             serve(engine, host=args.host, port=args.port)
         return 0
     except (ValueError, OSError, ImportError, RuntimeError) as exc:
-        print(f"mlx-zeroeffort-decider: {exc}", file=sys.stderr)
+        print(f"mlx-direct-decider: {exc}", file=sys.stderr)
         return 1
 
 

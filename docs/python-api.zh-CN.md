@@ -2,15 +2,15 @@
 
 [返回项目首页](../README.zh-CN.md)
 
-按照[快速开始](../README.zh-CN.md#quick-start)安装 MLX ZeroEffort Decider，然后将 `MLX_ZEROEFFORT_MODEL` 设置为已验证的本地检查点路径。参见[模型兼容性](models.zh-CN.md)。
+按照[快速开始](../README.zh-CN.md#quick-start)安装 MLX Direct Decider，然后将 `MLX_DIRECT_MODEL` 设置为已验证的本地检查点路径。参见[模型兼容性](models.zh-CN.md)。
 
 ## 做出决策
 
 ```python
 import os
-from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXDecisionEngine
+from mlx_direct_decider import Candidate, DecisionRequest, MLXDecisionEngine
 
-engine = MLXDecisionEngine(os.environ["MLX_ZEROEFFORT_MODEL"])
+engine = MLXDecisionEngine(os.environ["MLX_DIRECT_MODEL"])
 request = DecisionRequest(
     state={"view": "library", "visible_titles": ["Amber Maps", "Cloud Songs"]},
     utterance="Play the first one",
@@ -47,7 +47,7 @@ if answer.status == "selected":
 `DecisionSession` 在推理前保存状态快照。推理期间发生的更新会将结果标记为过期。执行时会再次检查当前版本，验证结果完整且由本会话发出，并且只允许消费一次。
 
 ```python
-from mlx_zeroeffort_decider import DecisionSession
+from mlx_direct_decider import DecisionSession
 
 session = DecisionSession(
     engine,

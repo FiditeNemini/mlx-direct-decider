@@ -2,13 +2,13 @@
 
 [Back to home](README.md)
 
-MLX ZeroEffort Decider is independently maintained under MIT. The typed,
+MLX Direct Decider is independently maintained under MIT. The typed,
 state-aware decision interface is inspired by [TypeSafe AI's Jev](https://docs.typesafe.ai/).
 There is no affiliation, endorsement, Jev checkpoint, or reproduction of unpublished RLCD.
 
 Runtime functionality is provided by [MLX](https://github.com/ml-explore/mlx) and
 [MLX-LM](https://github.com/ml-explore/mlx-lm), Copyright Apple Inc., MIT licensed.
-MLX ZeroEffort Decider calls their public model loader, quantized output heads, cache factory,
+MLX Direct Decider calls their public model loader, quantized output heads, cache factory,
 LRUPromptCache and generation routines. These dependencies retain their own licenses;
 their source is not vendored into this repository.
 

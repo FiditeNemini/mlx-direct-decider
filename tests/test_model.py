@@ -13,9 +13,13 @@ pytestmark = pytest.mark.model
 
 @pytest.fixture(scope="module")
 def real_engine():
-    model = os.environ.get("MLX_ZEROEFFORT_TEST_MODEL") or os.environ.get("JEV_TEST_MODEL")
+    model = (
+        os.environ.get("MLX_DIRECT_TEST_MODEL")
+        or os.environ.get("MLX_ZEROEFFORT_TEST_MODEL")
+        or os.environ.get("JEV_TEST_MODEL")
+    )
     if not model:
-        pytest.skip("set MLX_ZEROEFFORT_TEST_MODEL to a local checkpoint for real Metal tests")
+        pytest.skip("set MLX_DIRECT_TEST_MODEL to a local checkpoint for real Metal tests")
     return MLXDecisionEngine(model)
 
 

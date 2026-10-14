@@ -2,27 +2,30 @@
 
 [Back to home](../README.md)
 
-The project is **MLX ZeroEffort Decider**, hosted at
-[ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider).
-The owner selected this name on **2026-10-13**. Its tagline is:
+The project is **MLX Direct Decider**, hosted at
+[ItsOdeLeo/MLX-Direct-Decider](https://github.com/ItsOdeLeo/MLX-Direct-Decider).
+The owner confirmed this final name on **2026-10-14**. Its tagline is:
 **Decisions from existing models. No fine-tuning required.**
 
 | Public name | Value |
 | :--- | :--- |
-| Distribution and CLI | `mlx-zeroeffort-decider` |
-| Python import | `mlx_zeroeffort_decider` |
-| Local model variable | `MLX_ZEROEFFORT_MODEL` |
-| Opt-in model-test variable | `MLX_ZEROEFFORT_TEST_MODEL` |
+| Distribution and CLI | `mlx-direct-decider` |
+| Python import | `mlx_direct_decider` |
+| Local model variable | `MLX_DIRECT_MODEL` |
+| Opt-in model-test variable | `MLX_DIRECT_TEST_MODEL` |
 
-The `jev_mlx` import, `jev-mlx` command, `JEV_MLX_MODEL` and `JEV_TEST_MODEL`
-remain compatible. The canonical and legacy Python namespaces share the same
+The previous `mlx_zeroeffort_decider` and `jev_mlx` imports,
+`mlx-zeroeffort-decider` and `jev-mlx` commands, and their model/test variables
+remain compatible. `MLX_DIRECT_MODEL` takes precedence over
+`MLX_ZEROEFFORT_MODEL`, then `JEV_MLX_MODEL`; an explicit `--model` overrides all three. The canonical and legacy Python namespaces share the same
 classes and implementation; requests and sessions can be used through either
 namespace. No model weights, inference behavior, or cache policy changed.
 The implementation source stays under `src/jev_mlx` so existing source links
 and callers remain valid. A rename does not publish a package to PyPI.
 
-Here, ZeroEffort refers to the absence of an additional fine-tuning workflow.
-Applications still supply a compatible local checkpoint, state and candidates.
+Direct describes scoring allowed choices through the existing model output head.
+No additional fine-tuning is required. Applications supply a compatible local
+checkpoint, state and candidates.
 
 ## Implementation and compatibility
 
@@ -43,7 +46,9 @@ separately from the recorded model-quality evaluations.
 
 ## Previous names and recorded evidence
 
-Earlier names include **JEV MLX**, **JEVKit MLX** and **MLXJ**. The display-only
+A temporary **MLX ZeroEffort Decider** name was used on 2026-10-13, before
+the final Direct name was confirmed. Earlier names include **JEV MLX**,
+**JEVKit MLX** and **MLXJ**. The display-only
 rename from MLXJ to JEV MLX occurred on 2026-09-20. Recordings, frozen protocols,
 and benchmark evidence retain their original names, commands, source paths and
 bytes. Older reproduction commands still work through compatibility entries.

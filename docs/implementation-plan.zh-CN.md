@@ -1,4 +1,4 @@
-# MLX ZeroEffort Decider 实现计划
+# MLX Direct Decider 实现计划
 
 [返回项目首页](../README.zh-CN.md)
 

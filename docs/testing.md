@@ -20,11 +20,11 @@ The sections below explain the historical Qwen and GLM measurements and the Qwen
 
 These results apply to the specific machine, models, English scenarios, and implementation revisions measured. They do not establish arbitrary-model compatibility, a fixed 100 ms latency, zero semantic errors, or calibrated probabilities. Chinese documentation and interface text do not establish that Chinese or mixed-language instructions have passed model evaluation.
 
-The original evaluations, screenshots, and recordings use the project's former name, JEVKit MLX. Evidence files retain their original name, source hashes, and recording times; they were not rewritten for the rename. Reproduction commands below use the current `mlx-zeroeffort-decider` command, `mlx_zeroeffort_decider` module, and `MLX_ZEROEFFORT_MODEL` environment variable. Rename verification reran the core suite and a real-model call from an independent wheel; **it did not rerun the full quality evaluation or browser model tests**. See the [rename verification record](../benchmarks/results/rename-release-checks/verification.json).
+The original evaluations, screenshots, and recordings use the project's former name, JEVKit MLX. Evidence files retain their original name, source hashes, and recording times; they were not rewritten for the rename. Reproduction commands below use the current `mlx-direct-decider` command, `mlx_direct_decider` module, and `MLX_DIRECT_MODEL` environment variable. Rename verification reran the core suite and a real-model call from an independent wheel; **it did not rerun the full quality evaluation or browser model tests**. See the [rename verification record](../benchmarks/results/rename-release-checks/verification.json).
 
 Later game and desktop-showcase recordings display the earlier MLXJ name. Those
 videos and original decision records were not re-recorded or altered for the
-current MLX ZeroEffort Decider display name.
+current MLX Direct Decider display name.
 
 ## What was tested
 
@@ -177,18 +177,18 @@ On Apple Silicon, install real-inference dependencies, run a decision, and optio
 
 ```bash
 python -m pip install -e '.[mlx,dev,browser]'
-export MLX_ZEROEFFORT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
-mlx-zeroeffort-decider decide --request examples/decision.json
-MLX_ZEROEFFORT_TEST_MODEL="$MLX_ZEROEFFORT_MODEL" python -m pytest tests/test_model.py -q
+export MLX_DIRECT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
+mlx-direct-decider decide --request examples/decision.json
+MLX_DIRECT_TEST_MODEL="$MLX_DIRECT_MODEL" python -m pytest tests/test_model.py -q
 ```
 
 Run the development set first. Use only that set if changing prompts or thresholds. Then run the full frozen set and cache comparisons with a fixed configuration:
 
 ```bash
-python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split dev \
+python -m benchmarks.run --model "$MLX_DIRECT_MODEL" --split dev \
   --modes direct --repeats 1 --output results/local-qwen-dev
 
-python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split test \
+python -m benchmarks.run --model "$MLX_DIRECT_MODEL" --split test \
   --modes direct --conditions kv_cold same_page_new_utterance page_update \
   --repeats 1 --margin-threshold 0 --parity \
   --parity-atol 0.5 --parity-rtol 0 --parity-score-atol 0.1 \
@@ -198,16 +198,16 @@ python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split test \
 Run the three-method comparison on the same model, and the separate fresh-process cold-start check:
 
 ```bash
-python -m benchmarks.run --model "$MLX_ZEROEFFORT_MODEL" --split test \
+python -m benchmarks.run --model "$MLX_DIRECT_MODEL" --split test \
   --modes direct code json --repeats 1 \
   --output results/local-qwen-comparison
 
-python -m benchmarks.cold_start --model "$MLX_ZEROEFFORT_MODEL" \
+python -m benchmarks.cold_start --model "$MLX_DIRECT_MODEL" \
   --modes direct code json json_code --repeats 3 \
   --output results/local-qwen-process-cold
 ```
 
-These commands use current source and cannot guarantee the same timings as historical revisions. When switching to GLM, set a new `MLX_ZEROEFFORT_MODEL` and use a new output directory; the original GLM cold-start record used only 2 repetitions per method. Inspect `metadata.json`, `trials.jsonl`, `summary.json`, and `parity.jsonl`; retain failures and full inputs, and compare model identities, source hashes, and cache-hit conditions before comparing speed.
+These commands use current source and cannot guarantee the same timings as historical revisions. When switching to GLM, set a new `MLX_DIRECT_MODEL` and use a new output directory; the original GLM cold-start record used only 2 repetitions per method. Inspect `metadata.json`, `trials.jsonl`, `summary.json`, and `parity.jsonl`; retain failures and full inputs, and compare model identities, source hashes, and cache-hit conditions before comparing speed.
 
 To reproduce the six-domain extension, explicitly pass `--fixtures-dir benchmarks/fixtures/extended-v1`. Run its separate development split before the frozen test split. This three-model, four-method comparison used only `--conditions same_page_new_utterance`. Full commands and the separately declared Gemma cache phase are in the [fixed protocol](extended-evaluation-protocol.md); actual completed scope is in the [extended report](extended-results.md). Do not modify frozen files or tune thresholds using these published test results and still call the result unseen evaluation.
 
@@ -215,8 +215,8 @@ For browser testing, start the service in terminal one:
 
 ```bash
 source .venv/bin/activate
-export MLX_ZEROEFFORT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
-mlx-zeroeffort-decider serve --port 8765
+export MLX_DIRECT_MODEL=/absolute/path/to/Qwen3.5-9B-OptiQ-4bit
+mlx-direct-decider serve --port 8765
 ```
 
 In terminal two, install the test Chromium and run capture:

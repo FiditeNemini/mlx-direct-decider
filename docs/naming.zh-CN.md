@@ -2,25 +2,26 @@
 
 [返回项目首页](../README.zh-CN.md)
 
-项目名称为 **MLX ZeroEffort Decider**，仓库为
-[ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider)。
-作者于 **2026-10-13** 选定此名称。副标题明确写为：
+项目名称为 **MLX Direct Decider**，仓库为
+[ItsOdeLeo/MLX-Direct-Decider](https://github.com/ItsOdeLeo/MLX-Direct-Decider)。
+作者于 **2026-10-14** 明确确定此最终名称。副标题明确写为：
 **Decisions from existing models. No fine-tuning required.**
 即：**让已有模型直接做决策，无需微调。**
 
 | 对外标识 | 名称 |
 | :--- | :--- |
-| 发行包与 CLI | `mlx-zeroeffort-decider` |
-| Python 导入 | `mlx_zeroeffort_decider` |
-| 本地模型环境变量 | `MLX_ZEROEFFORT_MODEL` |
-| 显式模型测试环境变量 | `MLX_ZEROEFFORT_TEST_MODEL` |
+| 发行包与 CLI | `mlx-direct-decider` |
+| Python 导入 | `mlx_direct_decider` |
+| 本地模型环境变量 | `MLX_DIRECT_MODEL` |
+| 显式模型测试环境变量 | `MLX_DIRECT_TEST_MODEL` |
 
-原有 `jev_mlx` 导入、`jev-mlx` 命令、`JEV_MLX_MODEL` 和 `JEV_TEST_MODEL` 继续兼容。
+原有 `mlx_zeroeffort_decider` / `jev_mlx` 导入、`mlx-zeroeffort-decider` / `jev-mlx` 命令及其模型／测试变量继续兼容。
+模型变量优先级为 `MLX_DIRECT_MODEL`、`MLX_ZEROEFFORT_MODEL`、`JEV_MLX_MODEL`；明确传入的 `--model` 优先于三个变量。
 新旧 Python 命名空间共用相同类与实现，请求和会话可以交叉使用。
 模型权重、推理行为与缓存策略没有变化。实现源码保留在 `src/jev_mlx`，
 以维持现有源码链接和调用方兼容。更名不表示向 PyPI 发布包。
 
-ZeroEffort 在这里指无需额外的 fine-tuning 流程；应用仍需提供兼容的本地检查点、状态与候选项。
+Direct 指通过已有模型的原始输出头为允许的候选项评分，无需额外 fine-tuning。应用提供兼容的本地检查点、状态与候选项。
 
 ## 实现与兼容性
 
@@ -36,7 +37,8 @@ ZeroEffort 在这里指无需额外的 fine-tuning 流程；应用仍需提供�
 
 ## 旧称与历史证据
 
-旧称包括 **JEV MLX**、**JEVKit MLX** 与 **MLXJ**。2026-09-20 曾将展示名称从
+2026-10-13 曾临时使用 **MLX ZeroEffort Decider**，随后明确确定最终的 Direct 名称。
+更早的旧称包括 **JEV MLX**、**JEVKit MLX** 与 **MLXJ**。2026-09-20 曾将展示名称从
 MLXJ 改为 JEV MLX。录像、冻结协议及 benchmark 证据保留原始名称、命令、源码路径与文件字节；
 旧复现命令仍可通过兼容入口运行。GitHub 仓库在新名称下保留原有提交历史与 issues。
 

@@ -2,9 +2,9 @@
 
 [Back to home](../README.md)
 
-MLX ZeroEffort Decider reuses compatible pretrained checkpoints on Apple Silicon, with no
+MLX Direct Decider reuses compatible pretrained checkpoints on Apple Silicon, with no
 fine-tuning, new decision head, or decision-specific weights. The model still
-processes the full input. MLX ZeroEffort Decider reads verified candidate-token logits at the
+processes the full input. MLX Direct Decider reads verified candidate-token logits at the
 final input position; it does not generate or parse an answer string.
 
 | Component | Integration |
@@ -33,7 +33,7 @@ Weights are loaded locally, with remote code disabled. Obtain an ordinary
 compatible checkpoint separately if you do not already have one.
 
 ```python
-from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXVLMDecisionEngine
+from mlx_direct_decider import Candidate, DecisionRequest, MLXVLMDecisionEngine
 
 engine = MLXVLMDecisionEngine("/absolute/path/to/Qwen3-VL-4B-Instruct-4bit")
 request = DecisionRequest(
@@ -52,7 +52,7 @@ print(result.status, result.candidate_id, result.selected_value)
 The CLI accepts the same JSON request and explicit local image paths:
 
 ```sh
-mlx-zeroeffort-decider decide --backend mlx-vlm \
+mlx-direct-decider decide --backend mlx-vlm \
   --model /absolute/path/to/Qwen3-VL-4B-Instruct-4bit \
   --request examples/vision.json --image examples/synthetic-red.png
 ```
@@ -60,7 +60,7 @@ mlx-zeroeffort-decider decide --backend mlx-vlm \
 Omit `images` / `--image` for a text-only request through MLX-VLM. Reuse the loaded
 engine for later requests. Boolean requests use `DecisionRequest.boolean(...)`
 and return typed `True` / `False` values through the same result validation.
-The existing `mlx-zeroeffort-decider serve` and browser demos continue to use MLX-LM and
+The existing `mlx-direct-decider serve` and browser demos continue to use MLX-LM and
 structured text state; they do not accept image uploads.
 
 ## Bounds and cache behavior

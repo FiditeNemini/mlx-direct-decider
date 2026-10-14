@@ -1,4 +1,4 @@
-# MLX ZeroEffort Decider implementation plan
+# MLX Direct Decider implementation plan
 
 [Back to home](../README.md)
 

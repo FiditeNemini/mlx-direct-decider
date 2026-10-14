@@ -3,7 +3,7 @@
 import argparse
 import json
 
-from mlx_zeroeffort_decider import Candidate, DecisionSession, MLXDecisionEngine
+from mlx_direct_decider import Candidate, DecisionSession, MLXDecisionEngine
 
 
 def main():

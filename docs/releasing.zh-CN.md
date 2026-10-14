@@ -2,9 +2,9 @@
 
 [返回项目首页](../README.zh-CN.md)
 
-MLX ZeroEffort Decider 的发行包名为 `mlx-zeroeffort-decider`，导入名为 `mlx_zeroeffort_decider`，CLI 命令为 `mlx-zeroeffort-decider`。无需选定外部账户，即可在本地准备 0.1 版产物。构建发行包不等于发布。本地项目目录不会预留包名；当前安装示例使用源码检出目录或本地 wheel，而非 PyPI。
+MLX Direct Decider 的发行包名为 `mlx-direct-decider`，导入名为 `mlx_direct_decider`，CLI 命令为 `mlx-direct-decider`。无需选定外部账户，即可在本地准备 0.1 版产物。构建发行包不等于发布。本地项目目录不会预留包名；当前安装示例使用源码检出目录或本地 wheel，而非 PyPI。
 
-当前源码仓库为 [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider)，克隆后的目录名为 `MLX-ZeroEffort-Decider`；上述发行包、CLI 和导入名见上方说明，旧入口继续兼容。更改仓库名称不等于向软件包平台发布。
+当前源码仓库为 [ItsOdeLeo/MLX-Direct-Decider](https://github.com/ItsOdeLeo/MLX-Direct-Decider)，克隆后的目录名为 `MLX-Direct-Decider`；上述发行包、CLI 和导入名见上方说明，旧入口继续兼容。更改仓库名称不等于向软件包平台发布。
 
 最新证据包括：已完成的三模型／四方法 [36 题暖缓存对比](extended-results.zh-CN.md)、单独进行的 [Gemma 原始测试集与进程冷启动测试](gemma4-results.zh-CN.md)，以及 [161 项通过的核心测试](../benchmarks/results/extended-release-checks/core-tests.json)。Gemma 额外的扩展缓存阶段完成了 108 次决策，72 次缓存／全新计算对照全部通过。该次重新构建的 wheel 已在安装 MLX 依赖的全新独立环境中验证：全部 14 个运行时文件都与源码和归档字节一致，公开示例通过真实 Gemma CLI 调用选中了 `player.pause`。参见 [wheel 验证记录](../benchmarks/results/extended-release-checks/distribution.json)。源码归档内容检查和发行包哈希随本地产物保存在 `dist/extended-v1/verification.json` 与 `SHA256SUMS` 中；为避免记录自身哈希，构建后的这份记录位于源码归档外。历史 wheel 检查仍作为独立记录保留。基准完成和审计成功并不意味着模型选择正确：扩展测试中直接评分的枚举动作误选分别为 Gemma 1/30、Qwen 1/30、GLM 8/30。布尔分类指标应单独统计，并在发行说明中保留这些失败。
 
@@ -19,8 +19,8 @@ MLX ZeroEffort Decider 的发行包名为 `mlx-zeroeffort-decider`，导入名�
 ```sh
 python -m pytest -m 'not model'
 python -m ruff check src tests benchmarks scripts
-MLX_ZEROEFFORT_TEST_MODEL="$MLX_ZEROEFFORT_MODEL" python -m pytest tests/test_model.py
-python scripts/check_parity.py --model "$MLX_ZEROEFFORT_MODEL" \
+MLX_DIRECT_TEST_MODEL="$MLX_DIRECT_MODEL" python -m pytest tests/test_model.py
+python scripts/check_parity.py --model "$MLX_DIRECT_MODEL" \
   --output results/release-parity.json
 ```
 
@@ -32,8 +32,8 @@ python scripts/check_parity.py --model "$MLX_ZEROEFFORT_MODEL" \
 
 ```sh
 python -m build
-python -m zipfile -l dist/mlx_zeroeffort_decider-0.1.0-py3-none-any.whl
-tar -tzf dist/mlx_zeroeffort_decider-0.1.0.tar.gz
+python -m zipfile -l dist/mlx_direct_decider-0.1.0-py3-none-any.whl
+tar -tzf dist/mlx_direct_decider-0.1.0.tar.gz
 shasum -a 256 dist/*
 ```
 
@@ -44,10 +44,10 @@ wheel 必须包含软件包、浏览器资源、类型标记、元数据和许�
 ```sh
 python3 -m venv /tmp/jev-wheel-check
 /tmp/jev-wheel-check/bin/python -m pip install --no-deps \
-  /absolute/path/to/dist/mlx_zeroeffort_decider-0.1.0-py3-none-any.whl
-/tmp/jev-wheel-check/bin/mlx-zeroeffort-decider --help
+  /absolute/path/to/dist/mlx_direct_decider-0.1.0-py3-none-any.whl
+/tmp/jev-wheel-check/bin/mlx-direct-decider --help
 /tmp/jev-wheel-check/bin/python -c \
-  'from mlx_zeroeffort_decider import __version__; print(__version__)'
+  'from mlx_direct_decider import __version__; print(__version__)'
 ```
 
 如果该环境目录已存在，请另选新的目录名。在 Apple Silicon 上，在独立环境中安装 wheel 的 `[mlx]` 可选依赖，并针对明确选定的本地检查点运行真实决策。确认随包分发的演示资源能加载，模型选中的 DOM 动作能产生回执。Linux 核心 CI 无法验证这些 GPU／浏览器行为。

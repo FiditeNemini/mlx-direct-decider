@@ -1,13 +1,13 @@
-# MLX ZeroEffort Decider and AnyJev: decisions from existing LLMs without fine-tuning
+# MLX Direct Decider and AnyJev: decisions from existing LLMs without fine-tuning
 
 [Back to home](../README.md)
 
-This guide places MLX ZeroEffort Decider alongside AnyJev, OpenDecider, Laya, and Laya-MLX for developers
+This guide places MLX Direct Decider alongside AnyJev, OpenDecider, Laya, and Laya-MLX for developers
 evaluating local action selection, classification, and semantic routing. The
 technical connection is a shared need: turn application state and a question into
 a bounded decision that host code can use.
 
-MLX ZeroEffort Decider is an independently maintained library for existing causal MLX-LM models.
+MLX Direct Decider is an independently maintained library for existing causal MLX-LM models.
 The optional [MLX-VLM integration](multimodal.md) adds text/image choices using
 compatible pretrained vision-language checkpoints, also without fine-tuning.
 The related projects below are separate implementations. Links describe technical
@@ -16,7 +16,7 @@ checkpoint compatibility.
 
 ## Reuse existing weights without additional training
 
-**MLX ZeroEffort Decider adds decision scoring to a compatible MLX-LM checkpoint without training
+**MLX Direct Decider adds decision scoring to a compatible MLX-LM checkpoint without training
 or fine-tuning it, adding a trained decision head or weight adapter, or requiring separate
 decision-model weights.** If compatible base weights are already available locally,
 reuse them. Otherwise obtain the base checkpoint first; the backend loads a local
@@ -24,7 +24,7 @@ directory and does not download weights.
 
 The full model processes the prompt, with valid prefix-cache reuse where available.
 Its unchanged output head produces next-token logits at the final input position.
-MLX ZeroEffort Decider selects the logits for tokenizer-verified option codes and maps the result
+MLX Direct Decider selects the logits for tokenizer-verified option codes and maps the result
 to a business ID. This removes the need for a generated continuation; it does not
 reduce inference to running only the final layer. See the [model path](architecture.md)
 and [published scoring implementation](../src/jev_mlx/backends/mlx_lm.py).
@@ -44,7 +44,7 @@ also offers a `Decider` path without training. Its L0 method uses option rotatio
 and label-prior correction; its separate `Tacit` path uses self-distilled checkpoints.
 The underlying idea of reading decisions from existing LLMs is shared.
 
-MLX ZeroEffort Decider focuses on native MLX-LM inference on Apple Silicon, dynamic business IDs,
+MLX Direct Decider focuses on native MLX-LM inference on Apple Silicon, dynamic business IDs,
 explicit rejection, reusable valid prefixes, and versioned application execution.
 Its direct scoring does not include AnyJev's L0 corrections and its candidate scores
 are not calibrated correctness probabilities. The reviewed AnyJev backend directory
@@ -58,20 +58,20 @@ or more accurate. There is no shared benchmark between them in this repository.
 
 | Project | Model and runtime approach | Integration distinction |
 | :--- | :--- | :--- |
-| **MLX ZeroEffort Decider** | Reuse existing compatible causal MLX-LM weights on Apple Silicon; read original option-token logits with no extra training. | Dynamic candidates with stable business IDs, `no_match` / `abstain`, state versions, and single-use execution authorization. |
-| [AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md) | Training-free LLM readout with option rotations and label-prior correction; separate self-distilled models. | Its own typed question contracts and runtime backends; no MLX ZeroEffort Decider integration is included. |
+| **MLX Direct Decider** | Reuse existing compatible causal MLX-LM weights on Apple Silicon; read original option-token logits with no extra training. | Dynamic candidates with stable business IDs, `no_match` / `abstain`, state versions, and single-use execution authorization. |
+| [AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md) | Training-free LLM readout with option rotations and label-prior correction; separate self-distilled models. | Its own typed question contracts and runtime backends; no MLX Direct Decider integration is included. |
 | [OpenDecider](https://github.com/manjunathshiva/opendecider/blob/b830ea46961105da8c30e30a5f11ccce211bbf43/README.md) | Open-weight System 1 decision-model families, including encoder and decoder approaches. | Its own typed question contracts, serving clients, and model-specific runtimes. |
 | [Laya](https://github.com/NandhaKishorM/laya/blob/3cf26cbcb18725dbc2d127bb8bb2c4c43243ae63/README.md) · Convai Innovations | Encoder-based decision models with choice, ordered-score, and yes/no outputs. | Its own question schema, decision heads, and checkpoint routing. |
-| [Laya-MLX](https://github.com/mizorewww/laya-mlx/blob/ca5940aa9286dbbdfaacbecbdb7b337295ad36a2/README.md) | Independent MLX implementation of Laya's encoder and decision heads. | Local Apple Silicon inference for Laya checkpoints; a separate API from MLX ZeroEffort Decider. |
+| [Laya-MLX](https://github.com/mizorewww/laya-mlx/blob/ca5940aa9286dbbdfaacbecbdb7b337295ad36a2/README.md) | Independent MLX implementation of Laya's encoder and decision heads. | Local Apple Silicon inference for Laya checkpoints; a separate API from MLX Direct Decider. |
 
 The linked upstream READMEs are the sources for the related-project descriptions.
-MLX ZeroEffort Decider's behavior is documented in its [architecture](architecture.md) and
+MLX Direct Decider's behavior is documented in its [architecture](architecture.md) and
 [Python API](python-api.md).
 
 ## What to evaluate for your application
 
 If you already have an evaluated MLX-LM checkpoint and need a small set of allowed
-application actions, MLX ZeroEffort Decider provides that request and execution contract. If you
+application actions, MLX Direct Decider provides that request and execution contract. If you
 want a dedicated decision-model family, review OpenDecider or Laya's model cards
 and APIs. For Laya models on Apple Silicon through MLX, review Laya-MLX's conversion
 and inference instructions. These are starting points for evaluation, not a
@@ -81,12 +81,12 @@ Use representative application states and allowed choices to compare semantic
 accuracy, rejection behavior, latency, memory, and integration work. Keep model
 startup, loaded weights, reusable prefixes, and state updates separate. Different
 hardware, models, inputs, or datasets do not establish a speed or accuracy advantage.
-MLX ZeroEffort Decider's own [evaluation protocol](evaluation.md) and
+MLX Direct Decider's own [evaluation protocol](evaluation.md) and
 [36-case results](extended-results.md) provide its evidence and limitations.
 
-## Can MLX ZeroEffort Decider load OpenDecider or Laya weights?
+## Can MLX Direct Decider load OpenDecider or Laya weights?
 
-The shared decision use case is not a loading guarantee. MLX ZeroEffort Decider currently provides
+The shared decision use case is not a loading guarantee. MLX Direct Decider currently provides
 an MLX-LM backend and evaluates only the local checkpoints listed in its
 [model compatibility guide](models.md). No OpenDecider or Laya adapter or checkpoint
 validation is included. Similar backbone names are insufficient to establish
@@ -94,10 +94,10 @@ tokenizer, prompt, output-head, or semantic compatibility.
 
 ## Do the scores mean the same thing?
 
-No. MLX ZeroEffort Decider computes a restricted softmax over candidate logits and a raw-logit
+No. MLX Direct Decider computes a restricted softmax over candidate logits and a raw-logit
 margin; its scores are **not calibrated probabilities of correctness**. Upstream
 OpenDecider and Laya documentation describes calibrated decision distributions.
-Those descriptions are upstream claims, not MLX ZeroEffort Decider measurements. Thresholds and
+Those descriptions are upstream claims, not MLX Direct Decider measurements. Thresholds and
 scores should not be transferred between these systems without validation on the
 application's own data.
 
@@ -114,4 +114,4 @@ The other projects were reviewed on **2026-10-08** against these first-party REA
 - [Laya-MLX · `ca5940a`](https://github.com/mizorewww/laya-mlx/blob/ca5940aa9286dbbdfaacbecbdb7b337295ad36a2/README.md).
 
 Upstream capabilities can change after these snapshots. This is a documentation
-comparison; MLX ZeroEffort Decider has not run a common benchmark against these projects.
+comparison; MLX Direct Decider has not run a common benchmark against these projects.

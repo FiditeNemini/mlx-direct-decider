@@ -1,6 +1,6 @@
 """Record real-model decisions driving real DOM controls in an isolated browser.
 
-Start ``mlx-zeroeffort-decider serve --model PATH`` separately. This script never substitutes a
+Start ``mlx-direct-decider serve --model PATH`` separately. This script never substitutes a
 fake model, fixes model output, or invokes the action API instead of the UI.
 Failures remain in its JSON transcript and produce a nonzero exit status.
 """
@@ -50,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
         )
     args.output.mkdir(parents=True, exist_ok=True)
     report: dict[str, Any] = {
-        "project": "MLX ZeroEffort Decider",
+        "project": "MLX Direct Decider",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "url": args.url,
         "scope": "Real local backend; allowlisted decisions -> actual DOM button click -> execution receipt -> observed DOM state.",

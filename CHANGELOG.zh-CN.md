@@ -4,8 +4,9 @@
 
 ## 尚未打包发布的更新
 
-- 项目及仓库更名为 MLX ZeroEffort Decider。发行包与 CLI 为 `mlx-zeroeffort-decider`，
-  导入名为 `mlx_zeroeffort_decider`；保留 `jev_mlx` / `jev-mlx` 兼容入口。
+- 项目及仓库更名为 MLX Direct Decider。发行包与 CLI 为 `mlx-direct-decider`，
+  导入名为 `mlx_direct_decider`；保留 `mlx_zeroeffort_decider` / `mlx-zeroeffort-decider`
+  及 `jev_mlx` / `jev-mlx` 兼容入口。
   当前页面和界面使用新名称，benchmark 证据、录像及早期发布记录保留历史名称。
   不涉及 fine-tuning 或模型行为变化。
 

@@ -117,7 +117,7 @@ function selectScene(index) {
 function renderLanguage() {
   const text = words[language];
   document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-  document.title = language === "zh" ? "MLX ZeroEffort Decider — 浏览器决策录制回放" : "MLX ZeroEffort Decider — Recorded browser decisions";
+  document.title = language === "zh" ? "MLX Direct Decider — 浏览器决策录制回放" : "MLX Direct Decider — Recorded browser decisions";
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const key = element.dataset.i18n;
     if (key === "title") element.innerHTML = text[key];

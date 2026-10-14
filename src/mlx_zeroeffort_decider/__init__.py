@@ -1,4 +1,4 @@
-"""MLX ZeroEffort Decider: existing models, no fine-tuning required."""
+"""Compatibility namespace for the former ZeroEffort import path."""
 
 from jev_mlx import (
     ABSTAIN_ID,

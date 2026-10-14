@@ -9,7 +9,8 @@ from unittest.mock import Mock
 import pytest
 
 import jev_mlx
-import mlx_zeroeffort_decider as sdk
+import mlx_direct_decider as sdk
+import mlx_zeroeffort_decider as previous_sdk
 
 
 @pytest.mark.parametrize("name", [
@@ -17,8 +18,11 @@ import mlx_zeroeffort_decider as sdk
     "backends.mlx_lm", "backends.mlx_vlm", "backends.vlm_loaders",
 ])
 def test_submodules_share_the_same_objects(name):
-    assert importlib.import_module(f"mlx_zeroeffort_decider.{name}") is importlib.import_module(
+    assert importlib.import_module(f"mlx_direct_decider.{name}") is importlib.import_module(
         f"jev_mlx.{name}"
+    )
+    assert importlib.import_module(f"mlx_zeroeffort_decider.{name}") is importlib.import_module(
+        f"mlx_direct_decider.{name}"
     )
 
 
@@ -26,6 +30,7 @@ def test_requests_and_results_cross_namespaces():
     assert sdk.__all__ == jev_mlx.__all__
     for name in sdk.__all__:
         assert getattr(sdk, name) is getattr(jev_mlx, name)
+        assert getattr(sdk, name) is getattr(previous_sdk, name)
     backend = Mock()
     backend.score.return_value = jev_mlx.BackendOutput(
         {"choose": 3.0, jev_mlx.NO_MATCH_ID: 0.0, jev_mlx.ABSTAIN_ID: -1.0}
@@ -36,16 +41,21 @@ def test_requests_and_results_cross_namespaces():
     assert result.candidate_id == "choose" and result.selected_value is True
 
 
-@pytest.mark.parametrize("canonical,legacy,explicit,expected", [
-    ("new-local", "old-local", None, "new-local"),
-    (None, "old-local", None, "old-local"),
-    ("new-local", "old-local", "explicit-local", "explicit-local"),
+@pytest.mark.parametrize("canonical,previous,legacy,explicit,expected", [
+    ("new-local", "previous-local", "old-local", None, "new-local"),
+    (None, "previous-local", "old-local", None, "previous-local"),
+    (None, None, "old-local", None, "old-local"),
+    ("new-local", "previous-local", "old-local", "explicit-local", "explicit-local"),
 ])
 def test_model_environment_precedence(monkeypatch, tmp_path, capsys,
-                                      canonical, legacy, explicit, expected):
-    from mlx_zeroeffort_decider.cli import main
+                                      canonical, previous, legacy, explicit, expected):
+    from mlx_direct_decider.cli import main
 
-    for name, value in (("MLX_ZEROEFFORT_MODEL", canonical), ("JEV_MLX_MODEL", legacy)):
+    for name, value in (
+        ("MLX_DIRECT_MODEL", canonical),
+        ("MLX_ZEROEFFORT_MODEL", previous),
+        ("JEV_MLX_MODEL", legacy),
+    ):
         monkeypatch.delenv(name, raising=False)
         if value is not None:
             monkeypatch.setenv(name, value)
@@ -66,15 +76,15 @@ def test_model_environment_precedence(monkeypatch, tmp_path, capsys,
 def test_imports_and_help_do_not_initialize_mlx():
     program = """
 import sys
-import mlx_zeroeffort_decider
-from mlx_zeroeffort_decider.backends.mlx_lm import MLXLMBackend
-from mlx_zeroeffort_decider.backends.mlx_vlm import MLXVLMBackend
+import mlx_direct_decider
+from mlx_direct_decider.backends.mlx_lm import MLXLMBackend
+from mlx_direct_decider.backends.mlx_vlm import MLXVLMBackend
 assert not any(name in sys.modules for name in ('mlx.core', 'mlx_lm', 'mlx_vlm'))
 """
     subprocess.run([sys.executable, "-c", program], check=True, capture_output=True, text=True)
     result = subprocess.run(
-        [sys.executable, "-m", "mlx_zeroeffort_decider", "--help"],
+        [sys.executable, "-m", "mlx_direct_decider", "--help"],
         check=True, capture_output=True, text=True,
     )
-    assert "mlx-zeroeffort-decider" in result.stdout
+    assert "mlx-direct-decider" in result.stdout
     assert "No fine-tuning required" in result.stdout

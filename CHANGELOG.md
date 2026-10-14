@@ -4,9 +4,10 @@
 
 ## Unreleased
 
-- Renamed the project and repository to MLX ZeroEffort Decider. The distribution
-  and CLI are `mlx-zeroeffort-decider`, with imports from `mlx_zeroeffort_decider`.
-  Existing `jev_mlx` / `jev-mlx` callers remain compatible. Current pages and UI
+- Renamed the project and repository to MLX Direct Decider. The distribution
+  and CLI are `mlx-direct-decider`, with imports from `mlx_direct_decider`.
+  Previous `mlx_zeroeffort_decider` / `mlx-zeroeffort-decider` and
+  `jev_mlx` / `jev-mlx` callers remain compatible. Current pages and UI
   use the new name; benchmark evidence, recordings and previous release entries
   preserve their historical names. No fine-tuning or model behavior change is involved.
 

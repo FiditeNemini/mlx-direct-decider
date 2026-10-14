@@ -1,14 +1,14 @@
-# MLX ZeroEffort Decider：让已有 MLX 模型直接做有类型决策，无需微调
+# MLX Direct Decider：让已有 MLX 模型直接做有类型决策，无需微调
 
 <p align="center">
-  <img src="docs/assets/mlx-zeroeffort-decider-hero.zh-CN.svg" alt="MLX ZeroEffort Decider — 受 JEV 启发，基于 MLX 的本地语义决策" width="1280" />
+  <img src="docs/assets/mlx-direct-decider-hero.zh-CN.svg" alt="MLX Direct Decider — 受 JEV 启发，基于 MLX 的本地语义决策" width="1280" />
 </p>
 
 <p align="center"><strong>已有 MLX 大模型 → 本地决策引擎。</strong><br />无需 fine-tuning（微调），无需额外决策模型权重。</p>
 
-**MLX ZeroEffort Decider** 是面向 Apple Silicon Mac 的开源 Python 库，使用 [MLX](https://github.com/ml-explore/mlx)、[MLX-LM](https://github.com/ml-explore/mlx-lm) 及可选的 [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) 进行本地大模型（local LLM）动作选择。它根据应用状态和自然语言请求，从应用允许的动作中选出一个，或返回 `no_match` / `abstain`。你可以通过 Python API、CLI 或本地 HTTP 服务接入语义路由（semantic routing）、enum / boolean 决策和自然语言应用控制。
+**MLX Direct Decider** 是面向 Apple Silicon Mac 的开源 Python 库，使用 [MLX](https://github.com/ml-explore/mlx)、[MLX-LM](https://github.com/ml-explore/mlx-lm) 及可选的 [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) 进行本地大模型（local LLM）动作选择。它根据应用状态和自然语言请求，从应用允许的动作中选出一个，或返回 `no_match` / `abstain`。你可以通过 Python API、CLI 或本地 HTTP 服务接入语义路由（semantic routing）、enum / boolean 决策和自然语言应用控制。
 
-**复用你已有的兼容 MLX-LM 或 MLX-VLM 检查点，无需额外训练、微调或专用决策权重。** 模型照常处理提示词，MLX ZeroEffort Decider 从原始输出头读取最后一个输入位置的候选 logits。模型权重和输出头保持不变，直接决策无需生成后续文本。
+**复用你已有的兼容 MLX-LM 或 MLX-VLM 检查点，无需额外训练、微调或专用决策权重。** 模型照常处理提示词，MLX Direct Decider 从原始输出头读取最后一个输入位置的候选 logits。模型权重和输出头保持不变，直接决策无需生成后续文本。
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -41,7 +41,7 @@
 
 ## 看本地模型玩方块
 
-![MLX ZeroEffort Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks/preview.gif)
+![MLX Direct Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks/preview.gif)
 
 **Qwen3.5-9B · 模型选择 20 次落点 · 消除 4 行 · 400 分。** 录制画面保留更名前的 MLXJ 名称。GIF 以 **4 倍速**展示第二轮完整开发运行，包含推理等待。模型读取结构化棋盘和规则计算的结果，从所有合法垂直落点中选择；没有“最佳落点”算法代走。这是每块一步的回合制决策，不是看截图或逐帧控制。
 
@@ -51,11 +51,11 @@
 
 ## 基于 MLX 的动作选择与语义路由
 
-**MLX ZeroEffort Decider** 根据当前应用状态、用户的话和动态候选动作，让本地模型选出一个稳定的业务 ID；没有合适选项时，可以返回“不匹配”或“需要澄清”。
+**MLX Direct Decider** 根据当前应用状态、用户的话和动态候选动作，让本地模型选出一个稳定的业务 ID；没有合适选项时，可以返回“不匹配”或“需要澄清”。
 
 它适合嵌入你已有的工具：切换一个入口、选择当前列表里的内容、暂停播放器，或做一个 boolean / enum 判断。模型在 Mac 上运行，权重由你选择；无需先训练新模型。
 
-> **项目与包名：** 项目名为 MLX ZeroEffort Decider，发行包与命令为 `mlx-zeroeffort-decider`，Python 导入为 `mlx_zeroeffort_decider`。0.1 是实验版，尚未公开发布到 PyPI。
+> **项目与包名：** 项目名为 MLX Direct Decider，发行包与命令为 `mlx-direct-decider`，Python 导入为 `mlx_direct_decider`。0.1 是实验版，尚未公开发布到 PyPI。
 
 | 能力 | 在应用里意味着什么 |
 | :--- | :--- |
@@ -76,19 +76,19 @@
 克隆仓库并安装：
 
 ```sh
-git clone https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider.git
-cd MLX-ZeroEffort-Decider
+git clone https://github.com/ItsOdeLeo/MLX-Direct-Decider.git
+cd MLX-Direct-Decider
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[mlx]'
-export MLX_ZEROEFFORT_MODEL=/absolute/path/to/your/local/mlx-model
+export MLX_DIRECT_MODEL=/absolute/path/to/your/local/mlx-model
 ```
 
 ```python
 import os
-from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXDecisionEngine
+from mlx_direct_decider import Candidate, DecisionRequest, MLXDecisionEngine
 
-engine = MLXDecisionEngine(os.environ["MLX_ZEROEFFORT_MODEL"])
+engine = MLXDecisionEngine(os.environ["MLX_DIRECT_MODEL"])
 result = engine.decide(DecisionRequest(
     state={"focused_window": "notes"},
     utterance="Close it",
@@ -103,7 +103,7 @@ print(result.margin, result.timing)
 命令行使用同一份请求约定：
 
 ```sh
-mlx-zeroeffort-decider decide --request examples/decision.json
+mlx-direct-decider decide --request examples/decision.json
 ```
 
 返回结果包含候选 ID、原始 logits、候选分数、margin、状态版本、模型身份、真实耗时和缓存信息。[Python API](docs/python-api.zh-CN.md) 包含 boolean 判断、状态更新与执行示例。
@@ -113,7 +113,7 @@ mlx-zeroeffort-decider decide --request examples/decision.json
 - **MLX：**共用计算底座，无需单独的 Metal 后端。
 - **MLX-LM：**通过 `MLXDecisionEngine` 做文本决策，支持有容量上限的前缀复用。
 - **MLX-VLM：**通过 `MLXVLMDecisionEngine` 或
-  `mlx-zeroeffort-decider decide --backend mlx-vlm --image ...` 做文本＋图片决策，无需微调。
+  `mlx-direct-decider decide --backend mlx-vlm --image ...` 做文本＋图片决策，无需微调。
 
 使用 `python -m pip install -e '.[mlx,vlm]'` 安装图片支持。
 [图片快速开始与真实模型检查](docs/multimodal.zh-CN.md)记录 Qwen3-VL、SmolVLM 的错误，以及 Gemma 检查点的加载限制。VLM 请求目前重新计算完整上下文；HTTP／游戏演示仍使用文本状态。各文本检查点的覆盖范围见[模型指南](docs/models.zh-CN.md)。
@@ -238,13 +238,13 @@ Qwen 在原始集的 3 个未通过场景包括拒绝状态区分和排序后的
 
 ## 相关决策项目：AnyJev、OpenDecider 与 Laya
 
-正在评估 **AnyJev**、**OpenDecider**、**Laya** 或 **Laya-MLX** 的开发者，也可能需要本地动作选择、分类或语义路由。**MLX ZeroEffort Decider 聚焦 Apple Silicon 上已有兼容的因果 MLX-LM 检查点，无需 fine-tuning 或单独的决策模型权重。** 应用定义候选项，通过原模型输出头为其评分。AnyJev 也提供无需训练的路径，各自的实现和分数含义有所不同。
+正在评估 **AnyJev**、**OpenDecider**、**Laya** 或 **Laya-MLX** 的开发者，也可能需要本地动作选择、分类或语义路由。**MLX Direct Decider 聚焦 Apple Silicon 上已有兼容的因果 MLX-LM 检查点，无需 fine-tuning 或单独的决策模型权重。** 应用定义候选项，通过原模型输出头为其评分。AnyJev 也提供无需训练的路径，各自的实现和分数含义有所不同。
 
-| 项目 | 文档中的实现方向 | 与 MLX ZeroEffort Decider 的技术联系 |
+| 项目 | 文档中的实现方向 | 与 MLX Direct Decider 的技术联系 |
 | :--- | :--- | :--- |
-| [AnyJev](https://github.com/nokia-applied-research/AnyJev) | 无需训练的 `Decider` 包含候选轮换与标签先验校正；另有自蒸馏 `Tacit` 模型路线。 | 同样复用已有 LLM；MLX ZeroEffort Decider 提供原生 MLX 评分及应用执行保护，未包含 AnyJev 的 L0 校正。 |
-| [OpenDecider](https://github.com/manjunathshiva/opendecider) | 提供带类型输出及服务客户端的开放权重 System 1 决策模型。 | 同类决策模型方案；MLX ZeroEffort Decider 使用自己的请求和执行约定。 |
-| [Laya](https://github.com/NandhaKishorM/laya) · Convai Innovations | 基于编码器，回答选择、有序评分和是非问题。 | 相关的带类型决策方法；MLX ZeroEffort Decider 从因果语言模型的选项 token logits 评分。 |
+| [AnyJev](https://github.com/nokia-applied-research/AnyJev) | 无需训练的 `Decider` 包含候选轮换与标签先验校正；另有自蒸馏 `Tacit` 模型路线。 | 同样复用已有 LLM；MLX Direct Decider 提供原生 MLX 评分及应用执行保护，未包含 AnyJev 的 L0 校正。 |
+| [OpenDecider](https://github.com/manjunathshiva/opendecider) | 提供带类型输出及服务客户端的开放权重 System 1 决策模型。 | 同类决策模型方案；MLX Direct Decider 使用自己的请求和执行约定。 |
+| [Laya](https://github.com/NandhaKishorM/laya) · Convai Innovations | 基于编码器，回答选择、有序评分和是非问题。 | 相关的带类型决策方法；MLX Direct Decider 从因果语言模型的选项 token logits 评分。 |
 | [Laya-MLX](https://github.com/mizorewww/laya-mlx) | 在 Apple Silicon 上运行 Laya 编码器和决策头的独立 MLX 实现。 | 共享 MLX 平台和本地决策场景，模型架构及 API 各自独立。 |
 
 [AnyJev、OpenDecider 与 Laya 对照](docs/decision-models.zh-CN.md)列出了来源快照、集成边界与评测注意点。这些是相关项目，不代表已内置相应后端或存在厂商合作。
@@ -253,23 +253,23 @@ Qwen 在原始集的 3 个未通过场景包括拒绝状态区分和排序后的
 
 ## 常见问题
 
-### MLX ZeroEffort Decider 如何使用 MLX、MLX-LM 和 MLX-VLM？
+### MLX Direct Decider 如何使用 MLX、MLX-LM 和 MLX-VLM？
 
-MLX 提供数组与计算框架，MLX-LM 运行文本模型，可选的 MLX-VLM 后端运行文本／图片模型。Metal 执行由 MLX 负责。图片决策使用全新上下文，现有文本后端保留前缀复用。MLX ZeroEffort Decider 在此基础上提供应用定义的候选项、候选评分、拒绝结果和版本化执行。直接决策读取经过验证的单 token 选项编码对应的下一 token logits，不生成 JSON 续写。实现细节见[架构](docs/architecture.zh-CN.md)。
+MLX 提供数组与计算框架，MLX-LM 运行文本模型，可选的 MLX-VLM 后端运行文本／图片模型。Metal 执行由 MLX 负责。图片决策使用全新上下文，现有文本后端保留前缀复用。MLX Direct Decider 在此基础上提供应用定义的候选项、候选评分、拒绝结果和版本化执行。直接决策读取经过验证的单 token 选项编码对应的下一 token logits，不生成 JSON 续写。实现细节见[架构](docs/architecture.zh-CN.md)。
 
 完整模型仍然处理输入。读取最后位置的 logits，不代表只运行最后一层或替换输出头。
 
-### MLX ZeroEffort Decider 可以用于本地语义路由吗？
+### MLX Direct Decider 可以用于本地语义路由吗？
 
 可以。把当前允许的路由或动作描述为带稳定业务 ID 的候选项，提供应用状态和用户请求，然后读取选中的 ID。动作由宿主应用定义和执行；不合适或含糊的请求可以返回 `no_match` 或 `abstain`。接入方法见 [Python API](docs/python-api.zh-CN.md)。
 
-### MLX ZeroEffort Decider 与 AnyJev、OpenDecider、Laya-MLX 有什么区别？
+### MLX Direct Decider 与 AnyJev、OpenDecider、Laya-MLX 有什么区别？
 
-MLX ZeroEffort Decider 为已有兼容的因果 MLX-LM 检查点增加有限候选动作选择，无需微调或专用决策权重。AnyJev 的 `Decider` 同样无需训练地复用已有 LLM，并校正候选顺序和标签先验。OpenDecider 与 Laya 发布训练好的决策模型系列，Laya-MLX 运行 Laya 权重；它们的用户可以直接加载已发布检查点，不必亲自训练。详见[决策模型对照](docs/decision-models.zh-CN.md)。
+MLX Direct Decider 为已有兼容的因果 MLX-LM 检查点增加有限候选动作选择，无需微调或专用决策权重。AnyJev 的 `Decider` 同样无需训练地复用已有 LLM，并校正候选顺序和标签先验。OpenDecider 与 Laya 发布训练好的决策模型系列，Laya-MLX 运行 Laya 权重；它们的用户可以直接加载已发布检查点，不必亲自训练。详见[决策模型对照](docs/decision-models.zh-CN.md)。
 
-### 安装 MLX ZeroEffort Decider 后，所有 MacBook 模型都能直接使用吗？
+### 安装 MLX Direct Decider 后，所有 MacBook 模型都能直接使用吗？
 
-使用 `--model` 或 `MLX_ZEROEFFORT_MODEL` 指向兼容的本地 MLX-LM 检查点即可接入。加载接口跨模型架构复用，但每个检查点仍需满足架构实现、分词器、聊天模板、logits 访问和内存要求。安装软件包不会自动接管其他应用，也不能直接加载 Ollama 的 GGUF 模型。[兼容性说明](docs/models.zh-CN.md)区分了完整评测、小规模运行检查和尚未实测的模型家族。
+使用 `--model` 或 `MLX_DIRECT_MODEL` 指向兼容的本地 MLX-LM 检查点即可接入。加载接口跨模型架构复用，但每个检查点仍需满足架构实现、分词器、聊天模板、logits 访问和内存要求。安装软件包不会自动接管其他应用，也不能直接加载 Ollama 的 GGUF 模型。[兼容性说明](docs/models.zh-CN.md)区分了完整评测、小规模运行检查和尚未实测的模型家族。
 
 ### 已经评测了哪些 MLX 模型？
 
@@ -279,17 +279,17 @@ MLX ZeroEffort Decider 为已有兼容的因果 MLX-LM 检查点增加有限候�
 
 推理使用已有兼容的 MLX-LM 检查点，在 Apple Silicon Mac 上本地运行，无需云端 API、额外训练、微调、新决策头或专用决策检查点。已有兼容基础权重时可以直接复用；否则需要先单独获取基础权重，再把本地目录传给引擎。软件包不负责下载权重。
 
-### 如何安装 MLX ZeroEffort Decider？
+### 如何安装 MLX Direct Decider？
 
-克隆 [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider)，创建原生 ARM Python 3.11+ 环境，在仓库目录运行 `python -m pip install -e '.[mlx]'`，并将 `MLX_ZEROEFFORT_MODEL` 设为本地检查点目录。[快速开始](#quick-start)提供可运行示例。0.1 是实验版，尚未公开发布到 PyPI。
+克隆 [ItsOdeLeo/MLX-Direct-Decider](https://github.com/ItsOdeLeo/MLX-Direct-Decider)，创建原生 ARM Python 3.11+ 环境，在仓库目录运行 `python -m pip install -e '.[mlx]'`，并将 `MLX_DIRECT_MODEL` 设为本地检查点目录。[快速开始](#quick-start)提供可运行示例。0.1 是实验版，尚未公开发布到 PyPI。
 
 ### 本地 MLX 动作选择有多快？
 
 延迟取决于检查点、硬件、输入和可复用前缀。[实测结果](#results)区分了权重已加载且页面前缀可复用、启动、KV 冷和页面更新等情况。热缓存时间不是固定延迟保证，也不能证明无人监督执行的可靠性。
 
-### MLX ZeroEffort Decider 是官方 JEV 实现或通用聊天助手吗？
+### MLX Direct Decider 是官方 JEV 实现或通用聊天助手吗？
 
-MLX ZeroEffort Decider 是位于 [ItsOdeLeo/MLX-ZeroEffort-Decider](https://github.com/ItsOdeLeo/MLX-ZeroEffort-Decider) 的独立 JEV 启发项目。它使用已有 MLX-LM 模型，不使用 JEV 权重，也不复现未公开的 JEV 训练方法。0.1 支持英文、单轮、单步选择，通用聊天和多步规划不在范围内。实验性的文本／图片候选选择见[多模态指南](docs/multimodal.zh-CN.md)。
+MLX Direct Decider 是位于 [ItsOdeLeo/MLX-Direct-Decider](https://github.com/ItsOdeLeo/MLX-Direct-Decider) 的独立 JEV 启发项目。它使用已有 MLX-LM 模型，不使用 JEV 权重，也不复现未公开的 JEV 训练方法。0.1 支持英文、单轮、单步选择，通用聊天和多步规划不在范围内。实验性的文本／图片候选选择见[多模态指南](docs/multimodal.zh-CN.md)。
 
 ## 继续阅读
 

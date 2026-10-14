@@ -46,7 +46,7 @@ class LocalServer(ThreadingHTTPServer):
 
 class RequestHandler(BaseHTTPRequestHandler):
     server: LocalServer
-    server_version = "MLXZeroEffortDecider/0.1"
+    server_version = "MLXDirectDecider/0.1"
 
     def log_message(self, format: str, *args: Any) -> None:
         LOGGER.info("%s %s", self.client_address[0], format % args)
@@ -107,7 +107,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 200,
                 {
                     "status": "ready",
-                    "project": "MLX ZeroEffort Decider",
+                    "project": "MLX Direct Decider",
                     "backend": "local",
                     "state_version": self.server.controller.snapshot()["state_version"],
                 },
@@ -228,7 +228,7 @@ def create_server(engine: Any, *, host: str = "127.0.0.1", port: int = 8765) -> 
 
 def serve(engine: Any, *, host: str = "127.0.0.1", port: int = 8765) -> None:
     with create_server(engine, host=host, port=port) as server:
-        print(f"MLX ZeroEffort Decider demo: http://127.0.0.1:{server.server_port}", flush=True)
+        print(f"MLX Direct Decider demo: http://127.0.0.1:{server.server_port}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

@@ -2,9 +2,9 @@
 
 [返回项目首页](README.zh-CN.md)
 
-MLX ZeroEffort Decider 是独立维护的 MIT 开源项目。带类型、感知状态的决策接口受 [TypeSafe AI 的 Jev](https://docs.typesafe.ai/) 启发。没有官方关联或背书，不包含 Jev 检查点，也不声称复现未公开的 RLCD。
+MLX Direct Decider 是独立维护的 MIT 开源项目。带类型、感知状态的决策接口受 [TypeSafe AI 的 Jev](https://docs.typesafe.ai/) 启发。没有官方关联或背书，不包含 Jev 检查点，也不声称复现未公开的 RLCD。
 
-运行时能力由 [MLX](https://github.com/ml-explore/mlx) 和 [MLX-LM](https://github.com/ml-explore/mlx-lm) 提供，版权归 Apple Inc.，使用 MIT 许可证。MLX ZeroEffort Decider 调用其公开模型加载器、量化输出头、缓存工厂、LRUPromptCache 和生成接口。这些依赖保留各自许可证，源码未被复制进本仓库。
+运行时能力由 [MLX](https://github.com/ml-explore/mlx) 和 [MLX-LM](https://github.com/ml-explore/mlx-lm) 提供，版权归 Apple Inc.，使用 MIT 许可证。MLX Direct Decider 调用其公开模型加载器、量化输出头、缓存工厂、LRUPromptCache 和生成接口。这些依赖保留各自许可证，源码未被复制进本仓库。
 
 项目研究了 [jevmlx](https://github.com/bnsd55/jevmlx)、[kev](https://github.com/jaredpalmer/kev) 和 [JEV Ultrafast](https://github.com/browser-use/jev-ultrafast) 等相关公开实现。本仓库不包含这些项目的源文件或权重。
 

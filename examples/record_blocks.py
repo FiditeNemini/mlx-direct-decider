@@ -44,7 +44,7 @@ def main() -> int:
     files["examples/record_blocks.py"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     report = {
         "schema_version": 1,
-        "project": "MLX ZeroEffort Decider Blocks",
+        "project": "MLX Direct Decider Blocks",
         "scope": "fixed-seed illustrative development run, not a held-out benchmark",
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "planned_pieces": args.pieces,

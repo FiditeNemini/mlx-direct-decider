@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXDecisionEngine
+from mlx_direct_decider import Candidate, DecisionRequest, MLXDecisionEngine
 
 
 def main():

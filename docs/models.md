@@ -11,14 +11,14 @@ See the [MLX / MLX-LM / MLX-VLM guide](multimodal.md) for image decisions and ru
 
 ## Reuse the MLX-LM interface across model families
 
-MLX ZeroEffort Decider calls the official `mlx_lm.load` and model/cache interfaces rather than
+MLX Direct Decider calls the official `mlx_lm.load` and model/cache interfaces rather than
 selecting from a hardcoded list of Qwen, Gemma, or GLM checkpoints. A new compatible
-checkpoint can therefore work without model-specific MLX ZeroEffort Decider code or fine-tuning.
+checkpoint can therefore work without model-specific MLX Direct Decider code or fine-tuning.
 It still needs a supported architecture, a usable chat template, verified option
 token codes, next-token logits, correct cache behavior, and sufficient memory.
 
-Installing MLX ZeroEffort Decider does not attach it to every local application. Supply a local
-checkpoint through `--model` or `MLX_ZEROEFFORT_MODEL`. MLX-LM can
+Installing MLX Direct Decider does not attach it to every local application. Supply a local
+checkpoint through `--model` or `MLX_DIRECT_MODEL`. MLX-LM can
 [convert supported source models](https://github.com/ml-explore/mlx-lm#python-api)
 to MLX weights; conversion or quantization is separate from fine-tuning. Ollama's
 GGUF files need a different runtime/backend, and embedding, speech, or image-only
@@ -77,7 +77,7 @@ Prioritize representative Phi, DeepSeek, and GPT-OSS checkpoints,
 then additional Qwen and Gemma sizes and conversions. Their implementations or
 architecture mappings exist in the pinned
 [MLX-LM source](https://github.com/ml-explore/mlx-lm/tree/v0.31.3/mlx_lm/models),
-but no new MLX ZeroEffort Decider checkpoint validation for these families is claimed here.
+but no new MLX Direct Decider checkpoint validation for these families is claimed here.
 Check loading and prompt/token behavior first, numerical cache parity next, then
 decision quality on frozen representative cases. Add an adapter only for a
 demonstrated interface mismatch; adaptation does not require training weights.
@@ -149,7 +149,7 @@ has changed since this local copy was downloaded.
 | [mlx-community/gemma-4-26b-a4b-it-4bit](https://huggingface.co/mlx-community/gemma-4-26b-a4b-it-4bit/tree/8bcfa0de037c2b1bfa323a1e8d1f0132243b9e87) | `8bcfa0de037c2b1bfa323a1e8d1f0132243b9e87` |
 
 For exact reproduction, obtain that revision separately, compare hashes, and pass
-the local directory to MLX ZeroEffort Decider. The package neither includes nor modifies model weights.
+the local directory to MLX Direct Decider. The package neither includes nor modifies model weights.
 It disables remote tokenizer code. The default prompt limit is 4,096 tokens; prompts
 over that bound fail explicitly. In addition to weights, allow memory for snapshots,
 temporary compute arrays, the allocator and your other applications. No system
@@ -163,5 +163,5 @@ Gemma 4's local conversion card declares Apache 2.0, consistent with
 [Google's Gemma 4 license page](https://ai.google.dev/gemma/apache_2); its original
 base revision is not pinned by the retained conversion card. See the
 [Gemma audit](gemma4-audit.md) for the exact provenance boundary.
-Those are separate from MLX ZeroEffort Decider's MIT license. No Jev weights or training artifacts
+Those are separate from MLX Direct Decider's MIT license. No Jev weights or training artifacts
 are used.

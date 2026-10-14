@@ -1,4 +1,4 @@
-"""MLX ZeroEffort Decider: JEV-inspired local decisions for Apple Silicon."""
+"""MLX Direct Decider: JEV-inspired local decisions for Apple Silicon."""
 
 from .engine import DecisionBackend, MLXDecisionEngine
 from .session import (

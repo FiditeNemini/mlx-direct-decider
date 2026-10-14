@@ -1,15 +1,15 @@
 # Python API
 
-Install MLX ZeroEffort Decider using the [quick start](../README.md#quick-start), then set
-`MLX_ZEROEFFORT_MODEL` to a verified local checkpoint. See [model compatibility](models.md).
+Install MLX Direct Decider using the [quick start](../README.md#quick-start), then set
+`MLX_DIRECT_MODEL` to a verified local checkpoint. See [model compatibility](models.md).
 
 ## Make a decision
 
 ```python
 import os
-from mlx_zeroeffort_decider import Candidate, DecisionRequest, MLXDecisionEngine
+from mlx_direct_decider import Candidate, DecisionRequest, MLXDecisionEngine
 
-engine = MLXDecisionEngine(os.environ["MLX_ZEROEFFORT_MODEL"])
+engine = MLXDecisionEngine(os.environ["MLX_DIRECT_MODEL"])
 request = DecisionRequest(
     state={"view": "library", "visible_titles": ["Amber Maps", "Cloud Songs"]},
     utterance="Play the first one",
@@ -56,7 +56,7 @@ mark the result stale. Execution checks the current version again, verifies
 that the result was issued intact by this session, and consumes it once.
 
 ```python
-from mlx_zeroeffort_decider import DecisionSession
+from mlx_direct_decider import DecisionSession
 
 session = DecisionSession(
     engine,
