@@ -33,7 +33,7 @@ MLX Direct Decider 是独立维护、面向已有因果 MLX-LM 模型的库。�
 也提供无需训练的 `Decider` 路径。其 L0 方法包含候选轮换和标签先验校正；
 独立的 `Tacit` 路径则使用自蒸馏检查点。二者共享从已有 LLM 读取决策的基本思路。
 
-MLX Direct Decider 聚焦 Apple Silicon 上的原生 MLX-LM 推理、动态业务 ID、明确拒绝、
+MLX Direct Decider 聚焦 Apple Silicon 上的原生 MLX-LM 与实验性 MLX-VLM 推理、动态业务 ID、明确拒绝、
 有效前缀复用和版本化应用执行。直接评分未包含 AnyJev 的 L0 校正，候选分数
 也不是经过校准的正确概率。查看的 AnyJev 后端目录包含 Hugging Face、vLLM、
 SGLang 和 llama.cpp 实现，路线图将 MLX 列为后续后端工作。项目各自独立，
@@ -41,11 +41,25 @@ SGLang 和 llama.cpp 实现，路线图将 MLX 列为后续后端工作。项目
 
 这是技术对照，不构成速度或准确率优势证明。本仓库尚无二者共同运行的基准测试。
 
+<a name="mlx-direct-decider-vs-anyjev"></a>
+
+## MLX Direct Decider 与 AnyJev 对照
+
+两者都提供无需额外 fine-tuning 的已有模型决策路径。
+以下实现差异用于判断应用需要评估哪些功能。
+
+| 方面 | MLX Direct Decider | AnyJev |
+| :--- | :--- | :--- |
+| 已有权重 | 兼容的本地 MLX-LM 或 MLX-VLM 检查点。 | `Decider` 使用已有因果模型；`Tacit` 使用单独的自蒸馏检查点。 |
+| 运行时 | Apple Silicon 上的原生 MLX；文本与实验性文本／图片候选选择。 | 查看版本的后端：Hugging Face、vLLM、SGLang 与 llama.cpp。 |
+| 评分 | 直接读取原始输出头；候选分数未经校准。 | `Decider` L0 使用候选轮换与标签先验校正。 |
+| 应用接入 | 稳定候选 ID、明确拒绝、状态版本与单次执行授权。 | 自己的带类型问题和后端约定；本库没有内置相互适配器。 |
+
 ## 实现方式对照
 
 | 项目 | 模型与运行时方向 | 集成区别 |
 | :--- | :--- | :--- |
-| **MLX Direct Decider** | 在 Apple Silicon 上复用已有兼容的因果 MLX-LM 权重，读取原始选项 token logits，无需额外训练。 | 动态候选项、稳定业务 ID、`no_match` / `abstain`、状态版本和单次执行授权。 |
+| **MLX Direct Decider** | 在 Apple Silicon 上复用兼容 MLX-LM 权重，或用 MLX-VLM 权重做实验性文本／图片选择，读取原始选项 token logits，无需额外训练。 | 动态候选项、稳定业务 ID、`no_match` / `abstain`、状态版本和单次执行授权。 |
 | [AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md) | 无需训练地读取 LLM 输出，配合候选轮换和标签先验校正；另有自蒸馏模型。 | 自己的带类型问题约定及运行时后端；本库尚未提供 AnyJev 集成。 |
 | [OpenDecider](https://github.com/manjunathshiva/opendecider/blob/b830ea46961105da8c30e30a5f11ccce211bbf43/README.md) | 开放权重的 System 1 决策模型系列，包含编码器与解码器路线。 | 自己的带类型问题约定、服务客户端及模型对应的运行时。 |
 | [Laya](https://github.com/NandhaKishorM/laya/blob/3cf26cbcb18725dbc2d127bb8bb2c4c43243ae63/README.md) · Convai Innovations | 基于编码器的决策模型，提供选择、有序评分和是非输出。 | 自己的问题结构、决策头与检查点路由。 |
@@ -83,7 +97,7 @@ Laya 模型，则查看 Laya-MLX 的转换与推理说明。这些是评估起�
 
 ## 来源快照
 
-AnyJev 于 **2026-10-13** 对照
+AnyJev 于 **2026-10-14** 对照
 [README 修订 `b03158e`](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md)
 及其[后端目录](https://github.com/nokia-applied-research/AnyJev/tree/b03158e9ba18e84c01054aaa393481925088db07/anyjev/backends)查看。
 

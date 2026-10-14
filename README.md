@@ -1,14 +1,16 @@
-# MLX Direct Decider: decisions from existing models, no fine-tuning required
+# MLX Direct Decider — MLX decision engine without fine-tuning
 
 <p align="center">
-  <img src="docs/assets/mlx-direct-decider-hero.en.svg" alt="MLX Direct Decider — decisions from existing models, no fine-tuning required" width="1280" />
+  <img src="docs/assets/mlx-direct-decider-hero.en.svg" alt="MLX Direct Decider: local MLX decision flow on Apple Silicon without fine-tuning" width="1280" />
 </p>
 
 <p align="center"><strong>Your existing compatible MLX model → a local decision engine.</strong><br />No fine-tuning required. No extra decision-model weights.</p>
 
-**MLX Direct Decider** is an open-source Python library for local LLM action selection on Apple Silicon Macs, built with [MLX](https://github.com/ml-explore/mlx), [MLX-LM](https://github.com/ml-explore/mlx-lm), and optional [MLX-VLM](https://github.com/Blaizzy/mlx-vlm). It maps application state and a natural-language request to one of your allowed actions, or returns `no_match` / `abstain`. Use it for semantic routing, enum / boolean decisions, and language-driven application controls through a Python API, CLI, or local HTTP server.
+**MLX Direct Decider** is an open-source Python library for **training-free decisions from existing MLX models on Apple Silicon Macs**. Use it for local LLM action selection, classification, semantic routing, and enum / boolean decisions.
 
-**Use a compatible MLX-LM or MLX-VLM checkpoint you already have: no extra training, fine-tuning, or decision-specific weights.** The model processes the prompt normally; MLX Direct Decider reads candidate logits at the final input position from its original output head. The weights and output head remain unchanged, and direct decisions require no generated continuation.
+Reuse a compatible [MLX-LM](https://github.com/ml-explore/mlx-lm) checkpoint for text or an [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) checkpoint for experimental **text + image decisions**. Supply application state, a natural-language request and allowed choices; receive a stable candidate ID, `no_match` or `abstain`. Integrate through a Python API, CLI or local text HTTP service.
+
+**No additional fine-tuning, trained decision head or separate decision-model weights are required.** The full model processes the prompt normally; the library reads candidate logits from its unchanged original output head without generating a continuation. Compatible base-model weights are still needed.
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -22,7 +24,7 @@
   <a href="#models">Tested models</a> ·
   <a href="#blocks">Game demo</a> ·
   <a href="#results">Measured results</a> ·
-  <a href="#related-projects">Related projects</a> ·
+  <a href="#related-projects">AnyJev & related projects</a> ·
   <a href="#faq">FAQ</a> ·
   <a href="docs/evaluation.md">Methodology</a> ·
   <a href="#connect">Connect & support</a>
@@ -36,18 +38,6 @@
 <p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
 ---
-
-<a name="blocks"></a>
-
-## A local model plays Blocks
-
-![MLX Direct Decider Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks-direct/preview.gif)
-
-**Qwen3.5-9B · 20 model-selected placements · 6 cleared rows · 600 points.** Freshly recorded with the MLX Direct Decider name on October 14, 2026. The GIF shows the complete run at **4× playback**, including inference waits. The model chooses from every legal vertical-drop placement using structured board data and rule-computed outcomes; there is no best-move fallback. This is turn-based play, not screenshot understanding or frame-by-frame control.
-
-[Run the game locally](docs/blocks.md) · [Full-speed video](docs/assets/blocks-direct/full-run.mp4) · [All decisions](docs/assets/blocks-direct/transcript.json)
-
-This single illustrative development run reached its planned 20-piece limit without retries, browser errors or recording errors. Earlier attempts, including the initial refusal, remain in the [historical game report](docs/blocks.md#recorded-development-attempts). This is not a held-out game benchmark or a speed claim. Manual play can run on a static server; new AI decisions require the local MLX backend.
 
 ## MLX action selection and semantic routing
 
@@ -120,6 +110,18 @@ Install image support with `python -m pip install -e '.[mlx,vlm]'`.
 SmolVLM's mistakes, and the Gemma checkpoint loading limitation. VLM requests
 currently recompute the full context; the HTTP/game demos still use text state.
 See the [model guide](docs/models.md) for checkpoint-specific text coverage.
+
+<a name="blocks"></a>
+
+## A local model plays Blocks
+
+![MLX Direct Decider Blocks: complete 20-move development run, shown at 4× playback](docs/assets/blocks-direct/preview.gif)
+
+**Qwen3.5-9B · 20 model-selected placements · 6 cleared rows · 600 points.** Freshly recorded with the MLX Direct Decider name on October 14, 2026. The GIF shows the complete run at **4× playback**, including inference waits. The model chooses from every legal vertical-drop placement using structured board data and rule-computed outcomes; there is no best-move fallback. This is turn-based play, not screenshot understanding or frame-by-frame control.
+
+[Run the game locally](docs/blocks.md) · [Full-speed video](docs/assets/blocks-direct/full-run.mp4) · [All decisions](docs/assets/blocks-direct/transcript.json)
+
+This single illustrative development run reached its planned 20-piece limit without retries, browser errors or recording errors. Earlier attempts, including the initial refusal, remain in the [historical game report](docs/blocks.md#recorded-development-attempts). This is not a held-out game benchmark or a speed claim. Manual play can run on a static server; new AI decisions require the local MLX backend.
 
 <a name="models"></a>
 
@@ -271,6 +273,10 @@ The full model still processes the input. Reading final-position logits does not
 
 Yes. Describe the currently allowed routes or actions as candidates with stable business IDs, supply the application state and user request, and inspect the selected ID. The host application defines and executes the actions. `no_match` and `abstain` handle unsuitable or ambiguous requests. See the [Python API](docs/python-api.md).
 
+### How is MLX Direct Decider different from AnyJev?
+
+Both reuse existing models without additional training. MLX Direct Decider focuses on native MLX-LM and experimental MLX-VLM inference on Apple Silicon, with dynamic action IDs, prefix reuse for text, and versioned execution. AnyJev's `Decider` adds option-rotation and label-prior corrections. MLX Direct Decider uses direct candidate scoring; its scores are not calibrated correctness probabilities. See the [MLX Direct Decider vs AnyJev comparison](docs/decision-models.md#mlx-direct-decider-vs-anyjev).
+
 ### How does MLX Direct Decider compare with AnyJev, OpenDecider, and Laya-MLX?
 
 MLX Direct Decider adds bounded action selection to existing compatible causal MLX-LM checkpoints without fine-tuning or decision-specific weights. AnyJev's `Decider` also reuses existing LLMs without training and adds corrections for option ordering and label priors. OpenDecider and Laya publish trained decision-model families, and Laya-MLX runs Laya weights. Their users can load published checkpoints without training them themselves. See the [decision-model comparison](docs/decision-models.md).
@@ -287,9 +293,9 @@ paths and loading failures. The [text compatibility guide](docs/models.md) and
 [multimodal guide](docs/multimodal.md) retain exact versions, complete results and
 limits. Full evaluations and small smoke checks are identified separately.
 
-### Does inference require a cloud API or model training?
+### Do I need fine-tuning, separate decision-model weights or a cloud API?
 
-Inference runs locally on an Apple Silicon Mac with an existing compatible MLX-LM checkpoint. No cloud API, extra training, fine-tuning, new decision head, or decision-specific checkpoint is required. If you already have compatible base weights, reuse them. Otherwise obtain those base weights separately and pass their local directory to the engine; the package does not download weights.
+No. Reuse a compatible local MLX-LM checkpoint, or an MLX-VLM checkpoint for experimental image decisions, on an Apple Silicon Mac. No cloud API, extra training, fine-tuning, new decision head, or decision-specific checkpoint is required. If you already have compatible base weights, reuse them. Otherwise obtain those base weights separately and pass their local directory to the engine; the package does not download weights.
 
 ### How do I install MLX Direct Decider?
 

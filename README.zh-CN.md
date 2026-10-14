@@ -1,14 +1,16 @@
-# MLX Direct Decider：让已有 MLX 模型直接做有类型决策，无需微调
+# MLX Direct Decider：Mac 本地 MLX 决策引擎，无需 fine-tuning（微调）
 
 <p align="center">
-  <img src="docs/assets/mlx-direct-decider-hero.zh-CN.svg" alt="MLX Direct Decider — 受 JEV 启发，基于 MLX 的本地语义决策" width="1280" />
+  <img src="docs/assets/mlx-direct-decider-hero.zh-CN.svg" alt="MLX Direct Decider：Apple Silicon 上的本地 MLX 决策流程，无需微调" width="1280" />
 </p>
 
 <p align="center"><strong>已有 MLX 大模型 → 本地决策引擎。</strong><br />无需 fine-tuning（微调），无需额外决策模型权重。</p>
 
-**MLX Direct Decider** 是面向 Apple Silicon Mac 的开源 Python 库，使用 [MLX](https://github.com/ml-explore/mlx)、[MLX-LM](https://github.com/ml-explore/mlx-lm) 及可选的 [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) 进行本地大模型（local LLM）动作选择。它根据应用状态和自然语言请求，从应用允许的动作中选出一个，或返回 `no_match` / `abstain`。你可以通过 Python API、CLI 或本地 HTTP 服务接入语义路由（semantic routing）、enum / boolean 决策和自然语言应用控制。
+**MLX Direct Decider** 是一个开源 Python 库，**复用 Apple Silicon Mac 上已有的 MLX 模型，无需额外训练（training-free）即可做决策**。适用于本地大模型动作选择（local LLM action selection）、分类、语义路由（semantic routing）及 enum / boolean 判断。
 
-**复用你已有的兼容 MLX-LM 或 MLX-VLM 检查点，无需额外训练、微调或专用决策权重。** 模型照常处理提示词，MLX Direct Decider 从原始输出头读取最后一个输入位置的候选 logits。模型权重和输出头保持不变，直接决策无需生成后续文本。
+通过兼容的 [MLX-LM](https://github.com/ml-explore/mlx-lm) 检查点做文本决策，或通过 [MLX-VLM](https://github.com/Blaizzy/mlx-vlm) 检查点做实验性的**文本＋图片候选决策**。提供应用状态、自然语言请求与允许的选项，获得稳定的候选 ID、`no_match` 或 `abstain`。可通过 Python API、CLI 或本地文本 HTTP 服务接入。
+
+**无需额外 fine-tuning（微调）、训练新的决策头或获取专用决策模型权重。** 完整模型照常处理提示词；本库从保持不变的原始输出头读取候选 logits，无需生成后续文本。仍需已有兼容的基础模型权重。
 
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
@@ -22,7 +24,7 @@
   <a href="#models">已测模型</a> ·
   <a href="#blocks">游戏演示</a> ·
   <a href="#results">实测结果</a> ·
-  <a href="#related-projects">相关项目</a> ·
+  <a href="#related-projects">AnyJev 与相关项目</a> ·
   <a href="#faq">常见问题</a> ·
   <a href="docs/testing.zh-CN.md">怎么测试</a> ·
   <a href="#connect">联系</a>
@@ -36,18 +38,6 @@
 <p align="center"><a href="README.md">English</a> · <strong>简体中文</strong></p>
 
 ---
-
-<a name="blocks"></a>
-
-## 看本地模型玩方块
-
-![MLX Direct Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks-direct/preview.gif)
-
-**Qwen3.5-9B · 模型选择 20 次落点 · 消除 6 行 · 600 分。** 于 2026 年 10 月 14 日使用 MLX Direct Decider 名称重新录制。GIF 以 **4 倍速**展示完整运行，包含推理等待。模型读取结构化棋盘和规则计算的结果，从所有合法垂直落点中选择；没有“最佳落点”算法代走。这是每块一步的回合制决策，不是看截图或逐帧控制。
-
-[本地运行游戏](docs/blocks.zh-CN.md) · [原速完整录像](docs/assets/blocks-direct/full-run.mp4) · [全部决策记录](docs/assets/blocks-direct/transcript.json)
-
-本次单轮开发演示达到预定 20 步上限，没有重试、浏览器错误或录制错误。包括首次拒绝在内的早期尝试仍保留在[历史游戏报告](docs/blocks.zh-CN.md#recorded-development-attempts)。这不是留出游戏 benchmark，也不是速度声明。手动游玩可使用静态服务器；新的 AI 决策需要本地 MLX 后端。
 
 ## 基于 MLX 的动作选择与语义路由
 
@@ -117,6 +107,18 @@ mlx-direct-decider decide --request examples/decision.json
 
 使用 `python -m pip install -e '.[mlx,vlm]'` 安装图片支持。
 [图片快速开始与真实模型检查](docs/multimodal.zh-CN.md)记录 Qwen3-VL、SmolVLM 的错误，以及 Gemma 检查点的加载限制。VLM 请求目前重新计算完整上下文；HTTP／游戏演示仍使用文本状态。各文本检查点的覆盖范围见[模型指南](docs/models.zh-CN.md)。
+
+<a name="blocks"></a>
+
+## 看本地模型玩方块
+
+![MLX Direct Decider Blocks：完整 20 步开发运行，4 倍速播放](docs/assets/blocks-direct/preview.gif)
+
+**Qwen3.5-9B · 模型选择 20 次落点 · 消除 6 行 · 600 分。** 于 2026 年 10 月 14 日使用 MLX Direct Decider 名称重新录制。GIF 以 **4 倍速**展示完整运行，包含推理等待。模型读取结构化棋盘和规则计算的结果，从所有合法垂直落点中选择；没有“最佳落点”算法代走。这是每块一步的回合制决策，不是看截图或逐帧控制。
+
+[本地运行游戏](docs/blocks.zh-CN.md) · [原速完整录像](docs/assets/blocks-direct/full-run.mp4) · [全部决策记录](docs/assets/blocks-direct/transcript.json)
+
+本次单轮开发演示达到预定 20 步上限，没有重试、浏览器错误或录制错误。包括首次拒绝在内的早期尝试仍保留在[历史游戏报告](docs/blocks.zh-CN.md#recorded-development-attempts)。这不是留出游戏 benchmark，也不是速度声明。手动游玩可使用静态服务器；新的 AI 决策需要本地 MLX 后端。
 
 <a name="models"></a>
 
@@ -263,6 +265,10 @@ MLX 提供数组与计算框架，MLX-LM 运行文本模型，可选的 MLX-VLM 
 
 可以。把当前允许的路由或动作描述为带稳定业务 ID 的候选项，提供应用状态和用户请求，然后读取选中的 ID。动作由宿主应用定义和执行；不合适或含糊的请求可以返回 `no_match` 或 `abstain`。接入方法见 [Python API](docs/python-api.zh-CN.md)。
 
+### MLX Direct Decider 和 AnyJev 有什么区别？
+
+两者都可以复用已有模型，无需额外训练。MLX Direct Decider 聚焦 Apple Silicon 上的原生 MLX-LM 与实验性 MLX-VLM 推理，提供动态动作 ID、文本前缀复用和版本化执行。AnyJev 的 `Decider` 增加候选轮换与标签先验校正。本库使用直接候选评分，分数不是经过校准的正确概率。详见 [MLX Direct Decider 与 AnyJev 对照](docs/decision-models.zh-CN.md#mlx-direct-decider-vs-anyjev)。
+
 ### MLX Direct Decider 与 AnyJev、OpenDecider、Laya-MLX 有什么区别？
 
 MLX Direct Decider 为已有兼容的因果 MLX-LM 检查点增加有限候选动作选择，无需微调或专用决策权重。AnyJev 的 `Decider` 同样无需训练地复用已有 LLM，并校正候选顺序和标签先验。OpenDecider 与 Laya 发布训练好的决策模型系列，Laya-MLX 运行 Laya 权重；它们的用户可以直接加载已发布检查点，不必亲自训练。详见[决策模型对照](docs/decision-models.zh-CN.md)。
@@ -275,9 +281,9 @@ MLX Direct Decider 为已有兼容的因果 MLX-LM 检查点增加有限候选�
 
 [首页模型表](#models)列出全部 11 个本地实测检查点，覆盖 Qwen、GLM、Gemma、NVIDIA Nemotron、Llama、Mistral 与 SmolVLM，标明文本／图片路径及加载失败。[文本兼容性指南](docs/models.zh-CN.md)和[多模态指南](docs/multimodal.zh-CN.md)保留精确版本、完整结果与局限；完整评测和小规模冒烟检查分别标注。
 
-### 推理需要云端 API 或重新训练模型吗？
+### 需要 fine-tuning、专用决策模型权重或云端 API 吗？
 
-推理使用已有兼容的 MLX-LM 检查点，在 Apple Silicon Mac 上本地运行，无需云端 API、额外训练、微调、新决策头或专用决策检查点。已有兼容基础权重时可以直接复用；否则需要先单独获取基础权重，再把本地目录传给引擎。软件包不负责下载权重。
+不需要。复用已有兼容的 MLX-LM 检查点，或用于实验性图片决策的 MLX-VLM 检查点，在 Apple Silicon Mac 上本地运行即可。无需云端 API、额外训练、微调、新决策头或专用决策检查点。已有兼容基础权重时可以直接复用；否则需要先单独获取基础权重，再把本地目录传给引擎。软件包不负责下载权重。
 
 ### 如何安装 MLX Direct Decider？
 

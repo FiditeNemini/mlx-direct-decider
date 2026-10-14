@@ -44,7 +44,7 @@ also offers a `Decider` path without training. Its L0 method uses option rotatio
 and label-prior correction; its separate `Tacit` path uses self-distilled checkpoints.
 The underlying idea of reading decisions from existing LLMs is shared.
 
-MLX Direct Decider focuses on native MLX-LM inference on Apple Silicon, dynamic business IDs,
+MLX Direct Decider focuses on native MLX-LM and experimental MLX-VLM inference on Apple Silicon, dynamic business IDs,
 explicit rejection, reusable valid prefixes, and versioned application execution.
 Its direct scoring does not include AnyJev's L0 corrections and its candidate scores
 are not calibrated correctness probabilities. The reviewed AnyJev backend directory
@@ -54,11 +54,25 @@ MLX as future backend work. These are separate projects with no adapter included
 This is a technical comparison, not evidence that either implementation is faster
 or more accurate. There is no shared benchmark between them in this repository.
 
+<a name="mlx-direct-decider-vs-anyjev"></a>
+
+## MLX Direct Decider vs AnyJev
+
+Both offer decisions from existing models without additional fine-tuning. The
+following implementation differences help identify what to evaluate for your app.
+
+| Area | MLX Direct Decider | AnyJev |
+| :--- | :--- | :--- |
+| Existing weights | Compatible local MLX-LM or MLX-VLM checkpoints. | Existing causal models through `Decider`; separate self-distilled checkpoints through `Tacit`. |
+| Runtime | Native MLX on Apple Silicon; text and experimental text/image choices. | Reviewed backends: Hugging Face, vLLM, SGLang and llama.cpp. |
+| Scoring | Direct original-output-head readout; candidate scores are uncalibrated. | `Decider` L0 uses option rotations and label-prior correction. |
+| Application integration | Stable candidate IDs, explicit rejection, state versions and single-use execution authorization. | Its own typed question and backend contracts; no adapter is bundled here. |
+
 ## Implementation comparison
 
 | Project | Model and runtime approach | Integration distinction |
 | :--- | :--- | :--- |
-| **MLX Direct Decider** | Reuse existing compatible causal MLX-LM weights on Apple Silicon; read original option-token logits with no extra training. | Dynamic candidates with stable business IDs, `no_match` / `abstain`, state versions, and single-use execution authorization. |
+| **MLX Direct Decider** | Reuse compatible MLX-LM weights, or MLX-VLM weights for experimental text/image choices, on Apple Silicon; read original option-token logits with no extra training. | Dynamic candidates with stable business IDs, `no_match` / `abstain`, state versions, and single-use execution authorization. |
 | [AnyJev](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md) | Training-free LLM readout with option rotations and label-prior correction; separate self-distilled models. | Its own typed question contracts and runtime backends; no MLX Direct Decider integration is included. |
 | [OpenDecider](https://github.com/manjunathshiva/opendecider/blob/b830ea46961105da8c30e30a5f11ccce211bbf43/README.md) | Open-weight System 1 decision-model families, including encoder and decoder approaches. | Its own typed question contracts, serving clients, and model-specific runtimes. |
 | [Laya](https://github.com/NandhaKishorM/laya/blob/3cf26cbcb18725dbc2d127bb8bb2c4c43243ae63/README.md) · Convai Innovations | Encoder-based decision models with choice, ordered-score, and yes/no outputs. | Its own question schema, decision heads, and checkpoint routing. |
@@ -103,7 +117,7 @@ application's own data.
 
 ## Source snapshots
 
-AnyJev was reviewed on **2026-10-13** against
+AnyJev was reviewed on **2026-10-14** against
 [README revision `b03158e`](https://github.com/nokia-applied-research/AnyJev/blob/b03158e9ba18e84c01054aaa393481925088db07/README.md)
 and its [backend directory](https://github.com/nokia-applied-research/AnyJev/tree/b03158e9ba18e84c01054aaa393481925088db07/anyjev/backends).
 
