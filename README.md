@@ -12,6 +12,11 @@ Reuse a compatible [MLX-LM](https://github.com/ml-explore/mlx-lm) checkpoint for
 
 **No additional fine-tuning, trained decision head or separate decision-model weights are required.** The full model processes the prompt normally; the library reads candidate logits from its unchanged original output head without generating a continuation. Compatible base-model weights are still needed.
 
+> **JevBench public evaluation: 74.0% — 171/231 correct, without additional fine-tuning.**
+> Qwen3.5-9B OptiQ mixed 4/8-bit · Apple M2 Max · evaluated Q&A prompt profile.
+> Self-reported results on the legacy public set; not an official leaderboard score.
+> [Results, baseline comparison and reproduction](docs/jevbench.md).
+
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
   <img src="docs/assets/badges/python.svg" alt="Python 3.11+" />
@@ -23,6 +28,7 @@ Reuse a compatible [MLX-LM](https://github.com/ml-explore/mlx-lm) checkpoint for
   <a href="#quick-start">Quick start</a> ·
   <a href="#models">Tested models</a> ·
   <a href="#blocks">Game demo</a> ·
+  <a href="docs/jevbench.md">JevBench: 74.0%</a> ·
   <a href="#results">Measured results</a> ·
   <a href="#related-projects">AnyJev & related projects</a> ·
   <a href="#faq">FAQ</a> ·
@@ -134,7 +140,7 @@ decision accuracy are separate facts.
 
 | Local checkpoint | Backend / input | Recorded validation |
 | :--- | :--- | :--- |
-| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **30/36 correct** on the extension. |
+| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · text | **171/231 (74.0%)** on [JevBench public tasks, Q&A profile](docs/jevbench.md); **30/36** on the separate application-state extension. |
 | `GLM-4.7-Flash-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **21/36 correct** on the extension. |
 | `gemma-4-26b-a4b-it-4bit` | MLX-LM · text | Full 28- and 36-case evaluations; **31/36 correct** on the extension. |
 | `Qwen3-4B` | MLX-LM · text | 3-case development smoke: **1/3 correct**; cache parity **3/3 passed**. |
@@ -158,6 +164,20 @@ not establish general reliability or compatibility with every model in a family.
 <a name="results"></a>
 
 ## Measurements, with their limits
+
+### JevBench public tasks: 171/231 (74.0%)
+
+With the same frozen quantized Qwen3.5-9B checkpoint, a question-focused prompt
+profile improved from **157/231 (68.0%) to 171/231 (74.0%)**: 23 previously wrong
+answers corrected, nine regressions, **+6.1 percentage points** overall.
+All five native declines and one input over the 4,096-token limit count wrong.
+This is a self-reported, post-development comparison on the legacy public set,
+separate from the application tests below and the current official leaderboard.
+The evaluated Q&A profile is supplied as a standalone benchmark adapter;
+application action-selection defaults are unchanged.
+[Full results, exact prompt, per-task records and reproduction](docs/jevbench.md).
+
+### Application-state evaluation: 36 cases
 
 **New six-domain evaluation · Apple M2 Max · 64 GiB · 36 fictional English cases.**
 

@@ -12,6 +12,11 @@
 
 **无需额外 fine-tuning（微调）、训练新的决策头或获取专用决策模型权重。** 完整模型照常处理提示词；本库从保持不变的原始输出头读取候选 logits，无需生成后续文本。仍需已有兼容的基础模型权重。
 
+> **JevBench 公开题集实测：74.0%——171/231 题正确，无需额外 fine-tuning。**
+> Qwen3.5-9B OptiQ 混合 4/8-bit · Apple M2 Max · 本次评测的问答提示配置。
+> 这是旧版公开题集的本地自测结果，尚非官方榜单成绩。
+> [完整结果、原配置对比与复现方法](docs/jevbench.zh-CN.md)。
+
 <p align="center">
   <img src="docs/assets/badges/apple-silicon.svg" alt="Apple Silicon" />
   <img src="docs/assets/badges/python.svg" alt="Python 3.11+" />
@@ -23,6 +28,7 @@
   <a href="#quick-start">快速开始</a> ·
   <a href="#models">已测模型</a> ·
   <a href="#blocks">游戏演示</a> ·
+  <a href="docs/jevbench.zh-CN.md">JevBench：74.0%</a> ·
   <a href="#results">实测结果</a> ·
   <a href="#related-projects">AnyJev 与相关项目</a> ·
   <a href="#faq">常见问题</a> ·
@@ -129,7 +135,7 @@ mlx-direct-decider decide --request examples/decision.json
 
 | 本地检查点 | 后端／输入 | 已记录的验证 |
 | :--- | :--- | :--- |
-| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **30/36 正确**。 |
+| `Qwen3.5-9B-OptiQ-4bit` | MLX-LM · 文本 | [JevBench 公开题集，问答配置](docs/jevbench.zh-CN.md) **171/231（74.0%）**；独立的应用状态扩展集 **30/36**。 |
 | `GLM-4.7-Flash-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **21/36 正确**。 |
 | `gemma-4-26b-a4b-it-4bit` | MLX-LM · 文本 | 完整 28 题及 36 题评测；扩展集 **31/36 正确**。 |
 | `Qwen3-4B` | MLX-LM · 文本 | 3 题开发冒烟检查：**1/3 正确**；缓存一致性 **3/3 通过**。 |
@@ -150,6 +156,18 @@ mlx-direct-decider decide --request examples/decision.json
 <a name="results"></a>
 
 ## 实测结果，连同局限一起公开
+
+### JevBench 公开题集：171/231（74.0%）
+
+保持同一个量化 Qwen3.5-9B 检查点不变，调整问题位置和问答提示后，从
+**157/231（68.0%）提高到 171/231（74.0%）**：修正 23 道错题，新增 9 道
+错误，整体提高 **6.1 个百分点**。5 次原生拒答与 1 道超过 4,096 token
+上限的题目都计为错误。
+这是已观察过的旧版公开题集上的本地提示实验，与下面的应用测试及当前官方
+榜单分别报告。本次问答配置提供独立评测适配器，应用动作选择的默认提示保持原配置。
+[完整结果、精确提示词、逐题记录与复现方法](docs/jevbench.zh-CN.md)。
+
+### 应用状态评测：36 个场景
 
 **新增六领域测试 · Apple M2 Max · 64 GiB · 36 个虚构英文场景。**
 
