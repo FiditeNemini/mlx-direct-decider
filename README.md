@@ -167,9 +167,8 @@ not establish general reliability or compatibility with every model in a family.
 
 ### JevBench public tasks: 171/231 (74.0%)
 
-With the same frozen quantized Qwen3.5-9B checkpoint, a question-focused prompt
-profile improved from **157/231 (68.0%) to 171/231 (74.0%)**: 23 previously wrong
-answers corrected, nine regressions, **+6.1 percentage points** overall.
+The evaluated Q&A prompt profile answered **171/231 tasks correctly (74.0%)**
+with the frozen quantized Qwen3.5-9B checkpoint and no additional fine-tuning.
 All five native declines and one input over the 4,096-token limit count wrong.
 This is a self-reported, post-development comparison on the legacy public set,
 separate from the application tests below and the current official leaderboard.
